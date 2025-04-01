@@ -7,9 +7,40 @@ import { useQuery } from '@tanstack/react-query';
 
 import reactLogo from './assets/react.svg';
 
+type Pagination = {
+  info: {
+    count: 826,
+    pages: 42,
+    next: "https://rickandmortyapi.com/api/character/?page=2",
+    prev: null,
+  },
+}
+
+type Character = {
+  id: number;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: {
+    name: string;
+    url: string;
+  };
+  location: {
+    name: string;
+    url: string;
+  };
+  image: string;
+  episode: string[];
+  url: string;
+  created: string;
+}
+
+
 function App() {
   const [count, setCount] = useState(0);
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data } = useQuery<{results: Character[], infos: Pagination}>({
     queryKey: ["repoData"],
     queryFn: () =>
       fetch("https://rickandmortyapi.com/api/character").then((res) =>
