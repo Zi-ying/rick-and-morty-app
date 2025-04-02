@@ -11,7 +11,8 @@ const CharactersList = () => {
     infos: Pagination;
   }>({
     queryKey: ["charactersData"],
-    queryFn: getAllCharacters})
+    queryFn: getAllCharacters,
+  });
 
   if (isPending) return "Loading...";
 
