@@ -1,9 +1,17 @@
 import { Link } from 'react-router-dom';
 
-import { useGetCharacters } from './use-get-characters';
+import { useQuery } from '@tanstack/react-query';
+
+import { getAllCharacters } from './get-all-characters';
+import { Character, Pagination } from './types';
 
 const CharactersList = () => {
-  const { isPending, error, data } = useGetCharacters()
+  const { data, isPending, error } = useQuery<{
+    results: Character[];
+    infos: Pagination;
+  }>({
+    queryKey: ["charactersData"],
+    queryFn: getAllCharacters})
 
   if (isPending) return "Loading...";
 
