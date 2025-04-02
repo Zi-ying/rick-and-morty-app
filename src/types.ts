@@ -27,3 +27,11 @@ export type Character = {
   url: string;
   created: string;
 };
+
+export type FilterParams = {
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+}
