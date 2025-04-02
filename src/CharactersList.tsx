@@ -1,57 +1,34 @@
-import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
-type Pagination = {
-  info: {
-    count: 826;
-    pages: 42;
-    next: "https://rickandmortyapi.com/api/character/?page=2";
-    prev: null;
-  };
-};
-
-type Character = {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
-};
+import { useGetCharacters } from './use-get-characters';
 
 const CharactersList = () => {
-  const { isPending, error, data } = useQuery<{
-    results: Character[];
-    infos: Pagination;
-  }>({
-    queryKey: ["repoData"],
-    queryFn: () =>
-      fetch("https://rickandmortyapi.com/api/character").then((res) =>
-        res.json()
-      ),
-  });
+  const { isPending, error, data } = useGetCharacters()
 
   if (isPending) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
+
   return (
-    <div className='w-full'>
+    <div className="w-full grid grid-cols-3 gap-4">
       {data.results.map((item) => {
         return (
-          <li key={item.id}>
-            <ul>{item.id}</ul>
-          </li>
+          <Link to={`${item.id}`}>
+            <div
+              key={item.id}
+              className="bg-white border border-gray-100 rounded-lg shadow-lg grid justify-center p-2 cursor-pointer"
+            >
+              <img
+                src={item.image}
+                alt={`image of ${item.name} from Rick and Morty`}
+                className="rounded-lg"
+              />
+              <h5 className="text-gray-700">{item.name}</h5>
+              <h5 className="text-gray-500">{item.status}</h5>
+              <h5 className="text-gray-500">{item.species}</h5>
+              <h5 className="text-gray-500">{item.gender}</h5>
+            </div>
+          </Link>
         );
       })}
     </div>
