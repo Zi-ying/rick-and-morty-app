@@ -1,10 +1,8 @@
 export type Pagination = {
-  info: {
     count: number;
     pages: number;
     next: string;
     prev: null | string;
-  };
 };
 
 export type Character = {

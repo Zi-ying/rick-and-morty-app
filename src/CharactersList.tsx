@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -7,6 +7,7 @@ import { getAllCharacters } from './get-all-characters';
 import { genderOptions, statusOptions } from './options';
 import { Character, FilterParams, Pagination } from './types';
 import { useDebounce } from './use-debounce';
+import { usePagination } from './use-pagination';
 
 const CharactersList = () => {
   const [searchName, setSearchName] = useState<string>("");
@@ -14,8 +15,9 @@ const CharactersList = () => {
   const [searchSpecies, setSearchSpecies] = useState<string>("");
   const [searchStatus, setSearchStatus] = useState<string>("");
   const [searchType, setSearchType] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
-  const timeout = 500
+  const timeout = 500;
 
   const debouncedNameValue = useDebounce(searchName, timeout);
   const debouncedSpeciesValue = useDebounce(searchSpecies, timeout);
@@ -29,15 +31,6 @@ const CharactersList = () => {
     type: debouncedTypeValue,
   };
 
-  const { data, isPending, error } = useQuery<{
-    results: Character[];
-    info: Pagination;
-  }>({
-    queryKey: ["charactersData", filters],
-    queryFn: async () => getAllCharacters(filters),
-    placeholderData: keepPreviousData,
-  });
-
   const onResetClick = () => {
     setSearchName("");
     setSearchGender("");
@@ -45,6 +38,23 @@ const CharactersList = () => {
     setSearchStatus("");
     setSearchType("");
   };
+
+  const { data, isPending, error } = useQuery<{
+    results: Character[];
+    info: Pagination;
+  }>({
+    queryKey: ["charactersData", filters, currentPage],
+    queryFn: async () => getAllCharacters(filters, currentPage.toString()),
+    placeholderData: keepPreviousData,
+  });
+
+  const pageCount = data?.info ? data.info.count : 0
+
+  const { page, setNextPage, setPreviousPage } = usePagination(currentPage, pageCount);
+
+  useEffect(() => {
+    setCurrentPage(page)
+  }, [page])
 
   if (isPending) return "Loading...";
 
@@ -121,6 +131,15 @@ const CharactersList = () => {
             );
           })
         )}
+      </div>
+      <div>
+        <button onClick={setPreviousPage}>
+          Previous page
+        </button>
+        <button>{currentPage}</button>
+        <button onClick={setNextPage}>
+          Next page
+        </button>
       </div>
     </>
   );
