@@ -24,6 +24,7 @@ const Character = () => {
         }
 
         return response;
+
       } catch (error) {
         throw new Error(
           error instanceof Error
@@ -52,6 +53,7 @@ const Character = () => {
         <h5 className="text-gray-500">{data.status}</h5>
         <h5 className="text-gray-500">{data.species}</h5>
         <h5 className="text-gray-500">{data.gender}</h5>
+        <h5 className="text-gray-500">{data.type}</h5>
       </div>
       <Link to='/'>
         <button>Go back</button>
