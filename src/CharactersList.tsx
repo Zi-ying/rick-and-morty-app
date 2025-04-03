@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { getAllCharacters } from './get-all-characters';
+import { genderOptions, statusOptions } from './options';
 import { Character, FilterParams, Pagination } from './types';
+import { useDebounce } from './use-debounce';
 
 const CharactersList = () => {
   const [searchName, setSearchName] = useState<string>("");
@@ -13,25 +15,16 @@ const CharactersList = () => {
   const [searchStatus, setSearchStatus] = useState<string>("");
   const [searchType, setSearchType] = useState<string>("");
 
-  const genderOptions = [
-    { label: "Female", value: "female" },
-    { label: "Male", value: "male" },
-    { label: "Gender less", value: "genderless" },
-    { label: "Unknown", value: "unknown" },
-  ];
-
-  const statusOptions = [
-    { label: "Alive", value: "alive" },
-    { label: "Dead", value: "dead" },
-    { label: "Unknown", value: "unknown" },
-  ];
+  const debouncedNameValue = useDebounce(searchName, 500);
+  const debouncedSpeciesValue = useDebounce(searchSpecies, 500);
+  const debouncedTypeValue = useDebounce(searchType, 500);
 
   const filters: FilterParams = {
-    name: searchName,
+    name: debouncedNameValue,
     gender: searchGender,
-    species: searchSpecies,
+    species: debouncedSpeciesValue,
     status: searchStatus,
-    type: searchType,
+    type: debouncedTypeValue,
   };
 
   const { data, isPending, error } = useQuery<{
@@ -39,12 +32,17 @@ const CharactersList = () => {
     info: Pagination;
   }>({
     queryKey: ["charactersData", filters],
-    queryFn: () => getAllCharacters(filters),
+    queryFn: async () => getAllCharacters(filters),
     placeholderData: keepPreviousData,
   });
 
-  console.log("searchGender", searchGender)
-  console.log("searchStatus", searchStatus)
+  const onResetClick = () => {
+    setSearchName("");
+    setSearchGender("");
+    setSearchSpecies("");
+    setSearchStatus("");
+    setSearchType("");
+  };
 
   if (isPending) return "Loading...";
 
@@ -55,16 +53,16 @@ const CharactersList = () => {
       <input
         type="text"
         placeholder="Search by character name"
+        value={searchName}
         onChange={(e) => setSearchName(e.target.value)}
         className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
       />
-      <select onChange={(e) => setSearchGender(e.currentTarget.value)} className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
+      <select
+        onChange={(e) => setSearchGender(e.currentTarget.value)}
+        className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
       >
         {genderOptions.map((option) => (
-          <option
-            value={option.value}
-            key={option.value}
-          >
+          <option value={option.value} key={option.value}>
             {option.label}
           </option>
         ))}
@@ -72,16 +70,16 @@ const CharactersList = () => {
       <input
         type="text"
         placeholder="Search by species"
+        value={searchSpecies}
         onChange={(e) => setSearchSpecies(e.target.value)}
         className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
       />
-      <select onChange={(e) => setSearchStatus(e.currentTarget.value)} className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
+      <select
+        onChange={(e) => setSearchStatus(e.currentTarget.value)}
+        className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
       >
         {statusOptions.map((option) => (
-          <option
-            key={option.value}
-            value={option.value}
-          >
+          <option key={option.value} value={option.value}>
             {option.label}
           </option>
         ))}
@@ -89,9 +87,13 @@ const CharactersList = () => {
       <input
         type="text"
         placeholder="Search by type"
+        value={searchType}
         onChange={(e) => setSearchType(e.target.value)}
         className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
       />
+      <button onClick={onResetClick} className="justify-self-center">
+        X Clear all filters
+      </button>
       <div className="w-full grid grid-cols-3 gap-4">
         {!data.results ? (
           <div>There is no Data</div>
@@ -112,6 +114,7 @@ const CharactersList = () => {
                 <h5 className="text-gray-500">{item.status}</h5>
                 <h5 className="text-gray-500">{item.species}</h5>
                 <h5 className="text-gray-500">{item.gender}</h5>
+                <h5 className="text-gray-500">{item.type}</h5>
               </Link>
             );
           })
