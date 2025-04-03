@@ -1,8 +1,16 @@
-import type { Character, FilterParams, Pagination } from './types';
+import type { Character, FilterParams, Pagination } from "./types";
 
-export const getAllCharacters = async (filters: FilterParams): Promise<{ results: Character[]; info: Pagination }> => {
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character/?name=${filters.name}&status=${filters.status}&species=${filters.species}&type=${filters.type}&gender=${filters.gender}`
-  );
+const address = "https://rickandmortyapi.com/api/character";
+
+export const getAllCharacters = async (
+  filters: FilterParams
+): Promise<{ results: Character[]; info: Pagination }> => {
+  const url = new URL(address);
+  url.searchParams.append("name", filters.name);
+  url.searchParams.append("gender", filters.gender);
+  url.searchParams.append("species", filters.species);
+  url.searchParams.append("status", filters.status);
+  url.searchParams.append("type", filters.type);
+  const response = await fetch(url);
   return response.json();
 };

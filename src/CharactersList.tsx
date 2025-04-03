@@ -15,9 +15,11 @@ const CharactersList = () => {
   const [searchStatus, setSearchStatus] = useState<string>("");
   const [searchType, setSearchType] = useState<string>("");
 
-  const debouncedNameValue = useDebounce(searchName, 500);
-  const debouncedSpeciesValue = useDebounce(searchSpecies, 500);
-  const debouncedTypeValue = useDebounce(searchType, 500);
+  const timeout = 500
+
+  const debouncedNameValue = useDebounce(searchName, timeout);
+  const debouncedSpeciesValue = useDebounce(searchSpecies, timeout);
+  const debouncedTypeValue = useDebounce(searchType, timeout);
 
   const filters: FilterParams = {
     name: debouncedNameValue,
