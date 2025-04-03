@@ -106,7 +106,7 @@ const CharactersList = () => {
       <button onClick={onResetClick} className="justify-self-center">
         X Clear all filters
       </button>
-      <div className="w-full grid grid-cols-3 gap-4">
+      <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-4">
         {!data.results ? (
           <div>There is no Data</div>
         ) : (
@@ -132,13 +132,13 @@ const CharactersList = () => {
           })
         )}
       </div>
-      <div>
+      <div className='flex gap-1 md:gap-4 justify-center'>
         <button onClick={setPreviousPage}>
-          Previous page
+          Previous
         </button>
         <button>{currentPage}</button>
         <button onClick={setNextPage}>
-          Next page
+          Next
         </button>
       </div>
     </>
