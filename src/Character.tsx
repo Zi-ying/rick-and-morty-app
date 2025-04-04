@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import CharacterCard from './components/CharacterCard';
 import { Button } from './components/ui/button';
@@ -34,6 +34,8 @@ const Character = () => {
         );
       }
     },
+    placeholderData: keepPreviousData,
+
   });
 
   if (isError) {
