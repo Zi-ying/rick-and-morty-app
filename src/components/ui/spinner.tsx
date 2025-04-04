@@ -4,11 +4,11 @@ interface LoadingSpinnerProps {
 
 const LoadingSpinner = ({ message = 'Loading...' }: LoadingSpinnerProps) => {
   return (
-    <div className="text-center p-4">
+    <div className="grid gap-4 items-center justify-center p-4">
       <div
-      className="inline-block w-8 h-8 border-2 rounded-full border-[#01b6a5] animate-spin"
+      className="inline-block self-justify-center w-10 h-10 border-4 rounded-full border-[#01b6a5] animate-spin"
       />
-      <p>{message}</p>
+      <p className="text-[#01b6a5]">{message}</p>
     </div>
   );
 };
