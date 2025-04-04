@@ -4,6 +4,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import CharacterCard from './components/CharacterCard';
 import { Button } from './components/ui/button';
+import Spinner from './components/ui/spinner';
 import { getCharacterById } from './get-character-by-id';
 import NotFoundPage from './NotFoundPage';
 
@@ -35,14 +36,18 @@ const Character = () => {
       }
     },
     placeholderData: keepPreviousData,
-
   });
 
   if (isError) {
     return <NotFoundPage errorMessage={error.message} />;
   }
 
-  if (isPending) return "Loading...";
+  if (isPending)
+    return (
+      <div className="min-h-96 w-full grid justify-center items-center border rounded-2xl shadow-2xl">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div className="grid gap-4 justify-center">
