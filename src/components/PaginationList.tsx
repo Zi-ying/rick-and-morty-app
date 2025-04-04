@@ -9,26 +9,31 @@ import {
 
 interface PaginationListProps {
   page: number;
-  onPreviousPage: () => void
-  onNextPage: () => void
+  onPreviousPage: () => void;
+  onNextPage: () => void;
 }
 
-const PaginationList = ({page, onPreviousPage, onNextPage}: PaginationListProps) => {
+const PaginationList = ({
+  page,
+  onPreviousPage,
+  onNextPage,
+}: PaginationListProps) => {
+
   return (
     <Pagination>
-    <PaginationContent>
-      <PaginationItem>
-        <PaginationPrevious href="#" onClick={onPreviousPage} />
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink href="#">{page}</PaginationLink>
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationNext href="#" onClick={onNextPage} />
-      </PaginationItem>
-    </PaginationContent>
-  </Pagination>
-  )
-}
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href="#" onClick={onPreviousPage} />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#">{page}</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#" onClick={onNextPage} />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  );
+};
 
-export default PaginationList
+export default PaginationList;
