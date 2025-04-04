@@ -1,11 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import { Button } from './components/ui/button';
+import { Input } from './components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
 import { getAllCharacters } from './get-all-characters';
 import { genderOptions, statusOptions } from './options';
-import { Character, FilterParams, Pagination } from './types';
+import { Character, FilterParams, PaginationParams } from './types';
 import { useDebounce } from './use-debounce';
 import { usePagination } from './use-pagination';
 
@@ -15,7 +26,7 @@ const CharactersList = () => {
   const [searchSpecies, setSearchSpecies] = useState<string>("");
   const [searchStatus, setSearchStatus] = useState<string>("");
   const [searchType, setSearchType] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const timeout = 500;
 
@@ -41,20 +52,23 @@ const CharactersList = () => {
 
   const { data, isPending, error } = useQuery<{
     results: Character[];
-    info: Pagination;
+    info: PaginationParams;
   }>({
     queryKey: ["charactersData", filters, currentPage],
     queryFn: async () => getAllCharacters(filters, currentPage.toString()),
     placeholderData: keepPreviousData,
   });
 
-  const pageCount = data?.info ? data.info.count : 0
+  const pageCount = data?.info ? data.info.count : 0;
 
-  const { page, setNextPage, setPreviousPage } = usePagination(currentPage, pageCount);
+  const { page, setNextPage, setPreviousPage } = usePagination(
+    currentPage,
+    pageCount
+  );
 
   useEffect(() => {
-    setCurrentPage(page)
-  }, [page])
+    setCurrentPage(page);
+  }, [page]);
 
   if (isPending) return "Loading...";
 
@@ -62,50 +76,50 @@ const CharactersList = () => {
 
   return (
     <>
-      <input
+      <Input
         type="text"
         placeholder="Search by character name"
         value={searchName}
         onChange={(e) => setSearchName(e.target.value)}
-        className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
+        className="justify-self-center w-3xs"
       />
-      <select
-        onChange={(e) => setSearchGender(e.currentTarget.value)}
-        className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
-      >
+      <Select onValueChange={setSearchGender}>
+        <SelectTrigger className="w-3xs justify-self-center">
+          <SelectValue placeholder="Gender"  />
+        </SelectTrigger>
+        <SelectContent>
         {genderOptions.map((option) => (
-          <option value={option.value} key={option.value}>
-            {option.label}
-          </option>
+            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
         ))}
-      </select>
-      <input
+        </SelectContent>
+      </Select>
+      <Input
         type="text"
         placeholder="Search by species"
         value={searchSpecies}
         onChange={(e) => setSearchSpecies(e.target.value)}
-        className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
+        className="justify-self-center w-3xs"
       />
-      <select
-        onChange={(e) => setSearchStatus(e.currentTarget.value)}
-        className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
-      >
+      <Select onValueChange={setSearchStatus}>
+        <SelectTrigger className="w-3xs justify-self-center">
+          <SelectValue placeholder="Status"  />
+        </SelectTrigger>
+        <SelectContent>
         {statusOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
+            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
         ))}
-      </select>
-      <input
+        </SelectContent>
+      </Select>
+      <Input
         type="text"
         placeholder="Search by type"
         value={searchType}
         onChange={(e) => setSearchType(e.target.value)}
-        className="py-2 px-3 w-3xs border border-gray-400 rounded-md text-sm justify-self-center"
+        className="justify-self-center w-3xs"
       />
-      <button onClick={onResetClick} className="justify-self-center">
+      <Button onClick={onResetClick} className="justify-self-center">
         X Clear all filters
-      </button>
+      </Button>
       <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-4">
         {!data.results ? (
           <div>There is no Data</div>
@@ -132,14 +146,20 @@ const CharactersList = () => {
           })
         )}
       </div>
-      <div className='flex gap-1 md:gap-4 justify-center'>
-        <button onClick={setPreviousPage}>
-          Previous
-        </button>
-        <button>{currentPage}</button>
-        <button onClick={setNextPage}>
-          Next
-        </button>
+      <div className="flex gap-1 md:gap-4 justify-center">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" onClick={setPreviousPage} />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">{currentPage}</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" onClick={setNextPage} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </>
   );
