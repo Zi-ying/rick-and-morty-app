@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/pagination';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import CharacterCard from './components/CharacterCard';
 import { Button } from './components/ui/button';
 import { Input } from './components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
@@ -85,12 +86,14 @@ const CharactersList = () => {
       />
       <Select onValueChange={setSearchGender}>
         <SelectTrigger className="w-3xs justify-self-center">
-          <SelectValue placeholder="Gender"  />
+          <SelectValue placeholder="Gender" />
         </SelectTrigger>
         <SelectContent>
-        {genderOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
-        ))}
+          {genderOptions.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <Input
@@ -102,12 +105,14 @@ const CharactersList = () => {
       />
       <Select onValueChange={setSearchStatus}>
         <SelectTrigger className="w-3xs justify-self-center">
-          <SelectValue placeholder="Status"  />
+          <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
-        {statusOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
-        ))}
+          {statusOptions.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <Input
@@ -120,7 +125,7 @@ const CharactersList = () => {
       <Button onClick={onResetClick} className="justify-self-center">
         X Clear all filters
       </Button>
-      <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-1 md:gap-4">
+      <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 md:gap-4">
         {!data.results ? (
           <div>There is no Data</div>
         ) : (
@@ -129,18 +134,9 @@ const CharactersList = () => {
               <Link
                 key={item.id}
                 to={`${item.id}`}
-                className="bg-white border border-gray-100 rounded-lg shadow-lg grid justify-center p-2 cursor-pointer"
+                className="grid justify-center cursor-pointer"
               >
-                <img
-                  src={item.image}
-                  alt={`image of ${item.name} from Rick and Morty`}
-                  className="rounded-lg"
-                />
-                <h5 className="text-gray-700">{item.name}</h5>
-                <h5 className="text-gray-500">{item.status}</h5>
-                <h5 className="text-gray-500">{item.species}</h5>
-                <h5 className="text-gray-500">{item.gender}</h5>
-                <h5 className="text-gray-500">{item.type}</h5>
+               <CharacterCard data={item}/>
               </Link>
             );
           })
