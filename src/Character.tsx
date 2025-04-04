@@ -42,19 +42,19 @@ const Character = () => {
     return <NotFoundPage errorMessage={error.message} />;
   }
 
-  if (isPending)
-    return (
-      <div className="min-h-96 w-full grid justify-center items-center border rounded-2xl shadow-2xl">
-        <Spinner />
-      </div>
-    );
-
   return (
-    <div className="grid gap-4 justify-center">
-      <CharacterCard data={data} />
-      <Link to="/">
-        <Button>Go back</Button>
-      </Link>
+    <div className="grid gap-4 h-[100vh] items-center justify-center p-4">
+      {isPending && (
+          <Spinner />
+      )}
+      {data && (
+        <>
+          <CharacterCard data={data} />
+          <Link to="/">
+            <Button>Go back</Button>
+          </Link>
+        </>
+      )}
     </div>
   );
 };

@@ -8,11 +8,11 @@ interface CharacterCardProps {
 
 const CharacterCard = ({ data }: CharacterCardProps) => {
   return (
-    <Card className="p-4">
+    <Card className="p-4 rounded-xl shadow-lg">
       <img
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
-        className="rounded-lg"
+        className="rounded-xl"
       />
       <CardHeader>
         <CardTitle>{data.name}</CardTitle>
