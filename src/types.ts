@@ -1,4 +1,4 @@
-export type Pagination = {
+export type PaginationParams = {
     count: number;
     pages: number;
     next: string;
