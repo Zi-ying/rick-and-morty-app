@@ -5,6 +5,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import CharactersList from './CharactersList';
 import PaginationList from './components/PaginationList';
 import { Button } from './components/ui/button';
+import Spinner from './components/ui/spinner';
 import { getAllCharacters } from './get-all-characters';
 import { genderOptions, statusOptions } from './options';
 import SearchField from './SearchField';
@@ -63,8 +64,6 @@ const Home = () => {
     setCurrentPage(page);
   }, [page]);
 
-  if (isPending) return "Loading...";
-
   if (error) return "An error has occurred: " + error.message;
 
   return (
@@ -102,11 +101,18 @@ const Home = () => {
           X Clear all filters
         </Button>
       </div>
-      {!data.results ? (
-        <div className="min-h-96 w-full grid justify-center items-center border rounded-2xl">
-          <div className='grid gap-4'>
-            <p className='lg:text-3xl text-slate-700'>Oops</p>
-            <p className='lg:text-xl text-slate-500'>No data found</p>
+      <div>
+      { isPending && (
+          <div className="min-h-96 w-full grid justify-center items-center border rounded-2xl shadow-2xl">
+            <Spinner />
+          </div>
+        )}
+      </div>
+      {!data?.results ? (
+        <div className="min-h-96 w-full grid justify-center items-center border rounded-2xl shadow-2xl">
+          <div className="grid gap-4">
+            <p className="lg:text-3xl text-slate-700">Oops</p>
+            <p className="lg:text-xl text-slate-500">No data found</p>
             <Button onClick={onResetClick} className="justify-self-center">
               X Clear all filters
             </Button>
