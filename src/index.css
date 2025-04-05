@@ -103,11 +103,13 @@ body {
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-brand-500: #01b6a5;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

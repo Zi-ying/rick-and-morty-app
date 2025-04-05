@@ -47,12 +47,12 @@ const Character = () => {
       {isPending && <Spinner />}
       {data && (
         <>
-          <div className='flex gap-4'>
+          <div className='grid md:flex gap-4'>
             <CharacterCard data={data} />
-            <div className="hidden md:inline-flex flex-col gap-4 border rounded-lg p-4 bg-[#01b6a5] text-white items-center justify-center">
-              <div>You can find more about <span className='font-semibold'>{data.name}</span></div>
-              <div>She is often located here on <span className='font-semibold'>{data.location.name}</span></div>
-              <div>She is originally from <span className='font-semibold'>{data.origin.name}</span></div>
+            <div className="md:inline-flex flex-col gap-4 p-4 text-brand-500 items-start justify-center">
+              <div>You can find more about <span className='text-align font-semibold'>{data.name}</span></div>
+              <div>{data.name} is often located here on <span className='text-align font-semibold'>{data.location.name}</span></div>
+              <div>{data.name} is originally from <span className='text-align font-semibold'>{data.origin.name}</span></div>
             </div>
           </div>
           <Link to="/">
