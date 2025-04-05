@@ -44,12 +44,17 @@ const Character = () => {
 
   return (
     <div className="grid gap-4 h-[100vh] items-center justify-center p-4">
-      {isPending && (
-          <Spinner />
-      )}
+      {isPending && <Spinner />}
       {data && (
         <>
-          <CharacterCard data={data} />
+          <div className='flex gap-4'>
+            <CharacterCard data={data} />
+            <div className="hidden md:inline-flex flex-col gap-4 border rounded-lg p-4 bg-[#01b6a5] text-white items-center justify-center">
+              <div>You can find more about <span className='font-semibold'>{data.name}</span></div>
+              <div>She is often located here on <span className='font-semibold'>{data.location.name}</span></div>
+              <div>She is originally from <span className='font-semibold'>{data.origin.name}</span></div>
+            </div>
+          </div>
           <Link to="/">
             <Button>Go back</Button>
           </Link>
