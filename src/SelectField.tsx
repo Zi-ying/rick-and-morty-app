@@ -3,14 +3,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 
 interface SelectFieldProps {
   placeholder: string;
+  classnames?: string;
   data: {label: string, value: string}[]
   onChange: (value: string) => void;
 }
 
-const SelectField = ({placeholder, data, onChange}: SelectFieldProps) => {
+const SelectField = ({placeholder, data, classnames, onChange}: SelectFieldProps) => {
   return (
       <Select onValueChange={onChange}>
-        <SelectTrigger className='w-3xs'>
+        <SelectTrigger className={classnames}>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>

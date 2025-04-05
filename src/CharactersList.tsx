@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 
 import CharacterCard from './components/CharacterCard';
+import SmallCharacterCard from './components/SmallCharacterCard';
 import { Character } from './types';
 
 interface CharacterListProps {
   data: Character[];
+  isSmallScreen?: boolean;
 }
 
-const CharactersList = ({ data }: CharacterListProps) => {
+const CharactersList = ({ data, isSmallScreen }: CharacterListProps) => {
   return (
     <>
       {data.map((item) => {
@@ -17,7 +19,11 @@ const CharactersList = ({ data }: CharacterListProps) => {
             to={`${item.id}`}
             className="grid justify-center cursor-pointer"
           >
-            <CharacterCard data={item} />
+            {isSmallScreen ? (
+              <SmallCharacterCard data={item} />
+            ) : (
+              <CharacterCard data={item} />
+            )}
           </Link>
         );
       })}
