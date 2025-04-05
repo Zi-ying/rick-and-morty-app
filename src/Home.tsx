@@ -181,7 +181,7 @@ const Home = () => {
             />
           </div>
         </div>
-        <div className="hidden md:inline-block items-center justify-center h-4 gap-2">
+        <div className="hidden md:inline-flex items-center justify-center h-4 gap-2">
           {filtersBadge.filters.name && (
             <Badge>{filtersBadge.filters.name}</Badge>
           )}
