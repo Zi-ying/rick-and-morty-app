@@ -15,7 +15,6 @@ import type { Character } from "../../types/types";
 const Character = () => {
   const { id } = useParams();
 
-
   const { data, isPending, error, isError } = useQuery<Character>({
     queryKey: ["characterData", id],
     queryFn: async () => {
@@ -47,71 +46,73 @@ const Character = () => {
   }
 
   return (
-    <div className="grid gap-4 h-[100vh] items-center justify-center p-4">
+    <div className="grid min-h-[100vh] items-center justify-center gap-4 p-4">
       {isPending && <Spinner />}
       {data && (
-        <>
-          <div className="grid md:grid-cols-2 gap-4 border rounded-xl shadow-lg p-4 justify-center">
-          <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} className='rounded-xl' />
-            <div className="md:inline-flex flex-col gap-4 p-4 text-slate-500 md:items-start md:justify-center">
-              <CardTitle className="flex gap-2 items-center justify-center">
-                <div className="text-brand-500 text-end font-semibold text-md md:text-xl">
-                  {data.name}
-                </div>
-                <div
-                  className={cn(
-                    "rounded-full w-2 h-2",
-                    data.status === "Alive" && "bg-green-400",
-                    data.status === "unknown" && "bg-slate-500",
-                    data.status === "Dead" && "bg-red-500"
-                  )}
-                />
-              </CardTitle>
-              <div>
-                {data.name} is {data.status.toLocaleLowerCase()}
+        <div className="flex flex-col w-fit md:flex-row gap-4 border rounded-xl shadow-lg p-4 justify-center">
+          <Image
+            src={data.image}
+            alt={`image of ${data.name} from Rick and Morty`}
+            className="rounded-xl"
+          />
+          <div className="flex flex-col gap-4 p-4 text-slate-500 md:items-start md:justify-center">
+            <CardTitle className="flex gap-2 items-center justify-center">
+              <div className="text-brand-500 font-semibold md:text-start text-md md:text-xl">
+                {data.name}
               </div>
-              <div>
-                {data.name} is a {data.gender.toLocaleLowerCase()}
-              </div>
-              <div>
-                {data.name} is a {data.species.toLocaleLowerCase()}
-              </div>
-              {data.type ? (
-                <div>
-                  {data.name} is {data.type.toLocaleLowerCase()}
-                </div>
-              ) : (
-                <></>
-              )}
-              <div>
-                {data.name} is often located here on{" "}
-                <span className="text-align font-semibold">
-                  {data.location.name}
-                </span>
-              </div>
-              {data.origin.name ? (
-                <div>
-                  {data.origin.name !== "unknown" ? (
-                    <>
-                      {data.name} is originally from{" "}
-                      <span className="text-align font-semibold">
-                        {data.origin.name}
-                      </span>
-                    </>
-                  ) : (
-                    <>We do not know where {data.name} is from!</>
-                  )}
-                </div>
-              ) : (
-                <></>
-              )}
+              <div
+                className={cn(
+                  "rounded-full w-2 h-2",
+                  data.status === "Alive" && "bg-green-400",
+                  data.status === "unknown" && "bg-slate-500",
+                  data.status === "Dead" && "bg-red-500"
+                )}
+              />
+            </CardTitle>
+            <div className="md:text-start">
+              {data.name} is {data.status.toLocaleLowerCase()}
             </div>
+            <div className="md:text-start">
+              {data.name} is a {data.gender.toLocaleLowerCase()}
+            </div>
+            <div className="md:text-start">
+              {data.name} is a {data.species.toLocaleLowerCase()}
+            </div>
+            {data.type ? (
+              <div className="md:text-start">
+                {data.name} is {data.type.toLocaleLowerCase()}
+              </div>
+            ) : (
+              <></>
+            )}
+            <div className="md:text-start">
+              {data.name} is often located here on{" "}
+              <span className="text-align font-semibold">
+                {data.location.name}
+              </span>
+            </div>
+            {data.origin.name ? (
+              <div className="md:text-start">
+                {data.origin.name !== "unknown" ? (
+                  <>
+                    {data.name} is originally from{" "}
+                    <span className="text-align font-semibold">
+                      {data.origin.name}
+                    </span>
+                  </>
+                ) : (
+                  <>We do not know where {data.name} is from!</>
+                )}
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-          <Link to="/">
-            <Button>Go back</Button>
-          </Link>
-        </>
+        </div>
       )}
+      <Link to="/">
+        <Button className="self-place-end">Go back</Button>
+      </Link>
     </div>
   );
 };
