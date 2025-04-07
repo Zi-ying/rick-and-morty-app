@@ -18,15 +18,20 @@ const PaginationList = ({
   onPreviousPage,
   onNextPage,
 }: PaginationListProps) => {
+  const isFirstPage = page === 1;
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href="#" onClick={onPreviousPage} />
+          <PaginationPrevious
+            href="#"
+            onClick={onPreviousPage}
+            disabled={isFirstPage}
+          />
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink href="#">{page}</PaginationLink>
+          <PaginationLink href="#" isActive>{page}</PaginationLink>
         </PaginationItem>
         <PaginationItem>
           <PaginationNext href="#" onClick={onNextPage} />

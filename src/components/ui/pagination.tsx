@@ -35,6 +35,7 @@ function PaginationItem({ ...props }: React.ComponentProps<"li">) {
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
   React.ComponentProps<"a">
 
@@ -42,6 +43,7 @@ function PaginationLink({
   className,
   isActive,
   size = "icon",
+  disabled = false,
   ...props
 }: PaginationLinkProps) {
   return (
@@ -49,12 +51,14 @@ function PaginationLink({
       aria-current={isActive ? "page" : undefined}
       data-slot="pagination-link"
       data-active={isActive}
+      data-disabled={disabled}
       className={cn(
         buttonVariants({
           variant: isActive ? "outline" : "ghost",
           size,
         }),
         'bg-[#f7f7f7] text-brand-500 hover:bg-brand-500 hover:text-white shadow-lg',
+        disabled && 'opacity-50 pointer-events-none cursor-not-allowed',
         className
       )}
       {...props}
@@ -64,6 +68,7 @@ function PaginationLink({
 
 function PaginationPrevious({
   className,
+  disabled = false,
   ...props
 }: React.ComponentProps<typeof PaginationLink>) {
   return (
@@ -71,6 +76,7 @@ function PaginationPrevious({
       aria-label="Go to previous page"
       size="default"
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
+      disabled={disabled}
       {...props}
     >
       <ChevronLeftIcon />
