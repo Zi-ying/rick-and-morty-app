@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
 export const useDebounce = (value: string, delay: number) => {
-  const [debouncedValue, setDebouncedValue] = useState<string>(value);
+  const [debouncedValue, setDebouncedValue] = useState<string>(value.toLowerCase());
 
   useEffect(() => {
     const id = setTimeout(() => {
-      setDebouncedValue(value);
+      setDebouncedValue(value.toLowerCase());
     }, delay);
 
     return () => {

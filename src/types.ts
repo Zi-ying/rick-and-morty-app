@@ -27,9 +27,9 @@ export type Character = {
 };
 
 export type FilterParams = {
-  name?: string;
-  status?: string;
-  species?: string;
-  type?: string;
-  gender?: string;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
 }

@@ -79,7 +79,7 @@ const Character = () => {
               </div>
               {data.type ? (
                 <div>
-                  `${data.name} is ${data.type.toLocaleLowerCase()}`
+                {data.name} is {data.type.toLocaleLowerCase()}
                 </div>
               ) : (
                 <></>
