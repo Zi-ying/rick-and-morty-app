@@ -52,8 +52,7 @@ const Character = () => {
       {data && (
         <>
           <div className="grid md:grid-cols-2 gap-4 border rounded-xl shadow-lg p-4 justify-center">
-          <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} />
-
+          <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} className='rounded-xl' />
             <div className="md:inline-flex flex-col gap-4 p-4 text-slate-500 md:items-start md:justify-center">
               <CardTitle className="flex gap-2 items-center justify-center">
                 <div className="text-brand-500 text-end font-semibold text-md md:text-xl">

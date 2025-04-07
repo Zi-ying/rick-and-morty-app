@@ -11,7 +11,7 @@ const CharacterCard = ({ data }: CharacterCardProps) => {
 
   return (
     <Card className="p-4 rounded-xl shadow-lg min-w-[300px]">
-     <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} />
+     <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} className='rounded-xl' />
       <CardHeader>
         <CardTitle>{data.name}</CardTitle>
         <CardContent className='flex gap-2 items-center justify-center'>

@@ -3,8 +3,9 @@ import { useState } from 'react';
 interface ImageProps {
   src: string;
   alt: string;
+  className?: string;
 }
-const Image = ({ src, alt }: ImageProps) => {
+const Image = ({ src, alt, className }: ImageProps) => {
   const [imageError, setImageError] = useState<boolean>(false);
   const fallbackImage = '../../../public/oops.svg';
 
@@ -12,7 +13,7 @@ const Image = ({ src, alt }: ImageProps) => {
     <img
       src={imageError ? fallbackImage : src}
       alt={alt}
-      className="rounded-xl"
+      className={className}
       onError={() => setImageError(true)}
       loading="lazy"
     />

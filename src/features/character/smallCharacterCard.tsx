@@ -13,6 +13,7 @@ const SmallCharacterCard = ({ data }: SmallCharacterCardProps) => {
       <Image
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
+        className="rounded-full"
       />
 
       <CardHeader className="col-span-2">
