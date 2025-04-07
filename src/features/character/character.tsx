@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import Image from '../../components/image';
 import { Button } from '../../components/ui/button';
 import { CardTitle } from '../../components/ui/card';
 import Spinner from '../../components/ui/spinner';
@@ -9,9 +10,11 @@ import { cn } from '../../lib/utils';
 import NotFoundPage from '../../pages/NotFoundPage';
 import { getCharacterById } from './get-character-by-id';
 
-import type { Character } from '../../types/types';
+import type { Character } from "../../types/types";
+
 const Character = () => {
   const { id } = useParams();
+
 
   const { data, isPending, error, isError } = useQuery<Character>({
     queryKey: ["characterData", id],
@@ -48,12 +51,9 @@ const Character = () => {
       {isPending && <Spinner />}
       {data && (
         <>
-          <div className="grid md:flex gap-4 border rounded-xl shadow-lg p-4">
-            <img
-              src={data.image}
-              alt={`image of ${data.name} from Rick and Morty`}
-              className=" justify-self-center rounded-lg md:rounded-full md:h-60 md:w-60 lg:h-80 lg:w-80"
-            />
+          <div className="grid md:grid-cols-2 gap-4 border rounded-xl shadow-lg p-4 justify-center">
+          <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} />
+
             <div className="md:inline-flex flex-col gap-4 p-4 text-slate-500 md:items-start md:justify-center">
               <CardTitle className="flex gap-2 items-center justify-center">
                 <div className="text-brand-500 text-end font-semibold text-md md:text-xl">
@@ -79,7 +79,7 @@ const Character = () => {
               </div>
               {data.type ? (
                 <div>
-                {data.name} is {data.type.toLocaleLowerCase()}
+                  {data.name} is {data.type.toLocaleLowerCase()}
                 </div>
               ) : (
                 <></>
