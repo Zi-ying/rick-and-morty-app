@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FilterParams } from '../types';
+import { FilterParams } from '../types/types';
 import { RootState } from './store';
 
 type FilterParamsState = {

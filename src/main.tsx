@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import App from './App.tsx';
-import ErrorBoundary from './ErrorBoundary.tsx';
+import ErrorBoundary from './components/errorBoundary.tsx';
 import { store } from './store/store';
 
 const queryClient = new QueryClient();

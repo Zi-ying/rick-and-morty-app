@@ -1,4 +1,4 @@
-import { Character } from './types';
+import { Character } from '../../types/types';
 
 export const getCharacterById = async (id: string): Promise<Character> => {
   const url = `https://rickandmortyapi.com/api/character/${id}`

@@ -1,5 +1,5 @@
-import { Character } from '../types';
-import { Card, CardHeader, CardTitle } from './ui/card';
+import { Card, CardHeader, CardTitle } from '../../components/ui/card';
+import { Character } from '../../types/types';
 
 interface SmallCharacterCardProps {
   data: Character;

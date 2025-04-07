@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import CharacterCard from './components/CharacterCard';
-import SmallCharacterCard from './components/SmallCharacterCard';
-import { Character } from './types';
+import CharacterCard from '../../components/characterCard';
+import { Character } from '../../types/types';
+import SmallCharacterCard from '../character/smallCharacterCard';
 
 interface CharacterListProps {
   data: Character[];

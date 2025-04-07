@@ -1,5 +1,5 @@
 import { cn } from '../lib/utils';
-import { Character } from '../types';
+import { Character } from '../types/types';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 
 interface CharacterCardProps {

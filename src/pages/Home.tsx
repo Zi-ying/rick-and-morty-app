@@ -3,22 +3,19 @@ import { useDispatch } from 'react-redux';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import CharactersList from './CharactersList';
-import PaginationList from './components/PaginationList';
-import { Badge } from './components/ui/badge';
-import { Button } from './components/ui/button';
-import { Label } from './components/ui/label';
-import Spinner from './components/ui/spinner';
-import { getAllCharacters } from './get-all-characters';
-import { cn } from './lib/utils';
-import { genderOptions, statusOptions } from './options';
-import SearchField from './SearchField';
-import SelectField from './SelectField';
-import { addFilters, filtersList } from './store/filters-slice';
-import { useAppSelector } from './store/redux-hooks';
-import { Character, FilterParams, PaginationParams } from './types';
-import { useDebounce } from './use-debounce';
-import { usePagination } from './use-pagination';
+import { Button } from '../components/ui/button';
+import { Label } from '../components/ui/label';
+import CharactersListDisplay from '../features/charactersList/characterListDisplay';
+import { getAllCharacters } from '../features/charactersList/get-all-characters';
+import { usePagination } from '../features/charactersList/use-pagination';
+import FilterBadges from '../features/searchFields/filterBadges';
+import { genderOptions, statusOptions } from '../features/searchFields/options';
+import SearchField from '../features/searchFields/SearchField';
+import SelectField from '../features/searchFields/SelectField';
+import { useDebounce } from '../features/searchFields/use-debounce';
+import { cn } from '../lib/utils';
+import { addFilters, resetFilters } from '../store/filters-slice';
+import { Character, FilterParams, PaginationParams } from '../types/types';
 
 const Home = () => {
   const [searchName, setSearchName] = useState<string>("");
@@ -36,22 +33,13 @@ const Home = () => {
   const debouncedSpeciesValue = useDebounce(searchSpecies, timeout);
   const debouncedTypeValue = useDebounce(searchType, timeout);
 
-  const filters: FilterParams = useMemo(
-    () => ({
-      name: debouncedNameValue,
-      gender: searchGender,
-      species: debouncedSpeciesValue,
-      status: searchStatus,
-      type: debouncedTypeValue,
-    }),
-    [
-      debouncedNameValue,
-      searchGender,
-      debouncedSpeciesValue,
-      searchStatus,
-      debouncedTypeValue,
-    ]
-  );
+  const filters: FilterParams = useMemo(() => ({
+    name: debouncedNameValue,
+    gender: searchGender,
+    species: debouncedSpeciesValue,
+    status: searchStatus,
+    type: debouncedTypeValue,
+  }), [debouncedNameValue, searchGender, debouncedSpeciesValue, searchStatus, debouncedTypeValue]);
 
   useEffect(() => {
     dispatch(addFilters(filters));
@@ -63,6 +51,7 @@ const Home = () => {
     setSearchSpecies("");
     setSearchStatus("");
     setSearchType("");
+    dispatch(resetFilters());
   };
 
   const { data, isPending, error } = useQuery<{
@@ -81,8 +70,6 @@ const Home = () => {
     pageCount
   );
 
-  const filtersBadge = useAppSelector(filtersList);
-
   useEffect(() => {
     setCurrentPage(page);
   }, [page]);
@@ -99,8 +86,8 @@ const Home = () => {
         <div className="border rounded-lg p-2 bg-brand-500 text-white text-md md:text-2xl md:border-none md:p-0 md:bg-transparent md:text-brand-500">
           Character's list from Rick and Morty
         </div>
-        <div className="grid md:grid-cols-3 xl:grid-cols-5 gap-2 justify-center w-full">
-          <div className="flex gap-2 items-center w-3xs md:w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-2 justify-center w-full">
+          <div className="flex gap-2 items-center w-full">
             <Label htmlFor="name" className="hidden md:block">
               Name:
             </Label>
@@ -116,12 +103,12 @@ const Home = () => {
             onClick={onExpansionClick}
             className="md:hidden justify-self-center"
           >
-           {isExpanded ? "Less":  "More..."}
+            {isExpanded ? "Less" : "More..."}
           </Button>
           <div
             className={cn(
-              "flex gap-2 items-center",
-              isExpanded ? "inline-block" : "hidden md:inline-flex"
+              "flex gap-2 items-center w-full",
+              !isExpanded && "hidden md:flex"
             )}
           >
             <Label htmlFor="status" className="hidden md:block">
@@ -129,15 +116,15 @@ const Home = () => {
             </Label>
             <SelectField
               placeholder="Select by status"
-              classnames='w-3xs md:w-full'
+              classnames="w-full"
               data={statusOptions}
               onChange={setSearchStatus}
             />
           </div>
           <div
             className={cn(
-              "flex gap-2 items-center",
-              isExpanded ? "inline-block" : "hidden  md:inline-flex"
+              "flex gap-2 items-center w-full",
+              !isExpanded && "hidden md:flex"
             )}
           >
             <Label htmlFor="gender" className="hidden md:block">
@@ -145,15 +132,15 @@ const Home = () => {
             </Label>
             <SelectField
               placeholder="Select by gender"
-              classnames='w-3xs md:w-full'
+              classnames="w-full"
               data={genderOptions}
               onChange={setSearchGender}
             />
           </div>
           <div
             className={cn(
-              "flex gap-2 items-center",
-              isExpanded ? "inline-block" : "hidden md:inline-flex"
+              "flex gap-2 items-center w-full",
+              !isExpanded && "hidden md:flex"
             )}
           >
             <Label htmlFor="species" className="hidden md:block">
@@ -167,8 +154,8 @@ const Home = () => {
           </div>
           <div
             className={cn(
-              "flex gap-2 items-center",
-              isExpanded ? "inline-block" : "hidden  md:inline-flex"
+              "flex gap-2 items-center w-full",
+              !isExpanded && "hidden md:flex"
             )}
           >
             <Label htmlFor="type" className="hidden md:block">
@@ -182,54 +169,20 @@ const Home = () => {
           </div>
         </div>
         <div className="hidden md:inline-flex items-center justify-center h-4 gap-2">
-          {filtersBadge.filters.name && (
-            <Badge>{filtersBadge.filters.name}</Badge>
-          )}
-          {filtersBadge.filters.gender && (
-            <Badge>{filtersBadge.filters.gender}</Badge>
-          )}
-          {filtersBadge.filters.status && (
-            <Badge>{filtersBadge.filters.status}</Badge>
-          )}
-          {filtersBadge.filters.species && (
-            <Badge>{filtersBadge.filters.species}</Badge>
-          )}
-          {filtersBadge.filters.type && (
-            <Badge>{filtersBadge.filters.type}</Badge>
-          )}
+          <FilterBadges />
         </div>
         <Button onClick={onResetClick} className="justify-self-center">
           X Clear all filters
         </Button>
       </div>
-
-      {isPending && (
-        <div className="min-h-96 w-full grid justify-center items-center border rounded-2xl shadow-2xl">
-          <Spinner />
-        </div>
-      )}
-      {!data?.results ? (
-        <div className="min-h-96 flex flex-col items-center justify-center gap-4">
-          <p className="lg:text-3xl text-slate-700">Oops</p>
-          <h1 className="lg:text-xl text-slate-500">No data found.</h1>
-        </div>
-      ) : (
-        <>
-          <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:gap-4 p-4">
-            <CharactersList data={data.results} />
-          </div>
-          <div className="w-full grid gap-2 md:hidden">
-            <CharactersList data={data.results} isSmallScreen />
-          </div>
-          <div className="flex gap-1 md:gap-4 justify-center p-4">
-            <PaginationList
-              page={currentPage}
-              onPreviousPage={setPreviousPage}
-              onNextPage={setNextPage}
-            />
-          </div>
-        </>
-      )}
+      <CharactersListDisplay
+        data={data}
+        isPending={isPending}
+        error={error}
+        currentPage={currentPage}
+        onPreviousPage={setPreviousPage}
+        onNextPage={setNextPage}
+      />
     </div>
   );
 };

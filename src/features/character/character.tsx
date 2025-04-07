@@ -2,14 +2,14 @@ import { Link, useParams } from 'react-router-dom';
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { Button } from './components/ui/button';
-import { CardTitle } from './components/ui/card';
-import Spinner from './components/ui/spinner';
+import { Button } from '../../components/ui/button';
+import { CardTitle } from '../../components/ui/card';
+import Spinner from '../../components/ui/spinner';
+import { cn } from '../../lib/utils';
+import NotFoundPage from '../../pages/NotFoundPage';
 import { getCharacterById } from './get-character-by-id';
-import { cn } from './lib/utils';
-import NotFoundPage from './NotFoundPage';
 
-import type { Character } from "./types";
+import type { Character } from '../../types/types';
 const Character = () => {
   const { id } = useParams();
 

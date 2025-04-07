@@ -1,4 +1,4 @@
-import type { Character, FilterParams, PaginationParams } from "./types";
+import type { Character, FilterParams, PaginationParams } from "../../types/types";
 
 const address = "https://rickandmortyapi.com/api/character";
 
