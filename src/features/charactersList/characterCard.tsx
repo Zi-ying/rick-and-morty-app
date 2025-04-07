@@ -1,14 +1,13 @@
-import { cn } from '../lib/utils';
-import { Character } from '../types/types';
-import Image from './image';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import Image from '../../components/image';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
+import { cn } from '../../lib/utils';
+import { Character } from '../../types/types';
 
 interface CharacterCardProps {
   data: Character;
 }
 
 const CharacterCard = ({ data }: CharacterCardProps) => {
-
   return (
     <Card className="p-4 rounded-xl shadow-lg min-w-[300px]">
      <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} className='rounded-xl' />

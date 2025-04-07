@@ -5,7 +5,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { Button } from '../components/ui/button';
 import { Label } from '../components/ui/label';
-import CharactersListDisplay from '../features/charactersList/characterListDisplay';
+import CharactersListDisplay from '../features/charactersList/charactersDisplayList';
 import { getAllCharacters } from '../features/charactersList/get-all-characters';
 import { usePagination } from '../features/charactersList/use-pagination';
 import FilterBadges from '../features/searchFields/filterBadges';

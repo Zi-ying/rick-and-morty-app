@@ -25,16 +25,15 @@ const PaginationList = ({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            href="#"
             onClick={onPreviousPage}
             disabled={isFirstPage}
           />
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink href="#" isActive>{page}</PaginationLink>
+          <PaginationLink isActive>{page}</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext href="#" onClick={onNextPage} />
+          <PaginationNext onClick={onNextPage} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

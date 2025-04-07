@@ -1,9 +1,9 @@
-import PaginationList from '../../components/paginationList';
 import Spinner from '../../components/ui/spinner';
-import { Character, PaginationParams } from '../../types/types';
 import CharactersList from './charactersList';
+import PaginationList from './paginationList';
 
-interface CharacterListDisplayProps {
+import type { Character, PaginationParams } from '../../types/types';
+interface CharactersListDisplayProps {
   data: {
     results: Character[];
     info: PaginationParams;
@@ -15,14 +15,14 @@ interface CharacterListDisplayProps {
   onNextPage: () => void;
 }
 
-const CharacterListDisplay = ({
+const CharactersListDisplay = ({
   data,
   isPending,
   error,
   currentPage,
   onPreviousPage,
   onNextPage,
-}: CharacterListDisplayProps) => {
+}: CharactersListDisplayProps) => {
   if (error) return <div>An error has occurred: {error.message}</div>;
 
   if (isPending) {
@@ -61,4 +61,4 @@ const CharacterListDisplay = ({
   );
 };
 
-export default CharacterListDisplay;
+export default CharactersListDisplay;
