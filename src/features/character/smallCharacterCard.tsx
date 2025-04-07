@@ -9,7 +9,7 @@ interface SmallCharacterCardProps {
 const SmallCharacterCard = ({ data }: SmallCharacterCardProps) => {
 
   return (
-    <Card className="p-4 rounded-xl shadow-lg grid grid-cols-3  min-w-[150px] items-center">
+    <Card className="p-4 rounded-xl shadow-lg grid grid-cols-3  min-w-[100px] items-center">
       <Image
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
