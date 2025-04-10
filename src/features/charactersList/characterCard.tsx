@@ -9,12 +9,23 @@ interface CharacterCardProps {
 
 const CharacterCard = ({ data }: CharacterCardProps) => {
   return (
-    <Card className="p-4 rounded-xl shadow-lg min-w-[300px]">
-     <Image src={data.image} alt={`image of ${data.name} from Rick and Morty`} className='rounded-xl' />
+    <Card className="p-8 rounded-3xl shadow-xl bg-transparent hover:bg-brand-500 text-white hover:text-pickle-500">
+        <Image
+          src={data.image}
+          alt={`image of ${data.name} from Rick and Morty`}
+          className="rounded-full -translate-y-1/5 shadow-2xl"
+        />
       <CardHeader>
         <CardTitle>{data.name}</CardTitle>
-        <CardContent className='flex gap-2 items-center justify-center'>
-          <div className={cn("rounded-full w-2 h-2", data.status === 'Alive' && 'bg-green-400', data.status === 'unknown' && 'bg-slate-500', data.status === 'Dead' && 'bg-red-500')} />
+        <CardContent className="flex gap-2 items-center justify-center">
+          <div
+            className={cn(
+              "rounded-full w-2 h-2",
+              data.status === "Alive" && "bg-green-400",
+              data.status === "unknown" && "bg-slate-500",
+              data.status === "Dead" && "bg-red-500"
+            )}
+          />
           <p>{data.status}</p>
         </CardContent>
       </CardHeader>

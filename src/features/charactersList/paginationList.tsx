@@ -21,7 +21,7 @@ const PaginationList = ({
   const isFirstPage = page === 1;
 
   return (
-    <Pagination>
+    <Pagination className='cursor-pointer'>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
