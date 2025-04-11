@@ -8,6 +8,7 @@ import { Label } from '../components/ui/label';
 import CharactersListDisplay from '../features/charactersList/charactersDisplayList';
 import { getAllCharacters } from '../features/charactersList/get-all-characters';
 import { usePagination } from '../features/charactersList/use-pagination';
+import Navigation from '../features/navigation';
 import FilterBadges from '../features/searchFields/filterBadges';
 import { genderOptions, statusOptions } from '../features/searchFields/options';
 import SearchField from '../features/searchFields/SearchField';
@@ -82,6 +83,7 @@ const CharactersPage = () => {
 
   return (
     <div className="w-full bg-black md:relative">
+      <Navigation/>
       <div className="z-10 grid gap-4 md:border-b md:rounded-b-lg md:p-4 md:shadow-lg md:sticky top-0 left-0 right-0 p-2">
         <div className="border rounded-lg p-2 bg-brand-500 text-white text-md md:text-2xl md:border-none md:p-0 md:bg-transparent md:text-brand-500">
           Character's list from Rick and Morty
