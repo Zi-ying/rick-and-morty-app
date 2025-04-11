@@ -44,7 +44,7 @@ const CharactersListDisplay = ({
 
   return (
     <>
-      <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:gap-6 p-6">
+      <div className="w-full hidden md:grid md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-6 p-6">
         <CharactersList data={data.results} />
       </div>
       <div className="w-full grid sm:grid-cols-2 gap-2 md:hidden p-4">
