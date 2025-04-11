@@ -10,7 +10,7 @@ import { getAllCharacters } from '../features/charactersList/get-all-characters'
 import { usePagination } from '../features/charactersList/use-pagination';
 import Navigation from '../features/navigation';
 import FilterBadges from '../features/searchFields/filterBadges';
-import { genderOptions, statusOptions } from '../features/searchFields/options';
+import { genderOptions, speciesOptions, statusOptions } from '../features/searchFields/options';
 import SearchField from '../features/searchFields/SearchField';
 import SelectField from '../features/searchFields/SelectField';
 import { useDebounce } from '../features/searchFields/use-debounce';
@@ -31,16 +31,24 @@ const CharactersPage = () => {
   const timeout = 500;
 
   const debouncedNameValue = useDebounce(searchName, timeout);
-  const debouncedSpeciesValue = useDebounce(searchSpecies, timeout);
   const debouncedTypeValue = useDebounce(searchType, timeout);
 
-  const filters: FilterParams = useMemo(() => ({
-    name: debouncedNameValue,
-    gender: searchGender,
-    species: debouncedSpeciesValue,
-    status: searchStatus,
-    type: debouncedTypeValue,
-  }), [debouncedNameValue, searchGender, debouncedSpeciesValue, searchStatus, debouncedTypeValue]);
+  const filters: FilterParams = useMemo(
+    () => ({
+      name: debouncedNameValue,
+      gender: searchGender,
+      species: searchSpecies,
+      status: searchStatus,
+      type: debouncedTypeValue,
+    }),
+    [
+      debouncedNameValue,
+      searchGender,
+      searchSpecies,
+      searchStatus,
+      debouncedTypeValue,
+    ]
+  );
 
   useEffect(() => {
     dispatch(addFilters(filters));
@@ -82,93 +90,88 @@ const CharactersPage = () => {
   };
 
   return (
-    <div className="w-full bg-black md:relative">
-      <Navigation/>
-      <div className="z-10 grid gap-4 md:border-b md:rounded-b-lg md:p-4 md:shadow-lg md:sticky top-0 left-0 right-0 p-2">
-        <div className="border rounded-lg p-2 bg-brand-500 text-white text-md md:text-2xl md:border-none md:p-0 md:bg-transparent md:text-brand-500">
-          Character's list from Rick and Morty
+    <div className="w-full min-h-screen bg-black md:relative">
+      <Navigation>
+        <div className="bg-red-500 min-w-80 justify-self-center">
+          <SearchField
+            placeholder="Search by character name"
+            value={searchName}
+            onChange={(e) => {
+              setSearchName(e.target.value);
+            }}
+          />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-2 justify-center w-full">
-          <div className="flex gap-2 items-center w-full">
-            <Label htmlFor="name" className="hidden md:block">
-              Name:
-            </Label>
-            <SearchField
-              placeholder="Search by character name"
-              value={searchName}
-              onChange={(e) => {
-                setSearchName(e.target.value);
-              }}
-            />
-          </div>
-          <Button
-            onClick={onExpansionClick}
-            className="md:hidden justify-self-center"
-          >
-            {isExpanded ? "Less" : "More..."}
-          </Button>
-          <div
-            className={cn(
-              "flex gap-2 items-center w-full",
-              !isExpanded && "hidden md:flex"
-            )}
-          >
-            <Label htmlFor="status" className="hidden md:block">
-              Status:
-            </Label>
-            <SelectField
-              placeholder="Select by status"
-              classnames="w-full"
-              data={statusOptions}
-              onChange={setSearchStatus}
-            />
-          </div>
-          <div
-            className={cn(
-              "flex gap-2 items-center w-full",
-              !isExpanded && "hidden md:flex"
-            )}
-          >
-            <Label htmlFor="gender" className="hidden md:block">
-              Gender:
-            </Label>
-            <SelectField
-              placeholder="Select by gender"
-              classnames="w-full"
-              data={genderOptions}
-              onChange={setSearchGender}
-            />
-          </div>
-          <div
-            className={cn(
-              "flex gap-2 items-center w-full",
-              !isExpanded && "hidden md:flex"
-            )}
-          >
-            <Label htmlFor="species" className="hidden md:block">
-              Species:
-            </Label>
-            <SearchField
-              placeholder="Search by species"
-              value={searchSpecies}
-              onChange={(e) => setSearchSpecies(e.target.value)}
-            />
-          </div>
-          <div
-            className={cn(
-              "flex gap-2 items-center w-full",
-              !isExpanded && "hidden md:flex"
-            )}
-          >
-            <Label htmlFor="type" className="hidden md:block">
-              Type:
-            </Label>
-            <SearchField
-              placeholder="Search by type"
-              value={searchType}
-              onChange={(e) => setSearchType(e.target.value)}
-            />
-          </div>
+        <Button
+          onClick={onExpansionClick}
+          className="md:hidden justify-self-center"
+        >
+          {isExpanded ? "Less" : "More..."}
+        </Button>
+        <div
+          className={cn(
+            "flex gap-2 items-center w-full",
+            !isExpanded && "hidden md:flex"
+          )}
+        >
+          <Label htmlFor="status" className="hidden md:block">
+            Status:
+          </Label>
+          <SelectField
+            placeholder="Select by status"
+            value={searchStatus}
+            data={statusOptions}
+            onChange={setSearchStatus}
+            classnames="w-full"
+          />
+        </div>
+        <div
+          className={cn(
+            "flex gap-2 items-center w-full",
+            !isExpanded && "hidden md:flex"
+          )}
+        >
+          <Label htmlFor="gender" className="hidden md:block">
+            Gender:
+          </Label>
+          <SelectField
+            placeholder="Select by gender"
+            value={searchGender}
+            data={genderOptions}
+            onChange={setSearchGender}
+            classnames="w-full"
+          />
+        </div>
+        <div
+          className={cn(
+            "flex gap-2 items-center w-full",
+            !isExpanded && "hidden md:flex"
+          )}
+        >
+          <Label htmlFor="species" className="hidden md:block">
+            Species:
+          </Label>
+          <SelectField
+            placeholder="Select by species"
+            value={searchSpecies}
+            data={speciesOptions}
+            onChange={setSearchSpecies}
+            classnames="w-full"
+          />
+        </div>
+        <div
+          className={cn(
+            "flex gap-2 items-center w-full",
+            !isExpanded && "hidden md:flex"
+          )}
+        >
+          <Label htmlFor="type" className="hidden md:block">
+            Type:
+          </Label>
+          <SearchField
+            placeholder="Search by type"
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          />
         </div>
         <div className="hidden md:inline-flex items-center justify-center h-4 gap-2">
           <FilterBadges />
@@ -176,7 +179,7 @@ const CharactersPage = () => {
         <Button onClick={onResetClick} className="justify-self-center">
           X Clear all filters
         </Button>
-      </div>
+      </Navigation>
       <CharactersListDisplay
         data={data}
         isPending={isPending}
