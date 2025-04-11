@@ -16,6 +16,7 @@ const SearchField = ({placeholder, value, onChange}: SearchFieldProps) => {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        className='p-4'
       />
   );
 };
