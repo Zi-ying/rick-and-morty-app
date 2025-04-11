@@ -7,9 +7,8 @@ const Home = () => {
 
 
   return (
-    <div className='h-screen flex flex-col items-center justify-center'>
+    <div className='h-screen flex flex-col items-center justify-center bg-[url(/public/rick-and-morty-wallpaper.jpg)]'>
       <img src={image}/>
-      <div>HOME</div>
       <Link to='/character'>
         <Button>Get Started!</Button>
       </Link>
