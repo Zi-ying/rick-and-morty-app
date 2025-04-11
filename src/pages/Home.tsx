@@ -5,7 +5,6 @@ import { Button } from '../components/ui/button';
 const Home = () => {
   const image = '../../rick-and-morty.svg'
 
-
   return (
     <div className='h-screen flex flex-col items-center justify-center bg-[url(/public/rick-and-morty-wallpaper.jpg)]'>
       <img src={image}/>
