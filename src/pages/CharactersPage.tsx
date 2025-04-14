@@ -10,7 +10,7 @@ import { getAllCharacters } from '../features/charactersList/get-all-characters'
 import { usePagination } from '../features/charactersList/use-pagination';
 import Navigation from '../features/navigation';
 import FilterBadges from '../features/searchFields/filterBadges';
-import { genderOptions, speciesOptions, statusOptions } from '../features/searchFields/options';
+import { genderOptions, speciesOptions, statusOptions, typeOptions } from '../features/searchFields/options';
 import SearchField from '../features/searchFields/SearchField';
 import SelectField from '../features/searchFields/SelectField';
 import { useDebounce } from '../features/searchFields/use-debounce';
@@ -167,10 +167,12 @@ const CharactersPage = () => {
           <Label htmlFor="type" className="hidden md:block">
             Type:
           </Label>
-          <SearchField
-            placeholder="Search by type"
+          <SelectField
+            placeholder="Select by type"
             value={searchType}
-            onChange={(e) => setSearchType(e.target.value)}
+            data={typeOptions}
+            onChange={setSearchType}
+            classnames="w-full"
           />
         </div>
         <div className="hidden md:inline-flex items-center justify-center h-4 gap-2">
