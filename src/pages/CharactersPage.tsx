@@ -65,9 +65,10 @@ const CharactersPage = () => {
 
   const pageCount = data?.info?.count ?? 0;
 
-  const { page, setNextPage, setPreviousPage } = usePagination(
+  const { page, maxPage, setNextPage, setPreviousPage } = usePagination(
     currentPage,
-    pageCount
+    pageCount,
+    20,
   );
 
   useEffect(() => {
@@ -79,6 +80,7 @@ const CharactersPage = () => {
   const onExpansionClick = () => {
     setIsExpanded(!isExpanded);
   };
+
 
   return (
     <div className="w-full min-h-screen bg-black md:relative">
@@ -146,6 +148,7 @@ const CharactersPage = () => {
         currentPage={currentPage}
         onPreviousPage={setPreviousPage}
         onNextPage={setNextPage}
+        maxPage={maxPage}
       />
     </div>
   );

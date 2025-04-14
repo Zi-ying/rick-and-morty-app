@@ -11,6 +11,7 @@ interface CharactersListDisplayProps {
   isPending: boolean;
   error: Error | null;
   currentPage: number;
+  maxPage: number;
   onPreviousPage: () => void;
   onNextPage: () => void;
 }
@@ -20,9 +21,11 @@ const CharactersListDisplay = ({
   isPending,
   error,
   currentPage,
+  maxPage,
   onPreviousPage,
   onNextPage,
 }: CharactersListDisplayProps) => {
+
   if (error) return <div>An error has occurred: {error.message}</div>;
 
   if (isPending) {
@@ -56,6 +59,7 @@ const CharactersListDisplay = ({
       <div className="flex gap-1 md:gap-4 justify-center p-4">
         <PaginationList
           page={currentPage}
+          maxPage={maxPage}
           onPreviousPage={onPreviousPage}
           onNextPage={onNextPage}
         />
