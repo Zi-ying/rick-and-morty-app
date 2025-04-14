@@ -19,11 +19,12 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { cn } from '../lib/utils';
 
 const CharactersPage = () => {
-  const [name, setName] = useState<string>("");
-  const [gender, setGender] = useState<string>("");
-  const [species, setSpecies] = useState<string>("");
-  const [status, setStatus] = useState<string>("");
-  const [type, setType] = useState<string>("");
+  const filters: FilterParams = useAppSelector(allFilters);
+  const [name, setName] = useState<string>(filters.name);
+  const [gender, setGender] = useState<string>(filters.gender);
+  const [species, setSpecies] = useState<string>(filters.species);
+  const [status, setStatus] = useState<string>(filters.status);
+  const [type, setType] = useState<string>(filters.type);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -43,8 +44,6 @@ const CharactersPage = () => {
       })
     );
   }, [dispatch, debouncedNameValue, gender, species, status, type]);
-
-  const filters: FilterParams = useAppSelector(allFilters);
 
   const onResetClick = () => {
     setName("");
@@ -84,7 +83,7 @@ const CharactersPage = () => {
   return (
     <div className="w-full min-h-screen bg-black md:relative">
       <Navigation>
-        <div className="grid bg-red-400">
+        <div className="grid bg-red-400 gap-2">
           <SearchField
             placeholder="Search by character name"
             value={name}
@@ -103,7 +102,10 @@ const CharactersPage = () => {
             V
           </Button>
           <div
-            className={cn("bg-red-300 ", isExpanded ? "inline-flex" : "hidden")}
+            className={cn(
+              "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
+              isExpanded ? "inline-grid" : "hidden"
+            )}
           >
             <SelectField
               placeholder="Status"
@@ -134,12 +136,7 @@ const CharactersPage = () => {
               classnames="w-full"
             />
           </div>
-          <div className="hidden md:inline-flex items-center justify-center h-4 gap-2">
-            <FilterBadges />
-          </div>
-          <Button onClick={onResetClick} className="justify-self-center">
-            Clear
-          </Button>
+          <FilterBadges onResetClick={onResetClick} className="flex gap-2" />
         </div>
       </Navigation>
       <CharactersListDisplay

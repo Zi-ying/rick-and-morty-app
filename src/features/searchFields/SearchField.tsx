@@ -6,13 +6,18 @@ interface SearchFieldProps {
   placeholder: string;
   value: string;
   className: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>)=> void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SearchField = ({placeholder, value, className, onChange}: SearchFieldProps) => {
+const SearchField = ({
+  placeholder,
+  value,
+  className,
+  onChange,
+}: SearchFieldProps) => {
   return (
       <Input
-        type="text"
+        type="search"
         placeholder={placeholder}
         value={value}
         onChange={onChange}
@@ -21,4 +26,4 @@ const SearchField = ({placeholder, value, className, onChange}: SearchFieldProps
   );
 };
 
-export default SearchField
+export default SearchField;

@@ -28,6 +28,9 @@ const filtersSlice = createSlice({
       state.filters.species =  action.payload.species;
       state.filters.type =  action.payload.type;
     },
+    removeOneFilter: (state, action: PayloadAction<keyof FilterParams> )=> {
+      state.filters[action.payload] = '';
+    },
     resetFilters: (state) => {
       state.filters = initialState.filters;
     },
@@ -36,6 +39,6 @@ const filtersSlice = createSlice({
 
 export const allFilters = (state: RootState) => state.filters.filters;
 
-export const { addFilters, resetFilters } = filtersSlice.actions;
+export const { addFilters, removeOneFilter, resetFilters } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
