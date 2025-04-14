@@ -16,7 +16,7 @@ const CharactersList = ({ data, isSmallScreen }: CharacterListProps) => {
         return (
           <Link
             key={item.id}
-            to={`${item.id}`}
+            to={item.id.toString()}
             className="grid justify-center cursor-pointer"
           >
             {isSmallScreen ? (
