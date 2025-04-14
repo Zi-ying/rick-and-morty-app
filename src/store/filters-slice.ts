@@ -1,6 +1,6 @@
+import { FilterParams } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { FilterParams } from '../types/types';
 import { RootState } from './store';
 
 type FilterParamsState = {
@@ -34,7 +34,7 @@ const filtersSlice = createSlice({
   },
 });
 
-export const filtersList = (state: RootState) => state.filters.filters;
+export const allFilters = (state: RootState) => state.filters.filters;
 
 export const { addFilters, resetFilters } = filtersSlice.actions;
 

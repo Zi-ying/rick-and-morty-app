@@ -1,65 +1,55 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { Button } from '@/components/ui/button';
+import CharactersListDisplay from '@/features/charactersList/charactersDisplayList';
+import { getAllCharacters } from '@/features/charactersList/get-all-characters';
+import { usePagination } from '@/features/charactersList/use-pagination';
+import Navigation from '@/features/navigation';
+import FilterBadges from '@/features/searchFields/filterBadges';
+import { genderOptions, speciesOptions, statusOptions, typeOptions } from '@/features/searchFields/options';
+import SearchField from '@/features/searchFields/SearchField';
+import SelectField from '@/features/searchFields/SelectField';
+import { useDebounce } from '@/features/searchFields/use-debounce';
+import { addFilters, allFilters, resetFilters } from '@/store/filters-slice';
+import { useAppSelector } from '@/store/redux-hooks';
+import { Character, FilterParams, PaginationParams } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { Button } from '../components/ui/button';
-import { Label } from '../components/ui/label';
-import CharactersListDisplay from '../features/charactersList/charactersDisplayList';
-import { getAllCharacters } from '../features/charactersList/get-all-characters';
-import { usePagination } from '../features/charactersList/use-pagination';
-import Navigation from '../features/navigation';
-import FilterBadges from '../features/searchFields/filterBadges';
-import { genderOptions, speciesOptions, statusOptions, typeOptions } from '../features/searchFields/options';
-import SearchField from '../features/searchFields/SearchField';
-import SelectField from '../features/searchFields/SelectField';
-import { useDebounce } from '../features/searchFields/use-debounce';
-import { cn } from '../lib/utils';
-import { addFilters, resetFilters } from '../store/filters-slice';
-import { Character, FilterParams, PaginationParams } from '../types/types';
-
 const CharactersPage = () => {
-  const [searchName, setSearchName] = useState<string>("");
-  const [searchGender, setSearchGender] = useState<string>("");
-  const [searchSpecies, setSearchSpecies] = useState<string>("");
-  const [searchStatus, setSearchStatus] = useState<string>("");
-  const [searchType, setSearchType] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [species, setSpecies] = useState<string>("");
+  const [status, setStatus] = useState<string>("");
+  const [type, setType] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const timeout = 500;
 
-  const debouncedNameValue = useDebounce(searchName, timeout);
-  const debouncedTypeValue = useDebounce(searchType, timeout);
-
-  const filters: FilterParams = useMemo(
-    () => ({
-      name: debouncedNameValue,
-      gender: searchGender,
-      species: searchSpecies,
-      status: searchStatus,
-      type: debouncedTypeValue,
-    }),
-    [
-      debouncedNameValue,
-      searchGender,
-      searchSpecies,
-      searchStatus,
-      debouncedTypeValue,
-    ]
-  );
+  const debouncedNameValue = useDebounce(name, timeout);
 
   useEffect(() => {
-    dispatch(addFilters(filters));
-  }, [dispatch, filters]);
+    dispatch(
+      addFilters({
+        name: debouncedNameValue,
+        gender: gender,
+        species: species,
+        status: status,
+        type: type,
+      })
+    );
+  }, [dispatch, debouncedNameValue, gender, species, status, type]);
+
+  const filters: FilterParams = useAppSelector(allFilters);
 
   const onResetClick = () => {
-    setSearchName("");
-    setSearchGender("");
-    setSearchSpecies("");
-    setSearchStatus("");
-    setSearchType("");
+    setName("");
+    setGender("");
+    setSpecies("");
+    setStatus("");
+    setType("");
     dispatch(resetFilters());
   };
 
@@ -95,9 +85,9 @@ const CharactersPage = () => {
         <div className="bg-red-500 min-w-80 justify-self-center">
           <SearchField
             placeholder="Search by character name"
-            value={searchName}
+            value={name}
             onChange={(e) => {
-              setSearchName(e.target.value);
+              setName(e.target.value);
             }}
           />
         </div>
@@ -107,74 +97,34 @@ const CharactersPage = () => {
         >
           {isExpanded ? "Less" : "More..."}
         </Button>
-        <div
-          className={cn(
-            "flex gap-2 items-center w-full",
-            !isExpanded && "hidden md:flex"
-          )}
-        >
-          <Label htmlFor="status" className="hidden md:block">
-            Status:
-          </Label>
-          <SelectField
-            placeholder="Select by status"
-            value={searchStatus}
-            data={statusOptions}
-            onChange={setSearchStatus}
-            classnames="w-full"
-          />
-        </div>
-        <div
-          className={cn(
-            "flex gap-2 items-center w-full",
-            !isExpanded && "hidden md:flex"
-          )}
-        >
-          <Label htmlFor="gender" className="hidden md:block">
-            Gender:
-          </Label>
-          <SelectField
-            placeholder="Select by gender"
-            value={searchGender}
-            data={genderOptions}
-            onChange={setSearchGender}
-            classnames="w-full"
-          />
-        </div>
-        <div
-          className={cn(
-            "flex gap-2 items-center w-full",
-            !isExpanded && "hidden md:flex"
-          )}
-        >
-          <Label htmlFor="species" className="hidden md:block">
-            Species:
-          </Label>
-          <SelectField
-            placeholder="Select by species"
-            value={searchSpecies}
-            data={speciesOptions}
-            onChange={setSearchSpecies}
-            classnames="w-full"
-          />
-        </div>
-        <div
-          className={cn(
-            "flex gap-2 items-center w-full",
-            !isExpanded && "hidden md:flex"
-          )}
-        >
-          <Label htmlFor="type" className="hidden md:block">
-            Type:
-          </Label>
-          <SelectField
-            placeholder="Select by type"
-            value={searchType}
-            data={typeOptions}
-            onChange={setSearchType}
-            classnames="w-full"
-          />
-        </div>
+        <SelectField
+          placeholder="Status"
+          value={status}
+          data={statusOptions}
+          onChange={setStatus}
+          classnames="w-full"
+        />
+        <SelectField
+          placeholder="Gender"
+          value={gender}
+          data={genderOptions}
+          onChange={setGender}
+          classnames="w-full"
+        />
+        <SelectField
+          placeholder="Species"
+          value={species}
+          data={speciesOptions}
+          onChange={setSpecies}
+          classnames="w-full"
+        />
+        <SelectField
+          placeholder="Sub-species"
+          value={type}
+          data={typeOptions}
+          onChange={setType}
+          classnames="w-full"
+        />
         <div className="hidden md:inline-flex items-center justify-center h-4 gap-2">
           <FilterBadges />
         </div>
