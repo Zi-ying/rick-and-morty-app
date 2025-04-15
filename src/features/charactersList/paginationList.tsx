@@ -7,9 +7,13 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 
+import { cn } from '../../lib/utils';
+
 interface PaginationListProps {
   page: number;
   maxPage: number;
+  onFirstPage: () => void;
+  onLastPage: () => void;
   onPreviousPage: () => void;
   onNextPage: () => void;
 }
@@ -17,6 +21,8 @@ interface PaginationListProps {
 const PaginationList = ({
   page,
   maxPage,
+  onFirstPage,
+  onLastPage,
   onPreviousPage,
   onNextPage,
 }: PaginationListProps) => {
@@ -27,13 +33,25 @@ const PaginationList = ({
     <Pagination className="cursor-pointer">
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={onPreviousPage} disabled={isFirstPage} />
+          <PaginationPrevious href='#' onClick={onPreviousPage} disabled={isFirstPage} />
+        </PaginationItem>
+        <PaginationItem className={cn(isFirstPage ? 'hidden' : 'inline-flex')}>
+          <PaginationLink href='#' onClick={onFirstPage}>1</PaginationLink>
+        </PaginationItem>
+        <PaginationItem className={cn(isFirstPage ? 'hidden' : 'inline-flex')}>
+          <PaginationLink href='#'>...</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink isActive>{page}</PaginationLink>
+          <PaginationLink href='#' isActive>{page}</PaginationLink>
+        </PaginationItem>
+        <PaginationItem className={cn(isLastPage ? 'hidden' : 'inline-flex')}>
+          <PaginationLink href='#'>...</PaginationLink>
+        </PaginationItem>
+        <PaginationItem className={cn(isLastPage ? 'hidden' : 'inline-flex')}>
+          <PaginationLink href='#' onClick={onLastPage}>{maxPage}</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext onClick={onNextPage} disabled={isLastPage} />
+          <PaginationNext href='#' onClick={onNextPage} disabled={isLastPage} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

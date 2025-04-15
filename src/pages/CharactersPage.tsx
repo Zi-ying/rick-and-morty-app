@@ -67,7 +67,7 @@ const CharactersPage = () => {
 
   const maxPage = data?.info?.pages ?? 0;
 
-  const { page, setNextPage, setPreviousPage } = usePagination(
+  const { page, setFirstPage, setLastPage, setNextPage, setPreviousPage } = usePagination(
     currentPage,
     maxPage,
     setCurrentPage,
@@ -147,6 +147,8 @@ const CharactersPage = () => {
         isPending={isPending}
         error={error}
         currentPage={currentPage}
+        onFirstPage={setFirstPage}
+        onLastPage={setLastPage}
         onPreviousPage={setPreviousPage}
         onNextPage={setNextPage}
         maxPage={maxPage}

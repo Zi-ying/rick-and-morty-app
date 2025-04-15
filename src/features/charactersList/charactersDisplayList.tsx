@@ -12,6 +12,8 @@ interface CharactersListDisplayProps {
   error: Error | null;
   currentPage: number;
   maxPage: number;
+  onFirstPage: () => void;
+  onLastPage: () => void;
   onPreviousPage: () => void;
   onNextPage: () => void;
 }
@@ -22,6 +24,8 @@ const CharactersListDisplay = ({
   error,
   currentPage,
   maxPage,
+  onFirstPage,
+  onLastPage,
   onPreviousPage,
   onNextPage,
 }: CharactersListDisplayProps) => {
@@ -60,6 +64,8 @@ const CharactersListDisplay = ({
         <PaginationList
           page={currentPage}
           maxPage={maxPage}
+          onFirstPage={onFirstPage}
+          onLastPage={onLastPage}
           onPreviousPage={onPreviousPage}
           onNextPage={onNextPage}
         />

@@ -4,6 +4,14 @@ export const usePagination = (
   setPage: React.Dispatch<React.SetStateAction<number>>,
 ) => {
 
+  const setFirstPage =  () => {
+    setPage(1);
+  }
+
+  const setLastPage = () => {
+    setPage(maxPage);
+  }
+
   const setNextPage = () => {
     setPage(Math.min(page + 1, maxPage));
   };
@@ -15,6 +23,8 @@ export const usePagination = (
   return {
     page,
     maxPage,
+    setFirstPage,
+    setLastPage,
     setNextPage,
     setPreviousPage,
   };
