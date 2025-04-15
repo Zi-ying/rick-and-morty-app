@@ -43,6 +43,7 @@ const CharactersPage = () => {
         type: type,
       })
     );
+    setCurrentPage(1);
   }, [dispatch, debouncedNameValue, gender, species, status, type]);
 
   const onResetClick = () => {
@@ -52,6 +53,7 @@ const CharactersPage = () => {
     setStatus("");
     setType("");
     dispatch(resetFilters());
+    setCurrentPage(1);
   };
 
   const { data, isPending, error } = useQuery<{
@@ -63,12 +65,12 @@ const CharactersPage = () => {
     placeholderData: keepPreviousData,
   });
 
-  const pageCount = data?.info?.count ?? 0;
+  const maxPage = data?.info?.pages ?? 0;
 
-  const { page, maxPage, setNextPage, setPreviousPage } = usePagination(
+  const { page, setNextPage, setPreviousPage } = usePagination(
     currentPage,
-    pageCount,
-    20,
+    maxPage,
+    setCurrentPage,
   );
 
   useEffect(() => {
@@ -80,7 +82,6 @@ const CharactersPage = () => {
   const onExpansionClick = () => {
     setIsExpanded(!isExpanded);
   };
-
 
   return (
     <div className="w-full min-h-screen bg-black md:relative">
