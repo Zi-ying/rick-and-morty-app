@@ -46,7 +46,7 @@ const Character = () => {
   }
 
   return (
-    <div className="grid min-h-[100vh] items-center justify-center gap-4 p-4">
+    <div className="grid items-center justify-center gap-4 p-4">
       {isPending && <Spinner />}
       {data && (
         <div className="flex flex-col w-fit md:flex-row gap-4 border rounded-xl shadow-lg p-4 justify-center">
