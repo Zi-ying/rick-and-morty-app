@@ -110,7 +110,7 @@ const Character = () => {
           </div>
         </div>
       )}
-      <Link to="/">
+      <Link to="/character">
         <Button className="self-place-end">Go back</Button>
       </Link>
     </div>

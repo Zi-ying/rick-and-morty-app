@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 interface NavigationProps {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const Navigation = ({ children }: NavigationProps) => {
