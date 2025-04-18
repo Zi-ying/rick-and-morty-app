@@ -1,53 +1,64 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { allFilters, removeOneFilter } from '@/store/filters-slice';
-import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
+
+import { FilterParams } from '../../types/types';
 
 interface FilterBadgesProps {
+  filters: FilterParams;
   className: string;
-  onResetClick: () => void;
+  onClearOne: (filter: keyof FilterParams) => void;
+  onClearAll: () => void;
 }
 
-const FilterBadges = ({ className, onResetClick }: FilterBadgesProps) => {
-  const filters = useAppSelector(allFilters);
-  const dispatch = useAppDispatch();
-
+const FilterBadges = ({ filters, className, onClearAll, onClearOne }: FilterBadgesProps) => {
   return (
     <div className={className}>
       {filters.name && (
         <Badge className="capitalize">
           Name: {filters.name}
-          <button onClick={() => dispatch(removeOneFilter("name"))}>X</button>
+          <span onClick={() => onClearOne('name')} className='cursor-pointer'>X</span>
         </Badge>
       )}
       {filters.gender && (
         <Badge className="capitalize">
           Gender: {filters.gender}
-          <button onClick={() => dispatch(removeOneFilter("gender"))}>X</button>
+          <span onClick={() => onClearOne('gender')} className='cursor-pointer'>X</span>
         </Badge>
       )}
       {filters.status && (
         <Badge className="capitalize">
           Status: {filters.status}
-          <button onClick={() => dispatch(removeOneFilter("status"))}>X</button>
+          <span onClick={() => onClearOne('status')} className='cursor-pointer'>X</span>
         </Badge>
       )}
       {filters.species && (
         <Badge className="capitalize">
           Species: {filters.species}
-          <button onClick={() => dispatch(removeOneFilter("species"))}>
+          <div
+            onClick={() => onClearOne('species')}
+            className="cursor-pointer"
+          >
             X
-          </button>
+          </div>
         </Badge>
       )}
       {filters.type && (
         <Badge className="capitalize">
           Type: {filters.type}
-          <button onClick={() => dispatch(removeOneFilter("type"))}>X</button>
+          <span
+            onClick={() => onClearOne("type")}
+            className="cursor-pointer"
+          >
+            X
+          </span>
         </Badge>
       )}
-      {(filters.name || filters.gender || filters.species || filters.status || filters.type) && (
-        <Button variant="ghost" onClick={onResetClick}>
+      {(filters.name ||
+        filters.gender ||
+        filters.species ||
+        filters.status ||
+        filters.type) && (
+        <Button variant="ghost" onClick={onClearAll}>
           Clear all
         </Button>
       )}

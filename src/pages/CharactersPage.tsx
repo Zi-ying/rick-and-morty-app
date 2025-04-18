@@ -11,7 +11,7 @@ import { genderOptions, speciesOptions, statusOptions, typeOptions } from '@/fea
 import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
-import { addFilters, allFilters, resetFilters } from '@/store/filters-slice';
+import { addFilters, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
 import { Character, FilterParams, PaginationParams } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -80,6 +80,32 @@ const CharactersPage = () => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleClear = (filter: keyof FilterParams) => {
+    dispatch(removeOneFilter(filter));
+    switch (filter) {
+      case "name": {
+        setName("");
+        break;
+      }
+      case "gender": {
+        setGender("");
+        break;
+      }
+      case "status": {
+        setStatus("");
+        break;
+      }
+      case "species": {
+        setSpecies("");
+        break;
+      }
+      case "type": {
+        setType("");
+        break;
+      }
+    }
+  };
+
   return (
     <div className="w-full min-h-screen bg-black md:relative">
       <Navigation>
@@ -93,7 +119,9 @@ const CharactersPage = () => {
             }}
           />
           <FilterBadges
-            onResetClick={onResetClick}
+            filters={filters}
+            onClearOne={handleClear}
+            onClearAll={onResetClick}
             className="flex gap-2 justify-center"
           />
           <Button
