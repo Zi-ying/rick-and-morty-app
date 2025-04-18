@@ -1,13 +1,17 @@
-import Spinner from '../../components/ui/spinner';
-import CharactersList from './charactersList';
+import { Link } from 'react-router-dom';
+
+import SmallCharacterCard from '../character/smallCharacterCard';
+import CharacterCard from './characterCard';
 import PaginationList from './paginationList';
 
-import type { Character, PaginationParams } from '../../types/types';
+import type { Character, PaginationParams } from "../../types/types";
 interface CharactersListDisplayProps {
-  data: {
-    results: Character[];
-    info: PaginationParams;
-  } | undefined;
+  data:
+    | {
+        results: Character[];
+        info: PaginationParams;
+      }
+    | undefined;
   isPending: boolean;
   error: Error | null;
   currentPage: number;
@@ -29,16 +33,7 @@ const CharactersListDisplay = ({
   onPreviousPage,
   onNextPage,
 }: CharactersListDisplayProps) => {
-
   if (error) return <div>An error has occurred: {error.message}</div>;
-
-  if (isPending) {
-    return (
-      <div className="min-h-96 w-full grid justify-center items-center border rounded-2xl shadow-2xl">
-        <Spinner />
-      </div>
-    );
-  }
 
   if (!data?.results) {
     return (
@@ -51,14 +46,34 @@ const CharactersListDisplay = ({
 
   return (
     <>
-       <div className="hidden md:inline-grid md:text-2xl md:text-brand-500">
-          Character's list from Rick and Morty
-        </div>
+      <div className="hidden md:inline-grid md:text-2xl md:text-brand-500">
+        Character's list from Rick and Morty
+      </div>
       <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-6 p-6">
-        <CharactersList data={data.results} />
+        {data.results.map((item) => {
+          return (
+            <Link
+              key={item.id}
+              to={item.id.toString()}
+              className="grid justify-center cursor-pointer"
+            >
+              <CharacterCard data={item} isPending={isPending} />
+            </Link>
+          );
+        })}
       </div>
       <div className="w-full grid sm:grid-cols-2 gap-2 md:hidden p-4">
-        <CharactersList data={data.results} isSmallScreen />
+        {data.results.map((item) => {
+          return (
+            <Link
+              key={item.id}
+              to={item.id.toString()}
+              className="grid justify-center cursor-pointer"
+            >
+              <SmallCharacterCard data={item} isPending={isPending} />
+            </Link>
+          );
+        })}
       </div>
       <div className="flex gap-1 md:gap-4 justify-center p-4">
         <PaginationList

@@ -54,6 +54,7 @@ const Character = () => {
             src={data.image}
             alt={`image of ${data.name} from Rick and Morty`}
             className="rounded-xl"
+            isPending={isPending}
           />
           <div className="flex flex-col gap-4 p-4 text-slate-500 md:items-start md:justify-center">
             <CardTitle className="flex gap-2 items-center justify-center">
