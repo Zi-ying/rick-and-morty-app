@@ -122,7 +122,7 @@ const CharactersPage = () => {
             filters={filters}
             onClearOne={handleClear}
             onClearAll={onResetClick}
-            className="flex gap-2 justify-center"
+            className="flex flex-wrap gap-2 justify-center items-center"
           />
           <Button
             onClick={onExpansionClick}
