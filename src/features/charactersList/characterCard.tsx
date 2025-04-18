@@ -5,14 +5,16 @@ import { Character } from '../../types/types';
 
 interface CharacterCardProps {
   data: Character;
+  isPending: boolean;
 }
 
-const CharacterCard = ({ data }: CharacterCardProps) => {
+const CharacterCard = ({ data, isPending }: CharacterCardProps) => {
   return (
     <Card className="p-4 gap-6 rounded-lg shadow-xl bg-transparent hover:bg-brand-500 text-white hover:text-pickle-500 ">
         <Image
           src={data.image}
           alt={`image of ${data.name} from Rick and Morty`}
+          isPending={isPending}
           className="rounded-full shadow-2xl"
         />
       <CardHeader>
