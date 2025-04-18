@@ -67,11 +67,8 @@ const CharactersPage = () => {
 
   const maxPage = data?.info?.pages ?? 0;
 
-  const { page, setFirstPage, setLastPage, setNextPage, setPreviousPage } = usePagination(
-    currentPage,
-    maxPage,
-    setCurrentPage,
-  );
+  const { page, setFirstPage, setLastPage, setNextPage, setPreviousPage } =
+    usePagination(currentPage, maxPage, setCurrentPage);
 
   useEffect(() => {
     setCurrentPage(page);
@@ -86,7 +83,7 @@ const CharactersPage = () => {
   return (
     <div className="w-full min-h-screen bg-black md:relative">
       <Navigation>
-        <div className="grid bg-red-400 gap-2">
+        <div className="grid bg-red-400 gap-2 px-2">
           <SearchField
             placeholder="Search by character name"
             value={name}
@@ -94,6 +91,10 @@ const CharactersPage = () => {
             onChange={(e) => {
               setName(e.target.value);
             }}
+          />
+          <FilterBadges
+            onResetClick={onResetClick}
+            className="flex gap-2 justify-center"
           />
           <Button
             onClick={onExpansionClick}
@@ -139,7 +140,6 @@ const CharactersPage = () => {
               classnames="w-full"
             />
           </div>
-          <FilterBadges onResetClick={onResetClick} className="flex gap-2" />
         </div>
       </Navigation>
       <CharactersListDisplay
