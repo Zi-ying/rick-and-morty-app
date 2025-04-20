@@ -33,3 +33,13 @@ export type FilterParams = {
   type: string;
   gender: string;
 }
+
+export type Location = {
+  id: number;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: string[];
+  url: string;
+  created: string;
+}
