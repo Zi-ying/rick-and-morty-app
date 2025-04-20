@@ -1,11 +1,20 @@
+
 import LocationCard from './locationCard';
 
-const LocationsList = () => {
+import type { Location } from "@/types/types";
+
+interface LocationsListProps {
+  data: Location[];
+}
+
+const LocationsList = ({ data }: LocationsListProps) => {
   return (
     <>
-      <LocationCard/>
+      {data.map((item) => {
+        return <LocationCard key={item.id} data={item} />;
+      })}
     </>
-  )
-}
+  );
+};
 
 export default LocationsList;

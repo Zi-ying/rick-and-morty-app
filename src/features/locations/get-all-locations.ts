@@ -1,4 +1,4 @@
-import type { PaginationParams } from '@/types/types';
+import type { PaginationParams, Location } from '@/types/types';
 
 const address = 'https://rickandmortyapi.com/api/location';
 

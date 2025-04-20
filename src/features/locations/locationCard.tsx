@@ -1,13 +1,18 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-const LocationCard = () => {
+import type { Location } from "@/types/types";
+
+interface LocationCardProps {
+  data: Location;
+}
+
+const LocationCard = ({ data }: LocationCardProps) => {
   return (
-    <>
-      <Card>
-        <CardHeader>Location</CardHeader>
-        <CardContent>Location</CardContent>
-      </Card>
-    </>
+    <Card>
+      <CardHeader>{data.name}</CardHeader>
+      <CardContent>{data.dimension}</CardContent>
+      <CardContent>{data.type}</CardContent>
+    </Card>
   );
 };
 

@@ -10,7 +10,9 @@ const LocationPage = () => {
     placeholderData: keepPreviousData,
   });
 
-  console.log('data', data?.results)
+  if (!data?.results) {
+    return <>No Data found</>
+  }
 
   return (
     <>
@@ -18,7 +20,7 @@ const LocationPage = () => {
       <div className="bg-red-400 grid p-2 gap-2">
         <div>LOCATIONS</div>
         <div className="bg-red-300 grid md:grid-cols-2 gap-2">
-          <LocationsList />
+          <LocationsList data={data.results} />
         </div>
       </div>
     </>
