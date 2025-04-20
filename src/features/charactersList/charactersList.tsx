@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
 
-import SmallCharacterCard from '../character/smallCharacterCard';
+import SmallCharacterCard from '@/features/character/smallCharacterCard';
+
 import CharacterCard from './characterCard';
 import PaginationList from './paginationList';
 
-import type { Character, PaginationParams } from "../../types/types";
-interface CharactersListDisplayProps {
+import type { Character, PaginationParams } from "@/types/types";
+
+interface CharactersListProps {
   data:
     | {
         results: Character[];
@@ -22,7 +24,7 @@ interface CharactersListDisplayProps {
   onNextPage: () => void;
 }
 
-const CharactersListDisplay = ({
+const CharactersList = ({
   data,
   isPending,
   error,
@@ -32,7 +34,7 @@ const CharactersListDisplay = ({
   onLastPage,
   onPreviousPage,
   onNextPage,
-}: CharactersListDisplayProps) => {
+}: CharactersListProps) => {
   if (error) return <div>An error has occurred: {error.message}</div>;
 
   if (!data?.results) {
@@ -46,9 +48,6 @@ const CharactersListDisplay = ({
 
   return (
     <>
-      <div className="hidden md:inline-grid md:text-2xl md:text-brand-500">
-        Character's list from Rick and Morty
-      </div>
       <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-6 p-6">
         {data.results.map((item) => {
           return (
@@ -89,4 +88,4 @@ const CharactersListDisplay = ({
   );
 };
 
-export default CharactersListDisplay;
+export default CharactersList;

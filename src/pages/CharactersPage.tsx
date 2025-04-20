@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@/components/ui/button';
-import CharactersListDisplay from '@/features/charactersList/charactersDisplayList';
+import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { usePagination } from '@/features/charactersList/use-pagination';
 import Navigation from '@/features/navigation';
@@ -170,7 +170,10 @@ const CharactersPage = () => {
           </div>
         </div>
       </Navigation>
-      <CharactersListDisplay
+      <div className="hidden md:inline-grid md:text-2xl md:text-brand-500">
+        Character's list from Rick and Morty
+      </div>
+      <CharactersList
         data={data}
         isPending={isPending}
         error={error}
