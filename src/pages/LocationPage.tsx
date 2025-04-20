@@ -1,15 +1,18 @@
 import { useState } from 'react';
 
+import PaginationList from '@/features/charactersList/paginationList';
 import { getAllLocations } from '@/features/locations/get-all-locations';
 import LocationsList from '@/features/locations/locationsList';
 import Navigation from '@/features/navigation';
 import SearchField from '@/features/searchFields/SearchField';
+import { useDebounce } from '@/features/searchFields/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { useDebounce } from '../features/searchFields/use-debounce';
+import { usePagination } from '../features/charactersList/use-pagination';
 
 const LocationPage = () => {
   const [search, setSearch] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
 
   const timeout = 500;
   const debouncedSearch = useDebounce(search, timeout);
@@ -19,6 +22,11 @@ const LocationPage = () => {
     queryFn: () => getAllLocations({ filter: debouncedSearch }),
     placeholderData: keepPreviousData,
   });
+
+  const maxPage = data?.info.pages ?? 0;
+
+  const { setFirstPage, setLastPage, setNextPage, setPreviousPage } =
+    usePagination(page, maxPage, setPage);
 
   if (!data?.results) {
     return <>No Data found</>;
@@ -39,6 +47,14 @@ const LocationPage = () => {
         <div className="bg-red-300 grid md:grid-cols-2 gap-2">
           <LocationsList data={data.results} />
         </div>
+        <PaginationList
+          page={page}
+          maxPage={maxPage}
+          onFirstPage={setFirstPage}
+          onLastPage={setLastPage}
+          onPreviousPage={setPreviousPage}
+          onNextPage={setNextPage}
+        />
       </div>
     </>
   );
