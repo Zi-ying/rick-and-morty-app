@@ -57,7 +57,7 @@ function PaginationLink({
           // variant: isActive ? "bg-brand-500 tex-white" : "ghost",
           size,
         }),
-        'bg-[#f7f7f7] text-brand-500 hover:bg-brand-500 hover:text-white shadow-lg',
+        'bg-[#f7f7f7] text-brand-500 hover:bg-brand-500 hover:text-white shadow-lg cursor-pointer',
         isActive && "bg-brand-500 text-white",
         disabled && 'opacity-50 pointer-events-none cursor-not-allowed',
         className

@@ -17,8 +17,12 @@ const LocationPage = () => {
   const timeout = 500;
   const debouncedSearch = useDebounce(search, timeout);
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
   const { data } = useQuery({
-    queryKey: ["locationsData"],
+    queryKey: ["locationsData", debouncedSearch],
     queryFn: () => getAllLocations({ filter: debouncedSearch }),
     placeholderData: keepPreviousData,
   });
@@ -38,11 +42,11 @@ const LocationPage = () => {
         <SearchField
           placeholder="Search for a location"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={onChange}
           className="justify-self-center max-w-96"
         />
       </Navigation>
-      <div className="bg-red-400 grid p-2 gap-2">
+      <div className="bg-red-400 p-2 grid gap-2">
         <div>LOCATIONS</div>
         <div className="bg-red-300 grid md:grid-cols-2 gap-2">
           <LocationsList data={data.results} />

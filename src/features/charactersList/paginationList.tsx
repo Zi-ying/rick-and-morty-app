@@ -30,28 +30,28 @@ const PaginationList = ({
   const isLastPage = page === maxPage
 
   return (
-    <Pagination className="cursor-pointer">
+    <Pagination >
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href='#' onClick={onPreviousPage} disabled={isFirstPage} />
+          <PaginationPrevious onClick={onPreviousPage} disabled={isFirstPage} />
         </PaginationItem>
         <PaginationItem className={cn(isFirstPage ? 'hidden' : 'inline-flex')}>
-          <PaginationLink href='#' onClick={onFirstPage}>1</PaginationLink>
+          <PaginationLink onClick={onFirstPage}>1</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn(isFirstPage ? 'hidden' : 'inline-flex')}>
-          <PaginationLink href='#'>...</PaginationLink>
+          <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink href='#' isActive>{page}</PaginationLink>
+          <PaginationLink isActive>{page}</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn(isLastPage ? 'hidden' : 'inline-flex')}>
-          <PaginationLink href='#'>...</PaginationLink>
+          <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn(isLastPage ? 'hidden' : 'inline-flex')}>
-          <PaginationLink href='#' onClick={onLastPage}>{maxPage}</PaginationLink>
+          <PaginationLink onClick={onLastPage}>{maxPage}</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext href='#' onClick={onNextPage} disabled={isLastPage} />
+          <PaginationNext onClick={onNextPage} disabled={isLastPage} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
