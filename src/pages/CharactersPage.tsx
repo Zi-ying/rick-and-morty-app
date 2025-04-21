@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import Navigation from '@/features/navigation';
-import { getPagination } from '@/features/pagination/get-pagination';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { genderOptions, speciesOptions, statusOptions, typeOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -16,6 +15,7 @@ import { useAppSelector } from '@/store/redux-hooks';
 import { Character, FilterParams, PaginationParams } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import { getPagination } from '../features/pagination/get-pagination';
 import { cn } from '../lib/utils';
 
 const CharactersPage = () => {
@@ -67,7 +67,7 @@ const CharactersPage = () => {
 
   const maxPage = data?.info?.pages ?? 0;
 
-  const { page, setFirstPage, setLastPage, setNextPage, setPreviousPage } =
+  const { page } =
     getPagination(currentPage, maxPage, setCurrentPage);
 
   useEffect(() => {
@@ -178,11 +178,7 @@ const CharactersPage = () => {
         isPending={isPending}
         error={error}
         currentPage={currentPage}
-        onFirstPage={setFirstPage}
-        onLastPage={setLastPage}
-        onPreviousPage={setPreviousPage}
-        onNextPage={setNextPage}
-        maxPage={maxPage}
+        setPage={setCurrentPage}
       />
     </div>
   );
