@@ -14,9 +14,9 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/character" element={<CharactersPage />} />
-        <Route path="/character/:id" element={<CharacterPage />} />
+        <Route path="/character/:characterId" element={<CharacterPage />} />
         <Route path="/location" element={<LocationsPage />} />
-        <Route path="/location/:id" element={<LocationPage />} />
+        <Route path="/location/:locationId" element={<LocationPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
