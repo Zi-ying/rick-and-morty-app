@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import Navigation from '@/features/navigation';
-import { usePagination } from '@/features/pagination/use-pagination';
+import { getPagination } from '@/features/pagination/get-pagination';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { genderOptions, speciesOptions, statusOptions, typeOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -68,7 +68,7 @@ const CharactersPage = () => {
   const maxPage = data?.info?.pages ?? 0;
 
   const { page, setFirstPage, setLastPage, setNextPage, setPreviousPage } =
-    usePagination(currentPage, maxPage, setCurrentPage);
+    getPagination(currentPage, maxPage, setCurrentPage);
 
   useEffect(() => {
     setCurrentPage(page);

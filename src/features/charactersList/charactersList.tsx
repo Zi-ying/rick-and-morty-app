@@ -17,11 +17,8 @@ interface CharactersListProps {
   isPending: boolean;
   error: Error | null;
   currentPage: number;
-  maxPage: number;
-  onFirstPage: () => void;
-  onLastPage: () => void;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
+ setPage: React.Dispatch<React.SetStateAction<number>>;
+
 }
 
 const CharactersList = ({
@@ -29,15 +26,11 @@ const CharactersList = ({
   isPending,
   error,
   currentPage,
-  maxPage,
-  onFirstPage,
-  onLastPage,
-  onPreviousPage,
-  onNextPage,
+  setPage,
 }: CharactersListProps) => {
   if (error) return <div>An error has occurred: {error.message}</div>;
 
-  if (!data?.results) {
+  if (!data?.results && !data?.info) {
     return (
       <div className="min-h-96 flex flex-col items-center justify-center gap-4">
         <p className="lg:text-3xl text-slate-700">Oops</p>
@@ -45,6 +38,8 @@ const CharactersList = ({
       </div>
     );
   }
+
+  const maxPage = data.info.pages
 
   return (
     <>
@@ -78,10 +73,7 @@ const CharactersList = ({
         <PaginationList
           page={currentPage}
           maxPage={maxPage}
-          onFirstPage={onFirstPage}
-          onLastPage={onLastPage}
-          onPreviousPage={onPreviousPage}
-          onNextPage={onNextPage}
+          setPage={setPage}
         />
       </div>
     </>

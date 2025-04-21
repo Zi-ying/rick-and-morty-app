@@ -1,4 +1,4 @@
-export const usePagination = (
+export const getPagination = (
   page: number,
   maxPage: number,
   setPage: React.Dispatch<React.SetStateAction<number>>,

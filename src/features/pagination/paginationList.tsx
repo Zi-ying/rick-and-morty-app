@@ -8,49 +8,47 @@ import {
 } from '@/components/ui/pagination';
 import { cn } from '@/lib/utils';
 
+import { getPagination } from './get-pagination';
+
 interface PaginationListProps {
   page: number;
   maxPage: number;
-  onFirstPage: () => void;
-  onLastPage: () => void;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const PaginationList = ({
-  page,
-  maxPage,
-  onFirstPage,
-  onLastPage,
-  onPreviousPage,
-  onNextPage,
-}: PaginationListProps) => {
+const PaginationList = ({ page, maxPage, setPage }: PaginationListProps) => {
+  const { setFirstPage, setLastPage, setNextPage, setPreviousPage } =
+    getPagination(page, maxPage, setPage);
+
   const isFirstPage = page === 1;
-  const isLastPage = page === maxPage
+  const isLastPage = page === maxPage;
 
   return (
-    <Pagination >
+    <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious onClick={onPreviousPage} disabled={isFirstPage} />
+          <PaginationPrevious
+            onClick={setPreviousPage}
+            disabled={isFirstPage}
+          />
         </PaginationItem>
-        <PaginationItem className={cn(isFirstPage ? 'hidden' : 'inline-flex')}>
-          <PaginationLink onClick={onFirstPage}>1</PaginationLink>
+        <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
+          <PaginationLink onClick={setFirstPage}>1</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn(isFirstPage ? 'hidden' : 'inline-flex')}>
+        <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
         <PaginationItem>
           <PaginationLink isActive>{page}</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn(isLastPage ? 'hidden' : 'inline-flex')}>
+        <PaginationItem className={cn(isLastPage ? "hidden" : "inline-flex")}>
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn(isLastPage ? 'hidden' : 'inline-flex')}>
-          <PaginationLink onClick={onLastPage}>{maxPage}</PaginationLink>
+        <PaginationItem className={cn(isLastPage ? "hidden" : "inline-flex")}>
+          <PaginationLink onClick={setLastPage}>{maxPage}</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext onClick={onNextPage} disabled={isLastPage} />
+          <PaginationNext onClick={setNextPage} disabled={isLastPage} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
