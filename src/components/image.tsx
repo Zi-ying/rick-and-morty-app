@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import fallbackImage from '@/assets/oops.svg';
+
 interface ImageProps {
   src: string;
   alt: string;
@@ -8,7 +10,6 @@ interface ImageProps {
 }
 const Image = ({ src, alt, isPending, className }: ImageProps) => {
   const [imageError, setImageError] = useState<boolean>(false);
-  const fallbackImage = '../../../public/oops.svg';
 
   if (isPending) {
     <img src={fallbackImage} alt="Image is loading" />
