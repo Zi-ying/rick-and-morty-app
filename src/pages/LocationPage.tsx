@@ -34,12 +34,9 @@ const LocationPage = () => {
           className="justify-self-center max-w-96"
         />
       </Navigation>
-      <div className="bg-red-400 p-2 grid gap-2">
-        <div>LOCATIONS</div>
-        <div className="bg-red-300 grid md:grid-cols-2 gap-2">
-          <LocationsList data={data} page={page} onPage={setPage} />
-        </div>
-
+      <div className="bg-red-400 p-2 grid items-center gap-2">
+        <div className='bg-red-300 text-center'>LOCATIONS</div>
+        <LocationsList data={data} page={page} onPage={setPage} />
       </div>
     </>
   );

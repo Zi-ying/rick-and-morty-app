@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import PaginationList from '@/features/pagination/paginationList';
 
+import DataNotFound from '../dataNotFound';
 import CharacterCard from './characterCard';
 
 import type { Character, PaginationParams } from "@/types/types";
-
 interface CharactersListProps {
   data:
     | {
@@ -17,8 +17,7 @@ interface CharactersListProps {
   isPending: boolean;
   error: Error | null;
   currentPage: number;
- setPage: React.Dispatch<React.SetStateAction<number>>;
-
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const CharactersList = ({
@@ -31,15 +30,10 @@ const CharactersList = ({
   if (error) return <div>An error has occurred: {error.message}</div>;
 
   if (!data?.results && !data?.info) {
-    return (
-      <div className="min-h-96 flex flex-col items-center justify-center gap-4">
-        <p className="lg:text-3xl text-slate-700">Oops</p>
-        <h1 className="lg:text-xl text-slate-500">No data found.</h1>
-      </div>
-    );
+    return <DataNotFound />;
   }
 
-  const maxPage = data.info.pages
+  const maxPage = data.info.pages;
 
   return (
     <>

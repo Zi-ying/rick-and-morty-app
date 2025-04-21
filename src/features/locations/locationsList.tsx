@@ -1,4 +1,5 @@
 
+import DataNotFound from '../dataNotFound';
 import PaginationList from '../pagination/paginationList';
 import LocationCard from './locationCard';
 
@@ -13,11 +14,11 @@ interface LocationsListProps {
 const LocationsList = ({ data, page, onPage }: LocationsListProps) => {
 
   if (!data?.info && !data?.results) {
-    return <>No Data found</>;
+    return <DataNotFound />;
   }
 
   return (
-    <>
+    <div className="bg-red-300 grid md:grid-cols-2 gap-2">
       {data.results.map((item) => {
         return <LocationCard key={item.id} data={item} />;
       })}
@@ -26,7 +27,7 @@ const LocationsList = ({ data, page, onPage }: LocationsListProps) => {
           maxPage={data?.info.pages}
           setPage={onPage}
         />
-    </>
+    </div>
   );
 };
 
