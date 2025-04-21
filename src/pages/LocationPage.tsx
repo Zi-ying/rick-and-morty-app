@@ -1,14 +1,13 @@
 import { useState } from 'react';
 
-import PaginationList from '@/features/charactersList/paginationList';
 import { getAllLocations } from '@/features/locations/get-all-locations';
 import LocationsList from '@/features/locations/locationsList';
 import Navigation from '@/features/navigation';
+import PaginationList from '@/features/pagination/paginationList';
+import { usePagination } from '@/features/pagination/use-pagination';
 import SearchField from '@/features/searchFields/SearchField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-
-import { usePagination } from '../features/charactersList/use-pagination';
 
 const LocationPage = () => {
   const [search, setSearch] = useState<string>("");

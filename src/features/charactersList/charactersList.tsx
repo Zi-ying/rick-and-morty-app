@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import SmallCharacterCard from '@/features/character/smallCharacterCard';
+import PaginationList from '@/features/pagination/paginationList';
 
 import CharacterCard from './characterCard';
-import PaginationList from './paginationList';
 
 import type { Character, PaginationParams } from "@/types/types";
 
