@@ -39,6 +39,16 @@ const Navigation = ({ children }: NavigationProps) => {
               Locations
             </div>
           </Link>
+          <Link to="/episode">
+            <div
+              className={cn(
+                "bg-red-300",
+                location.pathname === "/episode" ? "underline" : ""
+              )}
+            >
+              Episodes
+            </div>
+          </Link>
         </div>
       </div>
       <div className="bg-red-700">{children}</div>
