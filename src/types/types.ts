@@ -53,3 +53,9 @@ export type Episode = {
   url: string;
   created: string;
 };
+
+export type LocationFilterParams = {
+  name: string;
+  type: string;
+  dimension: string;
+}
