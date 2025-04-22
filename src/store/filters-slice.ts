@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './store';
 
-type FilterParamsState = {
-  filters: CharacaterFilterParams
-}
+type CharacterFilterParamsState = {
+  filters: CharacaterFilterParams;
+};
 
-const initialState: FilterParamsState = {
+const initialState: CharacterFilterParamsState = {
   filters: {
     name: '',
     gender: '',
@@ -17,19 +17,25 @@ const initialState: FilterParamsState = {
   },
 };
 
-const filtersSlice = createSlice({
-  name: "filters",
+const characterFiltersSlice = createSlice({
+  name: "character-filters",
   initialState,
   reducers: {
-    addFilters: (state, action: PayloadAction<CharacaterFilterParams>) => {
-      state.filters.name =  action.payload.name;
-      state.filters.gender =  action.payload.gender;
-      state.filters.status =  action.payload.status;
-      state.filters.species =  action.payload.species;
-      state.filters.type =  action.payload.type;
+    addFilter: (
+      state,
+      action: PayloadAction<{
+        key: keyof CharacaterFilterParams;
+        value: CharacaterFilterParams[keyof CharacaterFilterParams];
+      }>
+    ) => {
+      const { key, value } = action.payload;
+      state.filters[key] = value;
     },
-    removeOneFilter: (state, action: PayloadAction<keyof CharacaterFilterParams> )=> {
-      state.filters[action.payload] = '';
+    removeOneFilter: (
+      state,
+      action: PayloadAction<keyof CharacaterFilterParams>
+    ) => {
+      state.filters[action.payload] = "";
     },
     resetFilters: (state) => {
       state.filters = initialState.filters;
@@ -39,6 +45,7 @@ const filtersSlice = createSlice({
 
 export const allFilters = (state: RootState) => state.filters.filters;
 
-export const { addFilters, removeOneFilter, resetFilters } = filtersSlice.actions;
+export const { addFilter, removeOneFilter, resetFilters } =
+  characterFiltersSlice.actions;
 
-export default filtersSlice.reducer;
+export default characterFiltersSlice.reducer;

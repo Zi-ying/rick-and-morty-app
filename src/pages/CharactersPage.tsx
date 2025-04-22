@@ -10,22 +10,16 @@ import { genderOptions, speciesOptions, statusOptions, typeOptions } from '@/fea
 import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
-import { addFilters, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
+import { cn } from '@/lib/utils';
+import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
 import { CharacaterFilterParams, Character, PaginationParams } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { getPagination } from '../features/pagination/get-pagination';
-import { cn } from '../lib/utils';
-
 const CharactersPage = () => {
   const filters: CharacaterFilterParams = useAppSelector(allFilters);
-  const [name, setName] = useState<string>(filters.name);
-  const [gender, setGender] = useState<string>(filters.gender);
-  const [species, setSpecies] = useState<string>(filters.species);
-  const [status, setStatus] = useState<string>(filters.status);
-  const [type, setType] = useState<string>(filters.type);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [name, setName] = useState<string>(filters.name);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -34,24 +28,10 @@ const CharactersPage = () => {
   const debouncedNameValue = useDebounce(name, timeout);
 
   useEffect(() => {
-    dispatch(
-      addFilters({
-        name: debouncedNameValue,
-        gender: gender,
-        species: species,
-        status: status,
-        type: type,
-      })
-    );
-    setCurrentPage(1);
-  }, [dispatch, debouncedNameValue, gender, species, status, type]);
+    dispatch(addFilter({ key: "name", value: debouncedNameValue }));
+  }, [dispatch, name, debouncedNameValue]);
 
   const onResetClick = () => {
-    setName("");
-    setGender("");
-    setSpecies("");
-    setStatus("");
-    setType("");
     dispatch(resetFilters());
     setCurrentPage(1);
   };
@@ -65,46 +45,16 @@ const CharactersPage = () => {
     placeholderData: keepPreviousData,
   });
 
-  const maxPage = data?.info?.pages ?? 0;
-
-  const { page } =
-    getPagination(currentPage, maxPage, setCurrentPage);
-
-  useEffect(() => {
-    setCurrentPage(page);
-  }, [page]);
-
-  if (error) return "An error has occurred: " + error.message;
-
   const onExpansionClick = () => {
     setIsExpanded(!isExpanded);
   };
 
   const handleClear = (filter: keyof CharacaterFilterParams) => {
     dispatch(removeOneFilter(filter));
-    switch (filter) {
-      case "name": {
-        setName("");
-        break;
-      }
-      case "gender": {
-        setGender("");
-        break;
-      }
-      case "status": {
-        setStatus("");
-        break;
-      }
-      case "species": {
-        setSpecies("");
-        break;
-      }
-      case "type": {
-        setType("");
-        break;
-      }
-    }
+    setCurrentPage(1);
   };
+
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <div className="w-full min-h-screen bg-black md:relative">
@@ -116,6 +66,7 @@ const CharactersPage = () => {
             className="max-w-96 justify-self-center p-4"
             onChange={(e) => {
               setName(e.target.value);
+              setCurrentPage(1);
             }}
           />
           <FilterBadges
@@ -141,30 +92,42 @@ const CharactersPage = () => {
           >
             <SelectField
               placeholder="Status"
-              value={status}
+              value={filters.status}
               data={statusOptions}
-              onChange={setStatus}
+              onChange={(e) => {
+                dispatch(addFilter({ key: "status", value: e }));
+                setCurrentPage(1);
+              }}
               classnames="w-full"
             />
             <SelectField
               placeholder="Gender"
-              value={gender}
+              value={filters.gender}
               data={genderOptions}
-              onChange={setGender}
+              onChange={(e) => {
+                dispatch(addFilter({ key: "gender", value: e }));
+                setCurrentPage(1);
+              }}
               classnames="w-full"
             />
             <SelectField
               placeholder="Species"
-              value={species}
+              value={filters.species}
               data={speciesOptions}
-              onChange={setSpecies}
+              onChange={(e) => {
+                dispatch(addFilter({ key: "species", value: e }));
+                setCurrentPage(1);
+              }}
               classnames="w-full"
             />
             <SelectField
               placeholder="Sub-species"
-              value={type}
+              value={filters.type}
               data={typeOptions}
-              onChange={setType}
+              onChange={(e) => {
+                dispatch(addFilter({ key: "type", value: e }));
+                setCurrentPage(1);
+              }}
               classnames="w-full"
             />
           </div>
