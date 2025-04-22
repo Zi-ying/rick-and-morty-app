@@ -36,7 +36,7 @@ const LocationsPage = () => {
       </Navigation>
       <div className="bg-red-400 p-2 grid items-center gap-2">
         <div className='bg-red-300 text-center'>LOCATIONS</div>
-        <LocationsList data={data} page={page} onPage={setPage} />
+        <LocationsList data={data} currentPage={page} setPage={setPage} />
       </div>
     </>
   );

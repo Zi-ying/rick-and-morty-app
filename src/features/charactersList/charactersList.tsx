@@ -4,6 +4,7 @@ import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import PaginationList from '@/features/pagination/paginationList';
 
 import DataNotFound from '../dataNotFound';
+import { getPagination } from '../pagination/get-pagination';
 import CharacterCard from './characterCard';
 
 import type { Character, PaginationParams } from "@/types/types";
@@ -35,6 +36,16 @@ const CharactersList = ({
 
   const maxPage = data.info.pages;
 
+    const {
+      page,
+      isFirstPage,
+      isLastPage,
+      setFirstPage,
+      setLastPage,
+      setNextPage,
+      setPreviousPage,
+    } = getPagination(currentPage, maxPage, setPage);
+
   return (
     <>
       <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-6 p-6">
@@ -64,10 +75,16 @@ const CharactersList = ({
         })}
       </div>
       <div className="flex gap-1 md:gap-4 justify-center p-4">
-        <PaginationList
-          page={currentPage}
+      <PaginationList
+          page={page}
           maxPage={maxPage}
+          isFirstPage={isFirstPage}
+          isLastPage={isLastPage}
           setPage={setPage}
+          onFirstPage={setFirstPage}
+          onLastPage={setLastPage}
+          onPreviousPage={setPreviousPage}
+          onNextPage={setNextPage}
         />
       </div>
     </>

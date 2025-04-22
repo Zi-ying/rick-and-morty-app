@@ -8,32 +8,31 @@ import {
 } from '@/components/ui/pagination';
 import { cn } from '@/lib/utils';
 
-import { getPagination } from './get-pagination';
-
 interface PaginationListProps {
   page: number;
   maxPage: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  onPreviousPage: () => void;
+  onNextPage: () => void;
+  onFirstPage: () => void;
+  onLastPage: () => void;
+  isFirstPage: boolean;
+  isLastPage: boolean;
 }
 
-const PaginationList = ({ page, maxPage, setPage }: PaginationListProps) => {
-  const { setFirstPage, setLastPage, setNextPage, setPreviousPage } =
-    getPagination(page, maxPage, setPage);
-
-  const isFirstPage = page === 1;
-  const isLastPage = page === maxPage;
+const PaginationList = ({ page, maxPage, onPreviousPage, onNextPage, onFirstPage, onLastPage, isFirstPage, isLastPage }: PaginationListProps) => {
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            onClick={setPreviousPage}
+            onClick={onPreviousPage}
             disabled={isFirstPage}
           />
         </PaginationItem>
         <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
-          <PaginationLink onClick={setFirstPage}>1</PaginationLink>
+          <PaginationLink onClick={onFirstPage}>1</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
           <PaginationLink disabled>...</PaginationLink>
@@ -45,10 +44,10 @@ const PaginationList = ({ page, maxPage, setPage }: PaginationListProps) => {
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn(isLastPage ? "hidden" : "inline-flex")}>
-          <PaginationLink onClick={setLastPage}>{maxPage}</PaginationLink>
+          <PaginationLink onClick={onLastPage}>{maxPage}</PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext onClick={setNextPage} disabled={isLastPage} />
+          <PaginationNext onClick={onNextPage} disabled={isLastPage} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

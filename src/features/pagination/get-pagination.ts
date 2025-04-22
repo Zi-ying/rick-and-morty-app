@@ -4,6 +4,9 @@ export const getPagination = (
   setPage: React.Dispatch<React.SetStateAction<number>>,
 ) => {
 
+  const isFirstPage = page === 1;
+  const isLastPage = page === maxPage;
+
   const setFirstPage =  () => {
     setPage(1);
   }
@@ -23,6 +26,8 @@ export const getPagination = (
   return {
     page,
     maxPage,
+    isFirstPage,
+    isLastPage,
     setFirstPage,
     setLastPage,
     setNextPage,
