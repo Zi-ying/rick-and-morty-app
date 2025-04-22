@@ -12,14 +12,14 @@ import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
 import { addFilters, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
-import { Character, FilterParams, PaginationParams } from '@/types/types';
+import { CharacaterFilterParams, Character, PaginationParams } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { getPagination } from '../features/pagination/get-pagination';
 import { cn } from '../lib/utils';
 
 const CharactersPage = () => {
-  const filters: FilterParams = useAppSelector(allFilters);
+  const filters: CharacaterFilterParams = useAppSelector(allFilters);
   const [name, setName] = useState<string>(filters.name);
   const [gender, setGender] = useState<string>(filters.gender);
   const [species, setSpecies] = useState<string>(filters.species);
@@ -80,7 +80,7 @@ const CharactersPage = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleClear = (filter: keyof FilterParams) => {
+  const handleClear = (filter: keyof CharacaterFilterParams) => {
     dispatch(removeOneFilter(filter));
     switch (filter) {
       case "name": {

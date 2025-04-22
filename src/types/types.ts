@@ -26,7 +26,7 @@ export type Character = {
   created: string;
 };
 
-export type FilterParams = {
+export type CharacaterFilterParams = {
   name: string;
   status: string;
   species: string;

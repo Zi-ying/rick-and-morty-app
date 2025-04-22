@@ -1,12 +1,12 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-import { FilterParams } from '../../types/types';
+import { CharacaterFilterParams } from '../../types/types';
 
 interface FilterBadgesProps {
-  filters: FilterParams;
+  filters: CharacaterFilterParams;
   className: string;
-  onClearOne: (filter: keyof FilterParams) => void;
+  onClearOne: (filter: keyof CharacaterFilterParams) => void;
   onClearAll: () => void;
 }
 
