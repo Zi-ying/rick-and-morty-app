@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 
+import Spinner from '@/components/ui/spinner';
 import Character from '@/features/character/character';
 import DataNotFound from '@/features/dataNotFound';
 import { getLocationById } from '@/features/location/get-location-by-id';
@@ -15,10 +16,14 @@ const LocationPage = () => {
     return (location as Location).id !== undefined;
   }
 
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["locationData", locationId],
     queryFn: async () => getLocationById(locationId),
   });
+
+  if (isPending) {
+    return <Spinner/>
+  }
 
   if (!data) {
     return <DataNotFound />;

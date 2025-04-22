@@ -44,6 +44,10 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
     placeholderData: keepPreviousData,
   });
 
+  if (isPending) {
+    return <Spinner />
+  }
+
   if (isError) {
     return <NotFoundPage errorMessage={error.message} />;
   }
