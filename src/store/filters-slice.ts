@@ -1,19 +1,22 @@
-import type { FilterParams } from '@/types/types';
+import type { Filters } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './store';
 
-type FilterParamsState = {
-  filters: FilterParams;
+type FilterState = {
+  filters: Filters;
 };
 
-const initialState: FilterParamsState = {
+const initialState: FilterState = {
   filters: {
-    name: '',
+    characterName: '',
+    locationName: '',
+    episodeName: '',
     gender: '',
     status: '',
     species: '',
-    type: '',
+    characterType: '',
+    locationType: '',
     dimension: '',
     episode: '',
   },
@@ -26,8 +29,8 @@ const FiltersSlice = createSlice({
     addFilter: (
       state,
       action: PayloadAction<{
-        key: keyof FilterParams;
-        value: FilterParams[keyof FilterParams];
+        key: keyof Filters;
+        value: Filters[keyof Filters];
       }>
     ) => {
       const { key, value } = action.payload;
@@ -35,7 +38,7 @@ const FiltersSlice = createSlice({
     },
     removeOneFilter: (
       state,
-      action: PayloadAction<keyof FilterParams>
+      action: PayloadAction<keyof Filters>
     ) => {
       state.filters[action.payload] = "";
     },

@@ -10,8 +10,8 @@ const LocationCard = ({ data }: LocationCardProps) => {
   return (
     <Card>
       <CardHeader>{data.name}</CardHeader>
-      <CardContent>{data.dimension}</CardContent>
       <CardContent>{data.type}</CardContent>
+      <CardContent>{data.dimension}</CardContent>
     </Card>
   );
 };

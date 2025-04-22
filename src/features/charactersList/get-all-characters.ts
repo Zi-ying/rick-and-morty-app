@@ -1,10 +1,10 @@
-import type { Character, FilterParams, PaginationParams } from "../../types/types";
+import type { Character, CharacterFilterParams, PaginationParams } from "@/types/types";
 
 const address = "https://rickandmortyapi.com/api/character";
 
 export const getAllCharacters = async (
-  filters: FilterParams,
-  pageParam: string
+  filters: CharacterFilterParams,
+  page: string
 ): Promise<{ results: Character[]; info: PaginationParams }> => {
   const url = new URL(address);
   url.searchParams.append("name", filters.name);
@@ -12,7 +12,7 @@ export const getAllCharacters = async (
   url.searchParams.append("species", filters.species);
   url.searchParams.append("status", filters.status);
   url.searchParams.append("type", filters.type);
-  url.searchParams.append('page', pageParam)
+  url.searchParams.append('page', page)
   const response = await fetch(url);
   return response.json();
 };

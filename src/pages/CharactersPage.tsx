@@ -6,20 +6,20 @@ import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import Navigation from '@/features/navigation';
 import FilterBadges from '@/features/searchFields/filterBadges';
-import { genderOptions, speciesOptions, statusOptions, typeOptions } from '@/features/searchFields/options';
+import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
-import { Character, FilterParams, PaginationParams } from '@/types/types';
+import { Character, CharacterFilterParams, Filters, PaginationParams } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const CharactersPage = () => {
-  const filters: FilterParams = useAppSelector(allFilters);
+  const filters: Filters = useAppSelector(allFilters);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [name, setName] = useState<string>(filters.name);
+  const [name, setName] = useState<string>(filters.characterName);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const CharactersPage = () => {
   const debouncedNameValue = useDebounce(name, timeout);
 
   useEffect(() => {
-    dispatch(addFilter({ key: "name", value: debouncedNameValue }));
+    dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
   }, [dispatch, name, debouncedNameValue]);
 
   const onResetClick = () => {
@@ -36,12 +36,20 @@ const CharactersPage = () => {
     setCurrentPage(1);
   };
 
+  const filtersArgs: CharacterFilterParams = {
+    name: filters.characterName,
+    gender: filters.gender,
+    status: filters.status,
+    species: filters.species,
+    type: filters.characterType,
+  }
+
   const { data, isPending, error } = useQuery<{
     results: Character[];
     info: PaginationParams;
   }>({
-    queryKey: ["charactersData", filters, currentPage],
-    queryFn: async () => getAllCharacters(filters, currentPage.toString()),
+    queryKey: ["charactersData", filtersArgs, currentPage],
+    queryFn: async () => getAllCharacters(filtersArgs, currentPage.toString()),
     placeholderData: keepPreviousData,
   });
 
@@ -49,7 +57,7 @@ const CharactersPage = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleClear = (filter: keyof FilterParams) => {
+  const handleClear = (filter: keyof Filters) => {
     dispatch(removeOneFilter(filter));
     setCurrentPage(1);
   };
@@ -122,10 +130,10 @@ const CharactersPage = () => {
             />
             <SelectField
               placeholder="Sub-species"
-              value={filters.type}
-              data={typeOptions}
+              value={filters.characterType}
+              data={characterTypeOptions}
               onChange={(e) => {
-                dispatch(addFilter({ key: "type", value: e }));
+                dispatch(addFilter({ key: "characterType", value: e }));
                 setCurrentPage(1);
               }}
               classnames="w-full"

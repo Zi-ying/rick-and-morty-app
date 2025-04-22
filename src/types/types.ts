@@ -26,11 +26,14 @@ export type Character = {
   created: string;
 };
 
-export type FilterParams = {
-  name: string;
+export type Filters = {
+  characterName: string;
+  locationName: string;
+  episodeName: string;
   status: string;
   species: string;
-  type: string;
+  characterType: string;
+  locationType: string;
   gender: string;
   dimension: string;
   episode: string;
@@ -55,3 +58,22 @@ export type Episode = {
   url: string;
   created: string;
 };
+
+export type CharacterFilterParams = {
+  name: string;
+  gender: string;
+  status: string;
+  species: string;
+  type: string;
+}
+
+export type LocationFilterParams = {
+  name: string;
+  dimension: string;
+  type: string;
+}
+
+export type EpisodeFilterParams = {
+  name: string;
+  episode: string;
+}

@@ -1,12 +1,12 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-import type { FilterParams } from "@/types/types";
+import type { Filters } from "@/types/types";
 
 interface FilterBadgesProps {
-  filters: FilterParams;
+  filters: Filters;
   className: string;
-  onClearOne: (filter: keyof FilterParams) => void;
+  onClearOne: (filter: keyof Filters) => void;
   onClearAll: () => void;
 }
 
@@ -18,10 +18,35 @@ const FilterBadges = ({
 }: FilterBadgesProps) => {
   return (
     <div className={className}>
-      {filters.name && (
+      {filters.characterName && (
         <Badge className="capitalize">
-          Name: {filters.name}
-          <span onClick={() => onClearOne("name")} className="cursor-pointer">
+          Name: {filters.characterName}
+          <span
+            onClick={() => onClearOne("characterName")}
+            className="cursor-pointer"
+          >
+            X
+          </span>
+        </Badge>
+      )}
+      {filters.locationName && (
+        <Badge className="capitalize">
+          Name: {filters.locationName}
+          <span
+            onClick={() => onClearOne("locationName")}
+            className="cursor-pointer"
+          >
+            X
+          </span>
+        </Badge>
+      )}
+      {filters.episodeName && (
+        <Badge className="capitalize">
+          Name: {filters.episodeName}
+          <span
+            onClick={() => onClearOne("episodeName")}
+            className="cursor-pointer"
+          >
             X
           </span>
         </Badge>
@@ -50,10 +75,24 @@ const FilterBadges = ({
           </div>
         </Badge>
       )}
-      {filters.type && (
+      {filters.characterType && (
         <Badge className="capitalize">
-          Type: {filters.type}
-          <span onClick={() => onClearOne("type")} className="cursor-pointer">
+          Type: {filters.characterType}
+          <span
+            onClick={() => onClearOne("characterType")}
+            className="cursor-pointer"
+          >
+            X
+          </span>
+        </Badge>
+      )}
+       {filters.locationType && (
+        <Badge className="capitalize">
+          Type: {filters.locationType}
+          <span
+            onClick={() => onClearOne("locationType")}
+            className="cursor-pointer"
+          >
             X
           </span>
         </Badge>
@@ -80,13 +119,16 @@ const FilterBadges = ({
           </span>
         </Badge>
       )}
-      {(filters.name ||
+      {(filters.characterName ||
+        filters.characterType ||
         filters.gender ||
         filters.species ||
         filters.status ||
         filters.dimension ||
         filters.episode ||
-        filters.type) && (
+        filters.episodeName ||
+        filters.locationName ||
+        filters.locationType) && (
         <Button variant="ghost" onClick={onClearAll}>
           Clear all
         </Button>
