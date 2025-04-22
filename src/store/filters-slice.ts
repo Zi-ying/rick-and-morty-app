@@ -1,31 +1,33 @@
-import { CharacaterFilterParams } from '@/types/types';
+import type { FilterParams } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from './store';
 
-type CharacterFilterParamsState = {
-  filters: CharacaterFilterParams;
+type FilterParamsState = {
+  filters: FilterParams;
 };
 
-const initialState: CharacterFilterParamsState = {
+const initialState: FilterParamsState = {
   filters: {
     name: '',
     gender: '',
     status: '',
     species: '',
     type: '',
+    dimension: '',
+    episode: '',
   },
 };
 
-const characterFiltersSlice = createSlice({
-  name: "character-filters",
+const FiltersSlice = createSlice({
+  name: "filters",
   initialState,
   reducers: {
     addFilter: (
       state,
       action: PayloadAction<{
-        key: keyof CharacaterFilterParams;
-        value: CharacaterFilterParams[keyof CharacaterFilterParams];
+        key: keyof FilterParams;
+        value: FilterParams[keyof FilterParams];
       }>
     ) => {
       const { key, value } = action.payload;
@@ -33,7 +35,7 @@ const characterFiltersSlice = createSlice({
     },
     removeOneFilter: (
       state,
-      action: PayloadAction<keyof CharacaterFilterParams>
+      action: PayloadAction<keyof FilterParams>
     ) => {
       state.filters[action.payload] = "";
     },
@@ -46,6 +48,6 @@ const characterFiltersSlice = createSlice({
 export const allFilters = (state: RootState) => state.filters.filters;
 
 export const { addFilter, removeOneFilter, resetFilters } =
-  characterFiltersSlice.actions;
+  FiltersSlice.actions;
 
-export default characterFiltersSlice.reducer;
+export default FiltersSlice.reducer;

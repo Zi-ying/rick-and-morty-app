@@ -13,11 +13,11 @@ import { useDebounce } from '@/features/searchFields/use-debounce';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
-import { CharacaterFilterParams, Character, PaginationParams } from '@/types/types';
+import { Character, FilterParams, PaginationParams } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const CharactersPage = () => {
-  const filters: CharacaterFilterParams = useAppSelector(allFilters);
+  const filters: FilterParams = useAppSelector(allFilters);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [name, setName] = useState<string>(filters.name);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const CharactersPage = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleClear = (filter: keyof CharacaterFilterParams) => {
+  const handleClear = (filter: keyof FilterParams) => {
     dispatch(removeOneFilter(filter));
     setCurrentPage(1);
   };

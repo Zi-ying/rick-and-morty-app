@@ -1,9 +1,9 @@
-import type { Character, CharacaterFilterParams, PaginationParams } from "../../types/types";
+import type { Character, FilterParams, PaginationParams } from "../../types/types";
 
 const address = "https://rickandmortyapi.com/api/character";
 
 export const getAllCharacters = async (
-  filters: CharacaterFilterParams,
+  filters: FilterParams,
   pageParam: string
 ): Promise<{ results: Character[]; info: PaginationParams }> => {
   const url = new URL(address);

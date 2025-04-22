@@ -26,12 +26,14 @@ export type Character = {
   created: string;
 };
 
-export type CharacaterFilterParams = {
+export type FilterParams = {
   name: string;
   status: string;
   species: string;
   type: string;
   gender: string;
+  dimension: string;
+  episode: string;
 };
 
 export type Location = {
@@ -53,9 +55,3 @@ export type Episode = {
   url: string;
   created: string;
 };
-
-export type LocationFilterParams = {
-  name: string;
-  type: string;
-  dimension: string;
-}
