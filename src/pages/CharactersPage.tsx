@@ -67,7 +67,7 @@ const CharactersPage = () => {
   return (
     <div className="min-h-screen">
       <Navigation>
-        <div className="grid bg-red-400 gap-2 px-2">
+        <div className="grid gap-2 px-2">
           <SearchField
             placeholder="Search by character name"
             value={name}
@@ -94,7 +94,7 @@ const CharactersPage = () => {
           </Button>
           <div
             className={cn(
-              "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
+              "grid grid-cols-1 gap-2 sm:grid-cols-4",
               isExpanded ? "inline-grid" : "hidden"
             )}
           >
@@ -147,7 +147,7 @@ const CharactersPage = () => {
         error={error}
         currentPage={currentPage}
         setPage={setCurrentPage}
-        />
+      />
     </div>
   );
 };

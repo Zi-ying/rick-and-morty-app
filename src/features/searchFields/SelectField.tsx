@@ -1,5 +1,6 @@
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
+import { cn } from '../../lib/utils';
 
 interface SelectFieldProps {
   placeholder: string;
@@ -12,12 +13,12 @@ interface SelectFieldProps {
 const SelectField = ({placeholder, value, data, classnames, onChange}: SelectFieldProps) => {
   return (
       <Select onValueChange={onChange} value={value}>
-        <SelectTrigger className={classnames}>
+        <SelectTrigger className={cn(classnames, 'hover:text-pickle-500 cursor-pointer')}>
           <SelectValue placeholder={placeholder}/>
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className='text-white bg-black border-none'>
           {data.map((item) => (
-            <SelectItem key={item.value} value={item.value}>
+            <SelectItem key={item.value} value={item.value} className='hover:text-pickle-500 cursor-pointer'>
               {item.label}
             </SelectItem>
           ))}
