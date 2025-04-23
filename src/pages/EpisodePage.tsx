@@ -10,9 +10,9 @@ import type { Episode } from "@/types/types";
 const EpisodePage = () => {
   const { episodeId } = useParams();
 
-  function isStatus200(
+  const isStatus200 = (
     episode: Episode | { error: string }
-  ): episode is Episode {
+  ): episode is Episode => {
     return (episode as Episode).id !== undefined;
   }
 

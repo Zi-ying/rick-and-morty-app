@@ -10,9 +10,9 @@ import type { Location } from "@/types/types";
 const LocationPage = () => {
   const { locationId } = useParams();
 
-  function isStatus200(
+  const isStatus200 = (
     location: Location | { error: string }
-  ): location is Location {
+  ): location is Location => {
     return (location as Location).id !== undefined;
   }
 
