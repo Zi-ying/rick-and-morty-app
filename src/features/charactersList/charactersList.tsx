@@ -36,18 +36,34 @@ const CharactersList = ({
 
   const maxPage = data.info.pages;
 
-    const {
-      page,
-      isFirstPage,
-      isLastPage,
-      setFirstPage,
-      setLastPage,
-      setNextPage,
-      setPreviousPage,
-    } = getPagination(currentPage, maxPage, setPage);
+  const {
+    page,
+    isFirstPage,
+    isLastPage,
+    setFirstPage,
+    setLastPage,
+    setNextPage,
+    setPreviousPage,
+  } = getPagination(currentPage, maxPage, setPage);
 
   return (
     <>
+      <div className='sticky top-52'>
+        <PaginationList
+          page={page}
+          maxPage={maxPage}
+          isFirstPage={isFirstPage}
+          isLastPage={isLastPage}
+          setPage={setPage}
+          onFirstPage={setFirstPage}
+          onLastPage={setLastPage}
+          onPreviousPage={setPreviousPage}
+          onNextPage={setNextPage}
+        />
+      </div>
+      <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
+        Character's list from Rick and Morty
+      </div>
       <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-6 p-6">
         {data.results.map((item) => {
           return (
@@ -73,19 +89,6 @@ const CharactersList = ({
             </Link>
           );
         })}
-      </div>
-      <div className="flex gap-1 md:gap-4 justify-center p-4">
-      <PaginationList
-          page={page}
-          maxPage={maxPage}
-          isFirstPage={isFirstPage}
-          isLastPage={isLastPage}
-          setPage={setPage}
-          onFirstPage={setFirstPage}
-          onLastPage={setLastPage}
-          onPreviousPage={setPreviousPage}
-          onNextPage={setNextPage}
-        />
       </div>
     </>
   );

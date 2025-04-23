@@ -42,7 +42,7 @@ const CharactersPage = () => {
     status: filters.status,
     species: filters.species,
     type: filters.characterType,
-  }
+  };
 
   const { data, isPending, error } = useQuery<{
     results: Character[];
@@ -65,7 +65,7 @@ const CharactersPage = () => {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="w-full min-h-screen bg-black md:relative">
+    <div className="min-h-screen">
       <Navigation>
         <div className="grid bg-red-400 gap-2 px-2">
           <SearchField
@@ -141,16 +141,13 @@ const CharactersPage = () => {
           </div>
         </div>
       </Navigation>
-      <div className="hidden md:inline-grid md:text-2xl md:text-brand-500">
-        Character's list from Rick and Morty
-      </div>
       <CharactersList
         data={data}
         isPending={isPending}
         error={error}
         currentPage={currentPage}
         setPage={setCurrentPage}
-      />
+        />
     </div>
   );
 };

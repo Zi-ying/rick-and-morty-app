@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom';
 
-import image from '@/assets/rick-and-morty.svg';
 import { Button } from '@/components/ui/button';
+import Navigation from '@/features/navigation';
 
 const Home = () => {
-
   return (
-    <div className="z-10 h-screen flex flex-col items-center justify-center bg-home">
-      <img src={image} alt='Rick and Morty'/>
-      <Link to='/character'>
-        <Button>Get Started!</Button>
-      </Link>
+    <div className='h-screen'>
+      <Navigation />
+      <div className="h-[calc(100%-72px)] flex items-center justify-center">
+        <Link to="/character">
+          <Button>Get Started!</Button>
+        </Link>
+      </div>
     </div>
   );
 };
