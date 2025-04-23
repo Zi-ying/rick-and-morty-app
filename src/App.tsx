@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from '@/components/layout';
 import CharacterPage from '@/pages/CharacterPage';
 import CharactersPage from '@/pages/CharactersPage';
+import EpisodePage from '@/pages/EpisodePage';
 import EpisodesPage from '@/pages/EpisodesPage';
 import Home from '@/pages/Home';
 import LocationPage from '@/pages/LocationPage';
@@ -19,6 +20,7 @@ function App() {
         <Route path="/location" element={<LocationsPage />} />
         <Route path="/location/:locationId" element={<LocationPage />} />
         <Route path="/episode" element={<EpisodesPage />} />
+        <Route path="/episode/:episodeId" element={<EpisodePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
