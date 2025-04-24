@@ -1,5 +1,7 @@
+import { Heart } from 'lucide-react';
+
 import Image from '@/components/image';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Character } from '@/types/types';
 
@@ -11,17 +13,16 @@ interface CharacterCardProps {
 
 const CharacterCard = ({ data, isPending, isFav }: CharacterCardProps) => {
   return (
-    <Card className="p-4 gap-6 rounded-2xl text-white hover:text-pickle-500 shadow-pickle-500/50 backdrop-blur-xs">
-        <Image
-          src={data.image}
-          alt={`image of ${data.name} from Rick and Morty`}
-          isPending={isPending}
-          className="rounded-full shadow-2xl"
-        />
-        <div className={cn('rounded-full h-4 w-4', isFav ? 'bg-pink-800' : 'bg-pink-100')} onClick={() => localStorage.setItem(data.id.toString(), data.name )}/>
-      <CardHeader>
-        <CardTitle>{data.name}</CardTitle>
-        <CardContent className="flex gap-2 items-center justify-center">
+    <Card className="rounded-xl hover:shadow-xl hover:text-pickle-500 shadow-pickle-500/50 backdrop-blur-xs">
+      <Image
+        src={data.image}
+        alt={`image of ${data.name} from Rick and Morty`}
+        isPending={isPending}
+        className="rounded-t-xl"
+      />
+      <CardHeader className="flex p-4 items-center w-full">
+        <CardTitle className="text-pickle-500 grow flex items-center justify-center gap-2">
+          {data.name}
           <div
             className={cn(
               "rounded-full w-2 h-2",
@@ -30,8 +31,11 @@ const CharacterCard = ({ data, isPending, isFav }: CharacterCardProps) => {
               data.status === "Dead" && "bg-red-500"
             )}
           />
-          <p>{data.status}</p>
-        </CardContent>
+        </CardTitle>
+        <Heart
+          className={cn("stroke-pink-700", isFav && "fill-pink-700")}
+          onClick={() => localStorage.setItem(data.id.toString(), data.name)}
+        />
       </CardHeader>
     </Card>
   );

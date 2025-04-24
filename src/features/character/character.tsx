@@ -45,7 +45,7 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   });
 
   if (isPending) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   if (isError) {
@@ -61,64 +61,60 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   }
 
   return (
-    <div className="grid items-center justify-center gap-4 p-4 h-screen">
+    <div className="grid items-center justify-center h-screen">
       {isPending && <Spinner />}
-        <div className="flex flex-col w-fit md:flex-row gap-4 rounded-xl shadow-lg p-4 justify-center text-white backdrop-blur-md">
-          <Image
-            src={data.image}
-            alt={`image of ${data.name} from Rick and Morty`}
-            className="rounded-xl"
-            isPending={isPending}
-          />
-          <div className="flex flex-col gap-4 p-4md:items-start md:justify-center">
-            <CardTitle className="flex gap-2 items-center justify-center">
-              <div className="text-brand-500 font-semibold md:text-start text-md md:text-xl">
-                {data.name}
-              </div>
-              <div
-                className={cn(
-                  "rounded-full w-2 h-2",
-                  data.status === "Alive" && "bg-green-400",
-                  data.status === "unknown" && "bg-slate-500",
-                  data.status === "Dead" && "bg-red-500"
-                )}
-              />
-            </CardTitle>
-            <div className="md:text-start">
-              Status: {data.status.toLocaleLowerCase()}
+      <div className="flex flex-col w-fit md:flex-row gap-4 rounded-xl shadow-md justify-center text-white backdrop-blur-md">
+        <Image
+          src={data.image}
+          alt={`image of ${data.name} from Rick and Morty`}
+          className="md:rounded-l-md rounded-t-md md:rounded-tr-none"
+          isPending={isPending}
+        />
+        <div className="flex flex-col gap-4 p-4 md:items-start md:justify-center">
+          <CardTitle className="flex gap-2 items-center justify-center">
+            <div className="text-pickle-500 font-semibold md:text-start text-md md:text-xl">
+              {data.name}
             </div>
-            <div className="md:text-start">
-              Gender: {data.gender.toLocaleLowerCase()}
-            </div>
-            <div className="md:text-start">
-              Species: {data.species.toLocaleLowerCase()}
-            </div>
-            {data.type ? (
-              <div className="md:text-start">
-                Type: {data.type.toLocaleLowerCase()}
-              </div>
-            ) : (
-              <></>
-            )}
-            <div className="md:text-start">
-              Located on: {data.location.name}
-            </div>
-            {data.origin.name ? (
-              <div className="md:text-start">
-                {data.origin.name !== "unknown" ? (
-                  <>Origin: {data.origin.name}</>
-                ) : (
-                  <>We do not know where {data.name} is from!</>
-                )}
-              </div>
-            ) : (
-              <></>
-            )}
+            <div
+              className={cn(
+                "rounded-full w-2 h-2",
+                data.status === "Alive" && "bg-green-400",
+                data.status === "unknown" && "bg-slate-500",
+                data.status === "Dead" && "bg-red-500"
+              )}
+            />
+          </CardTitle>
+          <div className="md:text-start">
+            Status: {data.status.toLocaleLowerCase()}
           </div>
           <div className="md:text-start">
-              Episodes: {data.episode.length}
+            Gender: {data.gender.toLocaleLowerCase()}
+          </div>
+          <div className="md:text-start">
+            Species: {data.species.toLocaleLowerCase()}
+          </div>
+          {data.type ? (
+            <div className="md:text-start">
+              Type: {data.type.toLocaleLowerCase()}
             </div>
+          ) : (
+            <></>
+          )}
+          <div className="md:text-start">Located on: {data.location.name}</div>
+          {data.origin.name ? (
+            <div className="md:text-start">
+              {data.origin.name !== "unknown" ? (
+                <>Origin: {data.origin.name}</>
+              ) : (
+                <>We do not know where {data.name} is from!</>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
+          <div className="md:text-start">Episodes: {data.episode.length}</div>
         </div>
+      </div>
       <Link to="/character">
         <Button className="self-place-end">Go back</Button>
       </Link>
