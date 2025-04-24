@@ -61,16 +61,16 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   }
 
   return (
-    <div className="grid items-center justify-center gap-4 p-4">
+    <div className="grid items-center justify-center gap-4 p-4 h-screen">
       {isPending && <Spinner />}
-        <div className="flex flex-col w-fit md:flex-row gap-4 border rounded-xl shadow-lg p-4 justify-center">
+        <div className="flex flex-col w-fit md:flex-row gap-4 rounded-xl shadow-lg p-4 justify-center text-white backdrop-blur-md">
           <Image
             src={data.image}
             alt={`image of ${data.name} from Rick and Morty`}
             className="rounded-xl"
             isPending={isPending}
           />
-          <div className="flex flex-col gap-4 p-4 text-slate-500 md:items-start md:justify-center">
+          <div className="flex flex-col gap-4 p-4md:items-start md:justify-center">
             <CardTitle className="flex gap-2 items-center justify-center">
               <div className="text-brand-500 font-semibold md:text-start text-md md:text-xl">
                 {data.name}
@@ -115,6 +115,9 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
               <></>
             )}
           </div>
+          <div className="md:text-start">
+              Episodes: {data.episode.length}
+            </div>
         </div>
       <Link to="/character">
         <Button className="self-place-end">Go back</Button>
