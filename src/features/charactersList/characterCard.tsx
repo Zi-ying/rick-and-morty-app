@@ -11,7 +11,7 @@ interface CharacterCardProps {
 
 const CharacterCard = ({ data, isPending, isFav }: CharacterCardProps) => {
   return (
-    <Card className="p-4 gap-6 rounded-lg shadow-xl bg-transparent hover:bg-brand-500 text-white hover:text-pickle-500 ">
+    <Card className="p-4 gap-6 rounded-2xl text-white hover:text-pickle-500 shadow-pickle-500/50 backdrop-blur-xs">
         <Image
           src={data.image}
           alt={`image of ${data.name} from Rick and Morty`}
