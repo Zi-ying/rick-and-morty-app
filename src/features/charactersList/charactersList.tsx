@@ -50,6 +50,12 @@ const CharactersList = ({
 
   const isFav = (value: string) => keys.includes(value);
 
+  const favArray: Character[] = [];
+
+  const getFav = (value: Character, isFav: boolean) => {
+    return isFav ? favArray.push(value) : undefined;
+  };
+
   return (
     <>
       <div className="sticky top-52">
@@ -70,15 +76,15 @@ const CharactersList = ({
       </div>
       <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 p-6">
         {data.results.map((item) => {
-          const fave = isFav(item.id.toString());
-
+          const fav = isFav(item.id.toString());
+          getFav(item, fav);
           return (
             <Link
               key={item.id}
               to={item.id.toString()}
               className="grid justify-center cursor-pointer"
             >
-              <CharacterCard data={item} isPending={isPending} isFav={fave} />
+              <CharacterCard data={item} isPending={isPending} isFav={fav} />
             </Link>
           );
         })}

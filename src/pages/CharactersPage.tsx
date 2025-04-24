@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@/components/ui/button';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
+import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
 import Navigation from '@/features/navigation';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
@@ -13,7 +14,7 @@ import { useDebounce } from '@/features/searchFields/use-debounce';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
-import { Character, CharacterFilterParams, Filters, PaginationParams } from '@/types/types';
+import { CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const CharactersPage = () => {
@@ -44,10 +45,7 @@ const CharactersPage = () => {
     type: filters.characterType,
   };
 
-  const { data, isPending, error } = useQuery<{
-    results: Character[];
-    info: PaginationParams;
-  }>({
+  const { data, isPending, error } = useQuery({
     queryKey: ["charactersData", filtersArgs, currentPage],
     queryFn: async () => getAllCharacters(filtersArgs, currentPage.toString()),
     placeholderData: keepPreviousData,
@@ -62,11 +60,15 @@ const CharactersPage = () => {
     setCurrentPage(1);
   };
 
-  if (error) return "An error has occurred: " + error.message;
+  const keys = Object.keys(localStorage).join()
 
-  const favArray = data?.results.filter((d) =>
-    localStorage.getItem(d.id.toString())
-  );
+  const { data: favdata } = useQuery({
+    queryKey: ["multipleCharactersData", keys],
+    queryFn: async () => getMultipleCharacters(keys),
+    placeholderData: keepPreviousData,
+  });
+
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <div className="min-h-screen">
@@ -146,7 +148,7 @@ const CharactersPage = () => {
         </div>
       </Navigation>
       <div className="bg-red-800 text-white">
-        {favArray?.map((i) => {
+        {favdata?.map((i) => {
           return <div key={i.id}>{i.name}</div>;
         })}
       </div>
