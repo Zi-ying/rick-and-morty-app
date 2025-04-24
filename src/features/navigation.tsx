@@ -14,7 +14,9 @@ const Navigation = ({ children }: NavigationProps) => {
   return (
     <div className="text-white sm:sticky left-0 top-0 shadow-2xl">
       <div className="grid grid-cols-2 p-2">
-        <img src={svg} alt="Rick and Morty" className="h-14" />
+        <Link to='/'>
+          <img src={svg} alt="Rick and Morty" className="h-14" />
+        </Link>
         <div className=" flex justify-end gap-4 items-center">
           <Link
             to="/"
