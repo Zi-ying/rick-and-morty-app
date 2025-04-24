@@ -68,7 +68,7 @@ const CharactersList = ({
       <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
         Character's list from Rick and Morty
       </div>
-      <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-6 p-6">
+      <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 p-6">
         {data.results.map((item) => {
           const fave = isFav(item.id.toString());
 
