@@ -64,6 +64,10 @@ const CharactersPage = () => {
 
   if (error) return "An error has occurred: " + error.message;
 
+  const favArray = data?.results.filter((d) =>
+    localStorage.getItem(d.id.toString())
+  );
+
   return (
     <div className="min-h-screen">
       <Navigation>
@@ -141,6 +145,11 @@ const CharactersPage = () => {
           </div>
         </div>
       </Navigation>
+      <div className="bg-red-800 text-white">
+        {favArray?.map((i) => {
+          return <div key={i.id}>{i.name}</div>;
+        })}
+      </div>
       <CharactersList
         data={data}
         isPending={isPending}

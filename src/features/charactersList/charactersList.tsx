@@ -46,9 +46,13 @@ const CharactersList = ({
     setPreviousPage,
   } = getPagination(currentPage, maxPage, setPage);
 
+  const keys = Object.keys(localStorage);
+
+  const isFav = (value: string) => keys.includes(value);
+
   return (
     <>
-      <div className='sticky top-52'>
+      <div className="sticky top-52">
         <PaginationList
           page={page}
           maxPage={maxPage}
@@ -66,13 +70,15 @@ const CharactersList = ({
       </div>
       <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 md:gap-6 p-6">
         {data.results.map((item) => {
+          const fave = isFav(item.id.toString());
+
           return (
             <Link
               key={item.id}
               to={item.id.toString()}
               className="grid justify-center cursor-pointer"
             >
-              <CharacterCard data={item} isPending={isPending} />
+              <CharacterCard data={item} isPending={isPending} isFav={fave} />
             </Link>
           );
         })}
