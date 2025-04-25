@@ -10,10 +10,10 @@ interface CharacterCardProps {
   data: Character;
   isPending: boolean;
   isFav: boolean;
+  onClick: () => void;
 }
 
-const CharacterCard = ({ data, isPending }: CharacterCardProps) => {
-
+const CharacterCard = ({ data, isPending, isFav, onClick }: CharacterCardProps) => {
   return (
     <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
       <Image
@@ -34,8 +34,8 @@ const CharacterCard = ({ data, isPending }: CharacterCardProps) => {
             )}
           />
         </CardTitle>
-        <Toggle aria-label="Toggle heart">
-          <Heart/>
+        <Toggle aria-label="Toggle heart" onClick={onClick}>
+          <Heart className={cn("fill-pink-300", isFav && "fill-pink-900")} />
         </Toggle>
       </CardHeader>
     </Card>

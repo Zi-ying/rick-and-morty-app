@@ -66,7 +66,10 @@ const CharactersPage = () => {
     setCurrentPage(1);
   };
 
-  const keys = Object.keys(localStorage).join()
+  const keys = Object.keys(localStorage).join();
+
+  useEffect(() => {
+  }, [keys]);
 
   const { data: favdata } = useQuery({
     queryKey: ["multipleCharactersData", keys],
@@ -75,21 +78,20 @@ const CharactersPage = () => {
   });
 
   const onClick = () => {
-    setIsFavorite(!isFavorite)
-  }
-
+    setIsFavorite(!isFavorite);
+  };
 
   const maxPage = data?.info.pages ?? 0;
 
-   const {
-      page,
-      isFirstPage,
-      isLastPage,
-      setFirstPage,
-      setLastPage,
-      setNextPage,
-      setPreviousPage,
-    } = getPagination(currentPage, maxPage, setCurrentPage);
+  const {
+    page,
+    isFirstPage,
+    isLastPage,
+    setFirstPage,
+    setLastPage,
+    setNextPage,
+    setPreviousPage,
+  } = getPagination(currentPage, maxPage, setCurrentPage);
 
   if (error) return "An error has occurred: " + error.message;
 
@@ -107,7 +109,7 @@ const CharactersPage = () => {
             }}
           />
           <Toggle aria-label="Toggle heart" onClick={onClick}>
-            <Heart className={cn('', isFavorite && 'fill-pink-600')}/>
+            <Heart className={cn("", isFavorite && "fill-pink-600")} />
           </Toggle>
 
           <FilterBadges
@@ -196,8 +198,6 @@ const CharactersPage = () => {
         data={isFavorite ? favdata : data?.results}
         isPending={isPending}
         error={error}
-        currentPage={currentPage}
-        setPage={setCurrentPage}
       />
     </div>
   );

@@ -10,16 +10,9 @@ interface CharactersListProps {
   data: Character[] | undefined;
   isPending: boolean;
   error: Error | null;
-  currentPage: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
-  if (error) return <div>An error has occurred: {error.message}</div>;
-
-  if (!data) {
-    return <DataNotFound />;
-  }
 
   const keys = Object.keys(localStorage);
 
@@ -30,6 +23,24 @@ const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
   const getFav = (value: Character, isFav: boolean) => {
     return isFav ? favArray.push(value) : undefined;
   };
+
+  const onClick = (value: Character) => {
+    const isFavo = favArray.find(i => i.id === value.id)
+    if (isFavo) {
+      localStorage.removeItem(value.id.toString());
+    }
+    if (!isFavo) {
+
+      localStorage.setItem(value.id.toString(), value.name)
+    }
+  }
+
+
+  if (error) return <div>An error has occurred: {error.message}</div>;
+
+  if (!data) {
+    return <DataNotFound />;
+  }
 
   return (
     <>
@@ -46,7 +57,7 @@ const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
             //   to={item.id.toString()}
             //   className="grid justify-center cursor-pointer"
             // >
-            <CharacterCard data={item} isPending={isPending} isFav={fav} />
+            <CharacterCard data={item} isPending={isPending} isFav={fav} onClick={() => onClick(item)}/>
             // </Link>
           );
         })}
