@@ -1,7 +1,9 @@
+import { Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@/components/ui/button';
+import { Toggle } from '@/components/ui/toggle';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
@@ -17,11 +19,15 @@ import { useAppSelector } from '@/store/redux-hooks';
 import { CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import { getPagination } from '../features/pagination/get-pagination';
+import PaginationList from '../features/pagination/paginationList';
+
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [name, setName] = useState<string>(filters.characterName);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const timeout = 500;
@@ -68,6 +74,23 @@ const CharactersPage = () => {
     placeholderData: keepPreviousData,
   });
 
+  const onClick = () => {
+    setIsFavorite(!isFavorite)
+  }
+
+
+  const maxPage = data?.info.pages ?? 0;
+
+   const {
+      page,
+      isFirstPage,
+      isLastPage,
+      setFirstPage,
+      setLastPage,
+      setNextPage,
+      setPreviousPage,
+    } = getPagination(currentPage, maxPage, setCurrentPage);
+
   if (error) return "An error has occurred: " + error.message;
 
   return (
@@ -83,6 +106,10 @@ const CharactersPage = () => {
               setCurrentPage(1);
             }}
           />
+          <Toggle aria-label="Toggle heart" onClick={onClick}>
+            <Heart className={cn('', isFavorite && 'fill-pink-600')}/>
+          </Toggle>
+
           <FilterBadges
             filters={filters}
             onClearOne={handleClear}
@@ -152,8 +179,21 @@ const CharactersPage = () => {
           return <div key={i.id}>{i.name}</div>;
         })}
       </div>
+      <div className="sticky top-52">
+        <PaginationList
+          page={page}
+          maxPage={maxPage}
+          isFirstPage={isFirstPage}
+          isLastPage={isLastPage}
+          setPage={setCurrentPage}
+          onFirstPage={setFirstPage}
+          onLastPage={setLastPage}
+          onPreviousPage={setPreviousPage}
+          onNextPage={setNextPage}
+        />
+      </div>
       <CharactersList
-        data={data}
+        data={isFavorite ? favdata : data?.results}
         isPending={isPending}
         error={error}
         currentPage={currentPage}

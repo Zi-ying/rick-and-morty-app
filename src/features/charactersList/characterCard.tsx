@@ -2,6 +2,7 @@ import { Heart } from 'lucide-react';
 
 import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { Toggle } from '@/components/ui/toggle';
 import { cn } from '@/lib/utils';
 import { Character } from '@/types/types';
 
@@ -11,9 +12,10 @@ interface CharacterCardProps {
   isFav: boolean;
 }
 
-const CharacterCard = ({ data, isPending, isFav }: CharacterCardProps) => {
+const CharacterCard = ({ data, isPending }: CharacterCardProps) => {
+
   return (
-    <Card className="rounded-xl hover:shadow-xl hover:text-pickle-500 shadow-pickle-500/50 backdrop-blur-xs">
+    <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
       <Image
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
@@ -32,10 +34,9 @@ const CharacterCard = ({ data, isPending, isFav }: CharacterCardProps) => {
             )}
           />
         </CardTitle>
-        <Heart
-          className={cn("stroke-pink-700", isFav && "fill-pink-700")}
-          onClick={() => localStorage.setItem(data.id.toString(), data.name)}
-        />
+        <Toggle aria-label="Toggle heart">
+          <Heart/>
+        </Toggle>
       </CardHeader>
     </Card>
   );
