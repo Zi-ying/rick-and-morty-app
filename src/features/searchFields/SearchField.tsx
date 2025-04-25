@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
-import { Input } from '../../components/ui/input';
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
 interface SearchFieldProps {
   placeholder: string;
@@ -21,7 +22,7 @@ const SearchField = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={className}
+        className={cn('backdrop-blur-sm', className)}
       />
   );
 };

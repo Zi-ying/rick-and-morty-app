@@ -13,10 +13,10 @@ interface SelectFieldProps {
 const SelectField = ({placeholder, value, data, classnames, onChange}: SelectFieldProps) => {
   return (
       <Select onValueChange={onChange} value={value}>
-        <SelectTrigger className={cn(classnames, 'hover:text-pickle-500 cursor-pointer')}>
+        <SelectTrigger className={cn(classnames, 'hover:text-pickle-500 cursor-pointer backdrop-blur-sm')}>
           <SelectValue placeholder={placeholder}/>
         </SelectTrigger>
-        <SelectContent className='text-white bg-black border-none'>
+        <SelectContent className='text-white backdrop-blur-lg border-none'>
           {data.map((item) => (
             <SelectItem key={item.value} value={item.value} className='hover:text-pickle-500 cursor-pointer'>
               {item.label}

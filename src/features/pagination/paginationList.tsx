@@ -25,7 +25,7 @@ const PaginationList = ({ page, maxPage, onPreviousPage, onNextPage, onFirstPage
   return (
     <Pagination>
       <PaginationContent>
-        <PaginationItem>
+        <PaginationItem className='backdrop-blur-sm'>
           <PaginationPrevious
             onClick={onPreviousPage}
             disabled={isFirstPage}
@@ -34,19 +34,19 @@ const PaginationList = ({ page, maxPage, onPreviousPage, onNextPage, onFirstPage
         <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
           <PaginationLink onClick={onFirstPage}>1</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
+        <PaginationItem className={cn('backdrop-blur-sm', isFirstPage ? "hidden" : "inline-flex")}>
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
         <PaginationItem>
           <PaginationLink isActive>{page}</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn(isLastPage ? "hidden" : "inline-flex")}>
+        <PaginationItem className={cn('blackdrop-blur-sm', isLastPage ? "hidden" : "inline-flex")}>
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn(isLastPage ? "hidden" : "inline-flex")}>
+        <PaginationItem className={cn('backdrop-blur-sm', isLastPage ? "hidden" : "inline-flex")}>
           <PaginationLink onClick={onLastPage}>{maxPage}</PaginationLink>
         </PaginationItem>
-        <PaginationItem>
+        <PaginationItem  className='backdrop-blur-sm'>
           <PaginationNext onClick={onNextPage} disabled={isLastPage} />
         </PaginationItem>
       </PaginationContent>
