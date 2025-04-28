@@ -21,9 +21,11 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { getPagination } from '../features/pagination/get-pagination';
 import PaginationList from '../features/pagination/paginationList';
+import { allFavorites } from '../store/favorites-slice';
 
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
+  const keys = useAppSelector(allFavorites);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [name, setName] = useState<string>(filters.characterName);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -66,14 +68,9 @@ const CharactersPage = () => {
     setCurrentPage(1);
   };
 
-  const keys = Object.keys(localStorage).join();
-
-  useEffect(() => {
-  }, [keys]);
-
   const { data: favdata } = useQuery({
     queryKey: ["multipleCharactersData", keys],
-    queryFn: async () => getMultipleCharacters(keys),
+    queryFn: async () => getMultipleCharacters(keys.join()),
     placeholderData: keepPreviousData,
   });
 

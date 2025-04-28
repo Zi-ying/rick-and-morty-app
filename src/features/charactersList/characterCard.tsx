@@ -4,16 +4,29 @@ import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Toggle } from '@/components/ui/toggle';
 import { cn } from '@/lib/utils';
+import { addFavorite, removeFavorite } from '@/store/favorites-slice';
+import { useAppDispatch } from '@/store/redux-hooks';
 import { Character } from '@/types/types';
 
 interface CharacterCardProps {
   data: Character;
   isPending: boolean;
-  isFav: boolean;
-  onClick: () => void;
+  isFavorite: boolean;
 }
 
-const CharacterCard = ({ data, isPending, isFav, onClick }: CharacterCardProps) => {
+const CharacterCard = ({ data, isPending, isFavorite }: CharacterCardProps) => {
+  const dispatch = useAppDispatch();
+
+  const onClick = () => {
+    if (!isFavorite) {
+      dispatch(addFavorite({key: data.id.toString(), value:data.name}));
+    }
+    else {
+      dispatch(removeFavorite(data.id.toString()));
+    }
+  };
+
+
   return (
     <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
       <Image
@@ -34,8 +47,8 @@ const CharacterCard = ({ data, isPending, isFav, onClick }: CharacterCardProps) 
             )}
           />
         </CardTitle>
-        <Toggle aria-label="Toggle heart" onClick={onClick}>
-          <Heart className={cn("fill-pink-300", isFav && "fill-pink-900")} />
+        <Toggle onClick={onClick}>
+          <Heart className={cn("", isFavorite && "fill-pink-600")} />
         </Toggle>
       </CardHeader>
     </Card>
