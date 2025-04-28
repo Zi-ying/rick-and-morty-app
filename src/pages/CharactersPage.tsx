@@ -173,11 +173,6 @@ const CharactersPage = () => {
           </div>
         </div>
       </Navigation>
-      <div className="bg-red-800 text-white">
-        {favdata?.map((i) => {
-          return <div key={i.id}>{i.name}</div>;
-        })}
-      </div>
       <div className="sticky top-52">
         <PaginationList
           page={page}

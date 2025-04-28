@@ -4,28 +4,16 @@ import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { Toggle } from '@/components/ui/toggle';
 import { cn } from '@/lib/utils';
-import { addFavorite, removeFavorite } from '@/store/favorites-slice';
-import { useAppDispatch } from '@/store/redux-hooks';
 import { Character } from '@/types/types';
 
 interface CharacterCardProps {
   data: Character;
   isPending: boolean;
   isFavorite: boolean;
+  onClick: () => void;
 }
 
-const CharacterCard = ({ data, isPending, isFavorite }: CharacterCardProps) => {
-  const dispatch = useAppDispatch();
-
-  const onClick = () => {
-    if (!isFavorite) {
-      dispatch(addFavorite({key: data.id.toString(), value:data.name}));
-    }
-    else {
-      dispatch(removeFavorite(data.id.toString()));
-    }
-  };
-
+const CharacterCard = ({ data, isPending, isFavorite, onClick }: CharacterCardProps) => {
 
   return (
     <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
@@ -48,7 +36,7 @@ const CharacterCard = ({ data, isPending, isFavorite }: CharacterCardProps) => {
           />
         </CardTitle>
         <Toggle onClick={onClick}>
-          <Heart className={cn("", isFavorite && "fill-pink-600")} />
+          <Heart className={cn("fill-pink-200 stroke-none", isFavorite && "fill-pink-600")} />
         </Toggle>
       </CardHeader>
     </Card>
