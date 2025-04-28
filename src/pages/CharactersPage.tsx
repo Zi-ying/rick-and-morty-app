@@ -8,20 +8,19 @@ import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
 import Navigation from '@/features/navigation';
+import { getPagination } from '@/features/pagination/get-pagination';
+import PaginationList from '@/features/pagination/paginationList';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
 import { cn } from '@/lib/utils';
+import { allFavorites } from '@/store/favorites-slice';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
 import { CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-
-import { getPagination } from '../features/pagination/get-pagination';
-import PaginationList from '../features/pagination/paginationList';
-import { allFavorites } from '../store/favorites-slice';
 
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
