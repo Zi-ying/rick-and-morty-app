@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import favoritesReducer from './favorites-slice';
 import filtersReducer from './filters-slice';
 
 // Infer the type of `store`
@@ -11,6 +12,7 @@ export type RootState = ReturnType<AppStore['getState']>
 
 export const store = configureStore({
   reducer: {
+    favorites: favoritesReducer,
     filters: filtersReducer,
   }
 })
