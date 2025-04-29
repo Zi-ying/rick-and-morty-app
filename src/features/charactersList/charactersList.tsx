@@ -48,18 +48,18 @@ const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
           const isFavorite = getFavorite(item);
 
           return (
-            // <Link
-            //   key={item.id}
-            //   to={item.id.toString()}
-            //   className="grid justify-center cursor-pointer"
-            // >
+            <Link
+              key={item.id}
+              to={item.id.toString()}
+              className="grid justify-center cursor-pointer"
+            >
               <CharacterCard
                 data={item}
                 isPending={isPending}
                 isFavorite={isFavorite}
-                onClick={() => onClick(item)}
+                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {onClick(item);  e.preventDefault()}}
               />
-            // </Link>
+            </Link>
           );
         })}
       </div>

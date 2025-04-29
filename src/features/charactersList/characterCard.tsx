@@ -10,7 +10,7 @@ interface CharacterCardProps {
   data: Character;
   isPending: boolean;
   isFavorite: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const CharacterCard = ({ data, isPending, isFavorite, onClick }: CharacterCardProps) => {
