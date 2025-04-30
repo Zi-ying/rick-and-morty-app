@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
 import { getAllLocations } from '@/features/locations/get-all-locations';
 import LocationsList from '@/features/locations/locationsList';
-import Navigation from '@/features/navigation';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { dimensionOptions, locationTypeOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -63,7 +62,6 @@ const LocationsPage = () => {
 
   return (
     <>
-      <Navigation>
         <SearchField
           placeholder="Search for a location"
           value={search}
@@ -110,7 +108,6 @@ const LocationsPage = () => {
           />
 
         </div>
-      </Navigation>
       <div className="bg-red-400 p-2 grid items-center gap-2">
         <div className="bg-red-300 text-center">LOCATIONS</div>
         <LocationsList data={data} currentPage={page} setPage={setPage} />

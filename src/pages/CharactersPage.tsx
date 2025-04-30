@@ -7,7 +7,6 @@ import { Toggle } from '@/components/ui/toggle';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
-import Navigation from '@/features/navigation';
 import { getPagination } from '@/features/pagination/get-pagination';
 import PaginationList from '@/features/pagination/paginationList';
 import FilterBadges from '@/features/searchFields/filterBadges';
@@ -93,8 +92,7 @@ const CharactersPage = () => {
 
   return (
     <div className="min-h-screen">
-      <Navigation>
-        <div className="grid gap-2 px-2">
+        <div className="grid gap-2 px-2 bg-red-600">
           <SearchField
             placeholder="Search by character name"
             value={name}
@@ -171,7 +169,6 @@ const CharactersPage = () => {
             />
           </div>
         </div>
-      </Navigation>
       <div className="sticky top-52">
         <PaginationList
           page={page}

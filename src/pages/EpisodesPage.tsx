@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
 import EpisodesList from '@/features/episodes/episodesList';
 import { getAllEpisodes } from '@/features/episodes/get-all-episodes';
-import Navigation from '@/features/navigation';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { episodeOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -62,43 +61,41 @@ const EpisodesPage = () => {
 
   return (
     <>
-      <Navigation>
-        <SearchField
-          placeholder="Search for an episode"
-          value={search}
-          onChange={onChange}
-          className="justify-self-center max-w-96"
+      <SearchField
+        placeholder="Search for an episode"
+        value={search}
+        onChange={onChange}
+        className="justify-self-center max-w-96"
+      />
+      <FilterBadges
+        filters={filters}
+        onClearOne={handleClear}
+        onClearAll={onResetClick}
+        className="flex flex-wrap gap-2 justify-center items-center"
+      />
+      <Button
+        onClick={onExpansionClick}
+        className={cn("justify-self-center", isExpanded ? "rotate-180" : "")}
+      >
+        V
+      </Button>
+      <div
+        className={cn(
+          "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
+          isExpanded ? "inline-grid" : "hidden"
+        )}
+      >
+        <SelectField
+          placeholder="type"
+          value={filters.episode}
+          data={episodeOptions}
+          onChange={(e) => {
+            dispatch(addFilter({ key: "episode", value: e }));
+            setPage(1);
+          }}
+          classnames="w-full"
         />
-        <FilterBadges
-          filters={filters}
-          onClearOne={handleClear}
-          onClearAll={onResetClick}
-          className="flex flex-wrap gap-2 justify-center items-center"
-        />
-        <Button
-          onClick={onExpansionClick}
-          className={cn("justify-self-center", isExpanded ? "rotate-180" : "")}
-        >
-          V
-        </Button>
-        <div
-          className={cn(
-            "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
-            isExpanded ? "inline-grid" : "hidden"
-          )}
-        >
-          <SelectField
-            placeholder="type"
-            value={filters.episode}
-            data={episodeOptions}
-            onChange={(e) => {
-              dispatch(addFilter({ key: "episode", value: e }));
-              setPage(1);
-            }}
-            classnames="w-full"
-          />
-        </div>
-      </Navigation>
+      </div>
       <div>Episodes Page</div>
       <EpisodesList
         data={data}
