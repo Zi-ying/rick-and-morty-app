@@ -4,7 +4,7 @@ import Navigation from '@/features/navigation';
 
 const Layout = () => {
   return (
-    <div className="w-full bg-home bg-fixed h-full">
+    <div className="w-full bg-home bg-fixed min-h-screen">
       <Navigation />
       <Outlet />
     </div>

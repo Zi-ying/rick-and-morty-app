@@ -7,13 +7,11 @@ const CharacterPage = () => {
   const { characterId } = useParams();
 
   return (
-    <div className='h-screen flex'>
-      <div className="flex flex-col bg-red-500">
-        <Character id={characterId} />
-        <Link to="/character" className='mt-auto'>
-          <Button>Go back</Button>
-        </Link>
-      </div>
+    <div className="h-[calc(100vh-56px)] grid place-content-center gap-2">
+      <Character id={characterId} />
+      <Link to="/character" className="m-auto">
+        <Button>Go back</Button>
+      </Link>
     </div>
   );
 };

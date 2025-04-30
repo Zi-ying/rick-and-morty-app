@@ -96,7 +96,7 @@ const CharactersPage = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <>
       <div className="grid gap-2 px-2 bg-red-600">
         <SearchField
           placeholder="Search by character name"
@@ -177,7 +177,7 @@ const CharactersPage = () => {
         isPending={isPending}
         error={error}
       />
-    </div>
+    </>
   );
 };
 
