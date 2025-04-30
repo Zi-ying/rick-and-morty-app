@@ -27,7 +27,7 @@ const CharactersPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [name, setName] = useState<string>(filters.characterName);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isFavoritePage, setIsFavoritePage] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const timeout = 500;
@@ -73,7 +73,7 @@ const CharactersPage = () => {
   });
 
   const onClick = () => {
-    setIsFavorite(!isFavorite);
+    setIsFavoritePage(!isFavoritePage);
   };
 
   const maxPage = data?.info.pages ?? 0;
@@ -103,7 +103,7 @@ const CharactersPage = () => {
             }}
           />
           <Toggle aria-label="Toggle heart" onClick={onClick}>
-            <Heart className={cn("", isFavorite && "fill-pink-600")} />
+            <Heart className={cn("", isFavoritePage && "fill-pink-600")} />
           </Toggle>
 
           <FilterBadges
@@ -183,7 +183,7 @@ const CharactersPage = () => {
         />
       </div>
       <CharactersList
-        data={isFavorite ? favdata : data?.results}
+        data={isFavoritePage ? favdata : data?.results}
         isPending={isPending}
         error={error}
       />
