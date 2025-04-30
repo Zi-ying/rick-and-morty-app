@@ -90,6 +90,11 @@ const CharactersPage = () => {
 
   if (error) return "An error has occurred: " + error.message;
 
+  const setFilters = (key: keyof Filters, value: string) => {
+    dispatch(addFilter({ key, value }));
+    setCurrentPage(1);
+  };
+
   return (
     <div className="min-h-screen">
       <div className="grid gap-2 px-2 bg-red-600">
@@ -110,51 +115,41 @@ const CharactersPage = () => {
           <div
             className={cn(
               "grid grid-cols-1 gap-2 sm:grid-cols-4",
-              isExpanded ? "inline-grid" : "hidden",
+              isExpanded ? "inline-grid" : "hidden"
             )}
           >
             <SelectField
               placeholder="Status"
               value={filters.status}
               data={statusOptions}
-              onChange={(e) => {
-                dispatch(addFilter({ key: "status", value: e }));
-                setCurrentPage(1);
-              }}
+              onChange={(e) => setFilters("status", e)}
               classnames="w-full"
             />
             <SelectField
               placeholder="Gender"
               value={filters.gender}
               data={genderOptions}
-              onChange={(e) => {
-                dispatch(addFilter({ key: "gender", value: e }));
-                setCurrentPage(1);
-              }}
+              onChange={(e) => setFilters("gender", e)}
               classnames="w-full"
             />
             <SelectField
               placeholder="Species"
               value={filters.species}
               data={speciesOptions}
-              onChange={(e) => {
-                dispatch(addFilter({ key: "species", value: e }));
-                setCurrentPage(1);
-              }}
+              onChange={(e) => setFilters("species", e)}
               classnames="w-full"
             />
             <SelectField
               placeholder="Sub-species"
               value={filters.characterType}
               data={characterTypeOptions}
-              onChange={(e) => {
-                dispatch(addFilter({ key: "characterType", value: e }));
-                setCurrentPage(1);
-              }}
+              onChange={(e) => setFilters("characterType", e)}
               classnames="w-full"
             />
           </div>
-          <Button onClick={onExpansionClick} className='ml-2'>+ Add Filter</Button>
+          <Button onClick={onExpansionClick} className="ml-2">
+            + Add Filter
+          </Button>
         </div>
 
         <FilterBadges
