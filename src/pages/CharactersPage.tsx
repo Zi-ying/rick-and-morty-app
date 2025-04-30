@@ -92,39 +92,25 @@ const CharactersPage = () => {
 
   return (
     <div className="min-h-screen">
-        <div className="grid gap-2 px-2 bg-red-600">
-          <SearchField
-            placeholder="Search by character name"
-            value={name}
-            className="max-w-96 justify-self-center p-4"
-            onChange={(e) => {
-              setName(e.target.value);
-              setCurrentPage(1);
-            }}
-          />
-          <Toggle aria-label="Toggle heart" onClick={onClick}>
-            <Heart className={cn("", isFavoritePage && "fill-pink-600")} />
-          </Toggle>
-
-          <FilterBadges
-            filters={filters}
-            onClearOne={handleClear}
-            onClearAll={onResetClick}
-            className="flex flex-wrap gap-2 justify-center items-center"
-          />
-          <Button
-            onClick={onExpansionClick}
-            className={cn(
-              "justify-self-center",
-              isExpanded ? "rotate-180" : ""
-            )}
-          >
-            V
-          </Button>
+      <div className="grid gap-2 px-2 bg-red-600">
+        <SearchField
+          placeholder="Search by character name"
+          value={name}
+          className="max-w-96 justify-self-center p-4"
+          onChange={(e) => {
+            setName(e.target.value);
+            setCurrentPage(1);
+          }}
+        />
+        <Toggle aria-label="Toggle heart" onClick={onClick}>
+          <Heart className={cn("", isFavoritePage && "fill-pink-600")} />
+        </Toggle>
+        {/* Filter Bar */}
+        <div>
           <div
             className={cn(
               "grid grid-cols-1 gap-2 sm:grid-cols-4",
-              isExpanded ? "inline-grid" : "hidden"
+              isExpanded ? "inline-grid" : "hidden",
             )}
           >
             <SelectField
@@ -168,7 +154,16 @@ const CharactersPage = () => {
               classnames="w-full"
             />
           </div>
+          <Button onClick={onExpansionClick} className='ml-2'>+ Add Filter</Button>
         </div>
+
+        <FilterBadges
+          filters={filters}
+          onClearOne={handleClear}
+          onClearAll={onResetClick}
+          className="flex flex-wrap gap-2 justify-center items-center"
+        />
+      </div>
       <div className="sticky top-52">
         <PaginationList
           page={page}
