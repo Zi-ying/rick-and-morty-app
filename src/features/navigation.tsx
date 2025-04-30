@@ -1,23 +1,17 @@
-import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import svg from '@/assets/rick-and-morty.svg';
 import { cn } from '@/lib/utils';
 
-interface NavigationProps {
-  children?: ReactNode;
-}
-
-const Navigation = ({ children }: NavigationProps) => {
+const Navigation = () => {
   const location = useLocation();
 
   return (
-    <div className="text-white sm:sticky left-0 top-0 shadow-2xl z-10 bg-home">
-      <div className="grid grid-cols-2 p-2">
-        <Link to='/'>
+    <div className="text-white sm:sticky left-0 top-0 shadow-2xl z-10 bg-home flex">
+        <Link to='/' className='flex-none'>
           <img src={svg} alt="Rick and Morty" className="h-14" />
         </Link>
-        <div className=" flex justify-end gap-4 items-center">
+        <div className="flex justify-end gap-4 items-center grow">
           <Link
             to="/"
             className={cn(
@@ -55,8 +49,6 @@ const Navigation = ({ children }: NavigationProps) => {
             Episodes
           </Link>
         </div>
-      </div>
-      <div>{children}</div>
     </div>
   );
 };
