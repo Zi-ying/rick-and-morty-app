@@ -1,9 +1,7 @@
-import { Heart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@/components/ui/button';
-import { Toggle } from '@/components/ui/toggle';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
@@ -19,6 +17,7 @@ import { useAppSelector } from '@/store/redux-hooks';
 import { CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import HeartToggle from '../components/heart-toggle';
 import { getPagination } from '../features/pagination/get-pagination';
 import PaginationList from '../features/pagination/paginationList';
 
@@ -98,44 +97,57 @@ const CharactersPage = () => {
     setPreviousPage,
   } = getPagination(currentPage, maxPage, setCurrentPage);
 
+  // useEffect(() => {
+  //   const array2 = filteredData.filter((d) =>
+  //     d.name.includes(debouncedNameValue2)
+  //   );
+
+  // }, [name2, debouncedNameValue2, filteredData]);
+
   if (error) return "An error has occurred: " + error.message;
 
+
+
   if (isFavoritePage) {
+
     return (
-      <>
-        <div className='flex items-center justify-center'>
-          <div className="text-white">Favorite Page</div>
-          <Toggle
-            aria-label="Toggle heart"
-            onClick={() => setIsFavoritePage(!isFavoritePage)}
-          >
-            <Heart className={cn("", isFavoritePage && "fill-pink-600")} />
-          </Toggle>
+      <div>
+        <div className="flex justify-center">
+          {/* <SearchField
+            placeholder="Search by character name"
+            value={name}
+            className="max-w-96 p-4"
+            onChange={(e) => setName(e.target.value)}
+          /> */}
+          <HeartToggle
+            isToggled={isFavoritePage}
+            onToggle={() => setIsFavoritePage(!isFavoritePage)}
+          />
         </div>
-        <CharactersList
-          data={favdata}
-          isPending={isFavDataPending}
-          error={favDataError}
-        />
-      </>
+          <CharactersList
+            data={favdata}
+            isPending={isFavDataPending}
+            error={favDataError}
+          />
+      </div>
     );
   }
 
   return (
     <>
       <div className="grid gap-2 px-2 bg-red-600">
-        <SearchField
-          placeholder="Search by character name"
-          value={name}
-          className="max-w-96 justify-self-center p-4"
-          onChange={(e) => setSearchFilter(e.target.value)}
-        />
-        <Toggle
-          aria-label="Toggle heart"
-          onClick={() => setIsFavoritePage(!isFavoritePage)}
-        >
-          <Heart className={cn("", isFavoritePage && "fill-pink-600")} />
-        </Toggle>
+        <div className="flex justify-center">
+          <SearchField
+            placeholder="Search by character name"
+            value={name}
+            className="max-w-96 p-4"
+            onChange={(e) => setSearchFilter(e.target.value)}
+          />
+          <HeartToggle
+            isToggled={isFavoritePage}
+            onToggle={() => setIsFavoritePage(!isFavoritePage)}
+          />
+        </div>
         {/* Filter Bar */}
         <div>
           <div
