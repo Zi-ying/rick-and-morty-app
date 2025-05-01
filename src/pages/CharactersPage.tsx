@@ -125,13 +125,8 @@ const CharactersPage = () => {
           />
         </div>
         {/* Filter Bar */}
-        <div>
-          <div
-            className={cn(
-              "grid grid-cols-1 gap-2 sm:grid-cols-4 text-white",
-              isExpanded ? "inline-grid" : "hidden"
-            )}
-          >
+        <div className={cn("grid gap-2 text-white m-auto", isExpanded ? 'grid-cols-5' : 'grid-cols-1')}>
+          <div className={cn(isExpanded ? 'grid grid-cols-4 gap-2 col-span-4' : 'hidden')}>
             <SelectField
               placeholder="Status"
               value={filters.status}
@@ -161,7 +156,7 @@ const CharactersPage = () => {
               classnames="w-full"
             />
           </div>
-          <Button onClick={() => setIsExpanded(!isExpanded)} className="ml-2">
+          <Button onClick={() => setIsExpanded(!isExpanded)} className='col-span-1'>
             + Add Filter
           </Button>
         </div>
@@ -169,17 +164,14 @@ const CharactersPage = () => {
           filters={filters}
           onClearOne={handleClear}
           onClearAll={onResetClick}
-          className="flex flex-wrap gap-2 justify-center items-center"
+          className="flex flex-wrap gap-2 justify-center items-center h-10"
         />
       </div>
       {!data?.info && !data?.results ? (
         <DataNotFound />
       ) : (
         <>
-          <div className="sticky top-34 z-10 bg-home bg-fixed">
-            <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
-              Character's list from Rick and Morty
-            </div>
+          <div className="sticky top-42 z-10 bg-home bg-fixed">
             <PaginationList
               currentPage={currentPage}
               maxPage={data.info.pages}
