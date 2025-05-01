@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@/components/ui/button';
@@ -35,9 +35,7 @@ const CharactersPage = () => {
 
   const debouncedNameValue = useDebounce(name, timeout);
 
-  useEffect(() => {
-    dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
-  }, [dispatch, name, debouncedNameValue]);
+  dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
 
   const setFilters = (key: keyof Filters, value: string) => {
     dispatch(addFilter({ key, value }));
@@ -88,8 +86,6 @@ const CharactersPage = () => {
 
   const value = useDebounce(name2, timeout);
 
-
-
   const maxPage = data?.info.pages ?? 0;
 
   const {
@@ -105,7 +101,7 @@ const CharactersPage = () => {
   if (error) return "An error has occurred: " + error.message;
 
   if (isFavoritePage) {
-    const filteredData = favdata?.filter(d => d.name.includes(value))
+    const filteredData = favdata?.filter((d) => d.name.includes(value));
 
     return (
       <div>
@@ -121,11 +117,11 @@ const CharactersPage = () => {
             onToggle={() => setIsFavoritePage(!isFavoritePage)}
           />
         </div>
-          <CharactersList
-            data={filteredData}
-            isPending={isFavDataPending}
-            error={favDataError}
-          />
+        <CharactersList
+          data={filteredData}
+          isPending={isFavDataPending}
+          error={favDataError}
+        />
       </div>
     );
   }
@@ -196,12 +192,7 @@ const CharactersPage = () => {
       <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
         Character's list from Rick and Morty
       </div>
-      <div
-        className={cn(
-          "sticky top-52",
-          isFavoritePage ? "hidden" : "inline-flex"
-        )}
-      >
+      <div className="sticky top-52">
         <PaginationList
           page={page}
           maxPage={maxPage}
