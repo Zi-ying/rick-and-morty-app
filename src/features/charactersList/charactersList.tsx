@@ -34,7 +34,7 @@ const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
 
   if (error) return <div>An error has occurred: {error.message}</div>;
 
-  if (!data) {
+  if (!data || data.length === 0) {
     return <DataNotFound />;
   }
 
