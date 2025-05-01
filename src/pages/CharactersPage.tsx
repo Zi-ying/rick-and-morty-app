@@ -26,6 +26,7 @@ const CharactersPage = () => {
   const keys = useAppSelector(allFavorites);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [name, setName] = useState<string>("");
+  const [name2, setName2] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isFavoritePage, setIsFavoritePage] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -85,6 +86,10 @@ const CharactersPage = () => {
     placeholderData: keepPreviousData,
   });
 
+  const value = useDebounce(name2, timeout);
+
+
+
   const maxPage = data?.info.pages ?? 0;
 
   const {
@@ -97,35 +102,27 @@ const CharactersPage = () => {
     setPreviousPage,
   } = getPagination(currentPage, maxPage, setCurrentPage);
 
-  // useEffect(() => {
-  //   const array2 = filteredData.filter((d) =>
-  //     d.name.includes(debouncedNameValue2)
-  //   );
-
-  // }, [name2, debouncedNameValue2, filteredData]);
-
   if (error) return "An error has occurred: " + error.message;
 
-
-
   if (isFavoritePage) {
+    const filteredData = favdata?.filter(d => d.name.includes(value))
 
     return (
       <div>
         <div className="flex justify-center">
-          {/* <SearchField
+          <SearchField
             placeholder="Search by character name"
-            value={name}
+            value={name2}
             className="max-w-96 p-4"
-            onChange={(e) => setName(e.target.value)}
-          /> */}
+            onChange={(e) => setName2(e.target.value)}
+          />
           <HeartToggle
             isToggled={isFavoritePage}
             onToggle={() => setIsFavoritePage(!isFavoritePage)}
           />
         </div>
           <CharactersList
-            data={favdata}
+            data={filteredData}
             isPending={isFavDataPending}
             error={favDataError}
           />
