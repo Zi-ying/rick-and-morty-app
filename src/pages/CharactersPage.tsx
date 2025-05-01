@@ -25,7 +25,7 @@ const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
   const keys = useAppSelector(allFavorites);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [name, setName] = useState<string>(filters.characterName);
+  const [name, setName] = useState<string>("");
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [isFavoritePage, setIsFavoritePage] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -37,6 +37,24 @@ const CharactersPage = () => {
   useEffect(() => {
     dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
   }, [dispatch, name, debouncedNameValue]);
+
+  const setFilters = (key: keyof Filters, value: string) => {
+    dispatch(addFilter({ key, value }));
+    setCurrentPage(1);
+  };
+
+  const setSearchFilter = (value: string) => {
+    setName(value);
+    setCurrentPage(1);
+  };
+
+  const handleClear = (filter: keyof Filters) => {
+    dispatch(removeOneFilter(filter));
+    setCurrentPage(1);
+    if (filter === "characterName") {
+      setName("");
+    }
+  };
 
   const onResetClick = () => {
     dispatch(resetFilters());
@@ -57,24 +75,11 @@ const CharactersPage = () => {
     placeholderData: keepPreviousData,
   });
 
-  const onExpansionClick = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const handleClear = (filter: keyof Filters) => {
-    dispatch(removeOneFilter(filter));
-    setCurrentPage(1);
-  };
-
   const { data: favdata } = useQuery({
     queryKey: ["multipleCharactersData", keys],
     queryFn: async () => getMultipleCharacters(keys.join()),
     placeholderData: keepPreviousData,
   });
-
-  const onClick = () => {
-    setIsFavoritePage(!isFavoritePage);
-  };
 
   const maxPage = data?.info.pages ?? 0;
 
@@ -90,11 +95,6 @@ const CharactersPage = () => {
 
   if (error) return "An error has occurred: " + error.message;
 
-  const setFilters = (key: keyof Filters, value: string) => {
-    dispatch(addFilter({ key, value }));
-    setCurrentPage(1);
-  };
-
   return (
     <>
       <div className="grid gap-2 px-2 bg-red-600">
@@ -102,12 +102,12 @@ const CharactersPage = () => {
           placeholder="Search by character name"
           value={name}
           className="max-w-96 justify-self-center p-4"
-          onChange={(e) => {
-            setName(e.target.value);
-            setCurrentPage(1);
-          }}
+          onChange={(e) => setSearchFilter(e.target.value)}
         />
-        <Toggle aria-label="Toggle heart" onClick={onClick}>
+        <Toggle
+          aria-label="Toggle heart"
+          onClick={() => setIsFavoritePage(!isFavoritePage)}
+        >
           <Heart className={cn("", isFavoritePage && "fill-pink-600")} />
         </Toggle>
         {/* Filter Bar */}
@@ -147,11 +147,10 @@ const CharactersPage = () => {
               classnames="w-full"
             />
           </div>
-          <Button onClick={onExpansionClick} className="ml-2">
+          <Button onClick={() => setIsExpanded(!isExpanded)} className="ml-2">
             + Add Filter
           </Button>
         </div>
-
         <FilterBadges
           filters={filters}
           onClearOne={handleClear}
