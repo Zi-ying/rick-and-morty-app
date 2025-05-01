@@ -7,8 +7,6 @@ import { Toggle } from '@/components/ui/toggle';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
-import { getPagination } from '@/features/pagination/get-pagination';
-import PaginationList from '@/features/pagination/paginationList';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -20,6 +18,9 @@ import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/fi
 import { useAppSelector } from '@/store/redux-hooks';
 import { CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
+import { getPagination } from '../features/pagination/get-pagination';
+import PaginationList from '../features/pagination/paginationList';
 
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
@@ -75,7 +76,11 @@ const CharactersPage = () => {
     placeholderData: keepPreviousData,
   });
 
-  const { data: favdata } = useQuery({
+  const {
+    data: favdata,
+    isPending: isFavDataPending,
+    error: favDataError,
+  } = useQuery({
     queryKey: ["multipleCharactersData", keys],
     queryFn: async () => getMultipleCharacters(keys.join()),
     placeholderData: keepPreviousData,
@@ -94,6 +99,27 @@ const CharactersPage = () => {
   } = getPagination(currentPage, maxPage, setCurrentPage);
 
   if (error) return "An error has occurred: " + error.message;
+
+  if (isFavoritePage) {
+    return (
+      <>
+        <div className='flex items-center justify-center'>
+          <div className="text-white">Favorite Page</div>
+          <Toggle
+            aria-label="Toggle heart"
+            onClick={() => setIsFavoritePage(!isFavoritePage)}
+          >
+            <Heart className={cn("", isFavoritePage && "fill-pink-600")} />
+          </Toggle>
+        </div>
+        <CharactersList
+          data={favdata}
+          isPending={isFavDataPending}
+          error={favDataError}
+        />
+      </>
+    );
+  }
 
   return (
     <>
@@ -158,7 +184,15 @@ const CharactersPage = () => {
           className="flex flex-wrap gap-2 justify-center items-center"
         />
       </div>
-      <div className="sticky top-52">
+      <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
+        Character's list from Rick and Morty
+      </div>
+      <div
+        className={cn(
+          "sticky top-52",
+          isFavoritePage ? "hidden" : "inline-flex"
+        )}
+      >
         <PaginationList
           page={page}
           maxPage={maxPage}
@@ -172,7 +206,7 @@ const CharactersPage = () => {
         />
       </div>
       <CharactersList
-        data={isFavoritePage ? favdata : data?.results}
+        data={data?.results}
         isPending={isPending}
         error={error}
       />

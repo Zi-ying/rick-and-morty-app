@@ -40,9 +40,6 @@ const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
 
   return (
     <>
-      <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
-        Character's list from Rick and Morty
-      </div>
       <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 p-6">
         {data.map((item) => {
           const isFavorite = getFavorite(item);
@@ -57,7 +54,12 @@ const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
                 data={item}
                 isPending={isPending}
                 isFavorite={isFavorite}
-                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {onClick(item);  e.preventDefault()}}
+                onClick={(
+                  e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
+                  onClick(item);
+                  e.preventDefault();
+                }}
               />
             </Link>
           );
