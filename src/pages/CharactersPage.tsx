@@ -128,12 +128,12 @@ const CharactersPage = () => {
 
   return (
     <>
-      <div className="grid gap-2 px-2 bg-red-600">
-        <div className="flex justify-center">
+      <div className="grid gap-2 px-2 sticky top-12 z-10 bg-home bg-fixed">
+        <div className="flex justify-center items-center">
           <SearchField
             placeholder="Search by character name"
             value={name}
-            className="max-w-96 p-4"
+            className="max-w-96 p-4 text-white"
             onChange={(e) => setSearchFilter(e.target.value)}
           />
           <HeartToggle
@@ -145,7 +145,7 @@ const CharactersPage = () => {
         <div>
           <div
             className={cn(
-              "grid grid-cols-1 gap-2 sm:grid-cols-4",
+              "grid grid-cols-1 gap-2 sm:grid-cols-4 text-white",
               isExpanded ? "inline-grid" : "hidden"
             )}
           >
@@ -188,11 +188,6 @@ const CharactersPage = () => {
           onClearAll={onResetClick}
           className="flex flex-wrap gap-2 justify-center items-center"
         />
-      </div>
-      <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
-        Character's list from Rick and Morty
-      </div>
-      <div className="sticky top-52">
         <PaginationList
           page={page}
           maxPage={maxPage}
@@ -204,6 +199,9 @@ const CharactersPage = () => {
           onPreviousPage={setPreviousPage}
           onNextPage={setNextPage}
         />
+      </div>
+      <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
+        Character's list from Rick and Morty
       </div>
       <CharactersList
         data={data?.results}
