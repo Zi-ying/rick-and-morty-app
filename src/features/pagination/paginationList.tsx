@@ -8,31 +8,37 @@ import {
 } from '@/components/ui/pagination';
 import { cn } from '@/lib/utils';
 
+import { getPagination } from './get-pagination';
+
 interface PaginationListProps {
-  page: number;
+  currentPage: number;
   maxPage: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
-  onFirstPage: () => void;
-  onLastPage: () => void;
-  isFirstPage: boolean;
-  isLastPage: boolean;
 }
 
-const PaginationList = ({ page, maxPage, onPreviousPage, onNextPage, onFirstPage, onLastPage, isFirstPage, isLastPage }: PaginationListProps) => {
+const PaginationList = ({ currentPage, maxPage, setPage }: PaginationListProps) => {
+
+  const {
+    page,
+    isFirstPage,
+    isLastPage,
+    setFirstPage,
+    setLastPage,
+    setNextPage,
+    setPreviousPage,
+  } = getPagination(currentPage, maxPage, setPage);
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem className='backdrop-blur-sm'>
           <PaginationPrevious
-            onClick={onPreviousPage}
+            onClick={setPreviousPage}
             disabled={isFirstPage}
           />
         </PaginationItem>
         <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
-          <PaginationLink onClick={onFirstPage}>1</PaginationLink>
+          <PaginationLink onClick={setFirstPage}>1</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn('backdrop-blur-sm', isFirstPage ? "hidden" : "inline-flex")}>
           <PaginationLink disabled>...</PaginationLink>
@@ -44,10 +50,10 @@ const PaginationList = ({ page, maxPage, onPreviousPage, onNextPage, onFirstPage
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn('backdrop-blur-sm', isLastPage ? "hidden" : "inline-flex")}>
-          <PaginationLink onClick={onLastPage}>{maxPage}</PaginationLink>
+          <PaginationLink onClick={setLastPage}>{maxPage}</PaginationLink>
         </PaginationItem>
         <PaginationItem  className='backdrop-blur-sm'>
-          <PaginationNext onClick={onNextPage} disabled={isLastPage} />
+          <PaginationNext onClick={setNextPage} disabled={isLastPage} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

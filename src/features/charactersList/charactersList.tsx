@@ -11,10 +11,9 @@ import type { Character } from "@/types/types";
 interface CharactersListProps {
   data: Character[] | undefined;
   isPending: boolean;
-  error: Error | null;
 }
 
-const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
+const CharactersList = ({ data, isPending }: CharactersListProps) => {
   const keys = useAppSelector(allFavorites);
   const dispatch = useAppDispatch();
 
@@ -31,8 +30,6 @@ const CharactersList = ({ data, isPending, error }: CharactersListProps) => {
       dispatch(removeFavorite(item.id.toString()));
     }
   };
-
-  if (error) return <div>An error has occurred: {error.message}</div>;
 
   if (!data || data.length === 0) {
     return <DataNotFound />;

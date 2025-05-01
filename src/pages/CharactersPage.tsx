@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Button } from '@/components/ui/button';
@@ -18,7 +18,7 @@ import { CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import HeartToggle from '../components/heart-toggle';
-import { getPagination } from '../features/pagination/get-pagination';
+import DataNotFound from '../features/dataNotFound';
 import PaginationList from '../features/pagination/paginationList';
 
 const CharactersPage = () => {
@@ -35,7 +35,9 @@ const CharactersPage = () => {
 
   const debouncedNameValue = useDebounce(name, timeout);
 
-  dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
+  useEffect(() => {
+    dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
+  }, [debouncedNameValue, dispatch]);
 
   const setFilters = (key: keyof Filters, value: string) => {
     dispatch(addFilter({ key, value }));
@@ -57,6 +59,7 @@ const CharactersPage = () => {
 
   const onResetClick = () => {
     dispatch(resetFilters());
+    setName("");
     setCurrentPage(1);
   };
 
@@ -74,29 +77,13 @@ const CharactersPage = () => {
     placeholderData: keepPreviousData,
   });
 
-  const {
-    data: favdata,
-    isPending: isFavDataPending,
-    error: favDataError,
-  } = useQuery({
+  const { data: favdata, isPending: isFavDataPending } = useQuery({
     queryKey: ["multipleCharactersData", keys],
     queryFn: async () => getMultipleCharacters(keys.join()),
     placeholderData: keepPreviousData,
   });
 
   const value = useDebounce(name2, timeout);
-
-  const maxPage = data?.info.pages ?? 0;
-
-  const {
-    page,
-    isFirstPage,
-    isLastPage,
-    setFirstPage,
-    setLastPage,
-    setNextPage,
-    setPreviousPage,
-  } = getPagination(currentPage, maxPage, setCurrentPage);
 
   if (error) return "An error has occurred: " + error.message;
 
@@ -117,11 +104,7 @@ const CharactersPage = () => {
             onToggle={() => setIsFavoritePage(!isFavoritePage)}
           />
         </div>
-        <CharactersList
-          data={filteredData}
-          isPending={isFavDataPending}
-          error={favDataError}
-        />
+        <CharactersList data={filteredData} isPending={isFavDataPending} />
       </div>
     );
   }
@@ -188,26 +171,24 @@ const CharactersPage = () => {
           onClearAll={onResetClick}
           className="flex flex-wrap gap-2 justify-center items-center"
         />
-        <PaginationList
-          page={page}
-          maxPage={maxPage}
-          isFirstPage={isFirstPage}
-          isLastPage={isLastPage}
-          setPage={setCurrentPage}
-          onFirstPage={setFirstPage}
-          onLastPage={setLastPage}
-          onPreviousPage={setPreviousPage}
-          onNextPage={setNextPage}
-        />
       </div>
-      <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
-        Character's list from Rick and Morty
-      </div>
-      <CharactersList
-        data={data?.results}
-        isPending={isPending}
-        error={error}
-      />
+      {!data?.info && !data?.results ? (
+        <DataNotFound />
+      ) : (
+        <>
+          <div className="sticky top-34 z-10 bg-home bg-fixed">
+            <div className="hidden sm:inline-grid sm:text-2xl sm:text-pickle-500">
+              Character's list from Rick and Morty
+            </div>
+            <PaginationList
+              currentPage={currentPage}
+              maxPage={data.info.pages}
+              setPage={setCurrentPage}
+            />
+          </div>
+          <CharactersList data={data?.results} isPending={isPending} />
+        </>
+      )}
     </>
   );
 };
