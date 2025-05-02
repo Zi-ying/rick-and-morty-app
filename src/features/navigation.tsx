@@ -15,7 +15,7 @@ const Navigation = () => {
           <Link
             to="/"
             className={cn(
-              "hover:text-pickle-500 hover:underline py-4",
+              "hover:text-pickle-500 hover:underline underline-offset-8 py-4",
               location.pathname === "/" ? "underline" : ""
             )}
           >
@@ -24,7 +24,7 @@ const Navigation = () => {
           <Link
             to="/character"
             className={cn(
-              "hover:text-pickle-500 hover:underline py-4",
+              "hover:text-pickle-500 hover:underline underline-offset-8 py-4",
               location.pathname === "/character" ? "underline" : ""
             )}
           >
@@ -33,7 +33,7 @@ const Navigation = () => {
           <Link
             to="/location"
             className={cn(
-              "hover:text-pickle-500 hover:underline py-4",
+              "hover:text-pickle-500 hover:underline underline-offset-8 py-4",
               location.pathname === "/location" ? "underline" : ""
             )}
           >
@@ -42,7 +42,7 @@ const Navigation = () => {
           <Link
             to="/episode"
             className={cn(
-              "hover:text-pickle-500 hover:underline py-4",
+              "hover:text-pickle-500 hover:underline underline-offset-8 py-4",
               location.pathname === "/episode" ? "underline" : ""
             )}
           >
