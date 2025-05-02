@@ -110,28 +110,34 @@ const CharactersPage = () => {
 
   return (
     <>
-      <div className="grid gap-2 px-2 sticky top-14 z-10 bg-home bg-fixed">
-        <div className="flex justify-center items-center">
+      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
+        <div className="grid grid-cols-4">
           <SearchField
             placeholder="Search by character name"
             value={name}
-            className="max-w-96 p-4 text-white"
+            className="p-4 text-white col-start-2 col-end-4"
             onChange={(e) => setSearchFilter(e.target.value)}
           />
-          <HeartToggle
-            isToggled={isFavoritePage}
-            onToggle={() => setIsFavoritePage(!isFavoritePage)}
-          />
+          <div>
+            <HeartToggle
+              isToggled={isFavoritePage}
+              onToggle={() => setIsFavoritePage(!isFavoritePage)}
+            />
+            <Button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="w-fit self-stretch"
+            >
+              {isExpanded ? "-" : "+"}
+            </Button>
+          </div>
         </div>
         {/* Filter Bar */}
-        <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="w-fit justify-self-center"
-        >
-          + Add Filters
-        </Button>
         <div
-          className={cn(isExpanded ? "grid md:grid-cols-4 gap-2 text-white m-auto" : "hidden")}
+          className={cn(
+            isExpanded
+              ? "grid md:grid-cols-4 gap-2 text-white m-auto"
+              : "hidden"
+          )}
         >
           <SelectField
             placeholder="Status"
@@ -166,22 +172,20 @@ const CharactersPage = () => {
           filters={filters}
           onClearOne={handleClear}
           onClearAll={onResetClick}
-          className="flex flex-wrap gap-2 justify-center items-center h-10"
+          className="flex flex-wrap gap-2 justify-center items-center"
         />
+        {data?.info && data?.results && (
+          <PaginationList
+            currentPage={currentPage}
+            maxPage={data.info.pages}
+            setPage={setCurrentPage}
+          />
+        )}
       </div>
       {!data?.info && !data?.results ? (
         <DataNotFound />
       ) : (
-        <>
-          <div className="sticky top-42 z-10 bg-home bg-fixed">
-            <PaginationList
-              currentPage={currentPage}
-              maxPage={data.info.pages}
-              setPage={setCurrentPage}
-            />
-          </div>
-          <CharactersList data={data?.results} isPending={isPending} />
-        </>
+        <CharactersList data={data?.results} isPending={isPending} />
       )}
     </>
   );
