@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom';
+
 import Image from '@/components/image';
+import { Button } from '@/components/ui/button';
 import { CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
@@ -58,60 +61,67 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 rounded-xl shadow-md justify-center text-white backdrop-blur-md">
-      <Image
-        src={data.image}
-        alt={`image of ${data.name} from Rick and Morty`}
-        className="md:rounded-l-md rounded-t-md md:rounded-tr-none flex-none"
-      />
-      <div className="flex flex-col gap-4 p-4 md:items-start md:justify-center md:grow">
-        <CardTitle className="flex gap-2 items-center justify-center">
-          <div className="text-pickle-500 font-semibold md:text-start text-md md:text-xl">
-            {data.name}
-          </div>
-          <div
-            className={cn(
-              "rounded-full w-2 h-2",
-              data.status === "Alive" && "bg-green-400",
-              data.status === "unknown" && "bg-slate-500",
-              data.status === "Dead" && "bg-red-500"
-            )}
-          />
-        </CardTitle>
-        <div className="grid md:grid-cols-2 items-center justify-center gap-2">
-          <div>
-            <p className="text-pickle-500 text-lg">Status</p>
-            <p className="whitespace-nowrap">
-              {data.status.toLocaleLowerCase()}
-            </p>
-          </div>
-          <div>
-            <p className="text-pickle-500 text-lg">Gender</p>
-            <p className="whitespace-nowrap">
-              {data.gender.toLocaleLowerCase()}
-            </p>
-          </div>
-          <div>
-            <p className="text-pickle-500 text-lg">Species</p>
-            <p className="whitespace-nowrap">
-              {data.species.toLocaleLowerCase()}
-            </p>
-          </div>
-          <div>
-            <p className="text-pickle-500 text-lg">Type</p>
-            <p className="whitespace-nowrap">{data.type ? data.type.toLocaleLowerCase() : 'none'}</p>
-          </div>
-          <div>
-            <p className="text-pickle-500 text-lg">Location</p>
-            <p className="whitespace-nowrap">{data.location.name}</p>
-          </div>
-          <div>
-            <p className="text-pickle-500 text-lg">Episodes</p>
-            <p className="whitespace-nowrap">{data.episode.length}</p>
+    <>
+      <div className="flex flex-col md:flex-row gap-4 rounded-xl shadow-md justify-center text-white backdrop-blur-md">
+        <Image
+          src={data.image}
+          alt={`image of ${data.name} from Rick and Morty`}
+          className="md:rounded-l-md rounded-t-md md:rounded-tr-none flex-none"
+        />
+        <div className="flex flex-col gap-4 p-4 md:items-start md:justify-center md:grow">
+          <CardTitle className="flex gap-2 items-center justify-center">
+            <div className="text-pickle-500 font-semibold md:text-start text-md md:text-xl">
+              {data.name}
+            </div>
+            <div
+              className={cn(
+                "rounded-full w-2 h-2",
+                data.status === "Alive" && "bg-green-400",
+                data.status === "unknown" && "bg-slate-500",
+                data.status === "Dead" && "bg-red-500"
+              )}
+            />
+          </CardTitle>
+          <div className="grid md:grid-cols-2 items-center justify-center gap-2">
+            <div>
+              <p className="text-pickle-500 text-lg">Status</p>
+              <p className="whitespace-nowrap">
+                {data.status.toLocaleLowerCase()}
+              </p>
+            </div>
+            <div>
+              <p className="text-pickle-500 text-lg">Gender</p>
+              <p className="whitespace-nowrap">
+                {data.gender.toLocaleLowerCase()}
+              </p>
+            </div>
+            <div>
+              <p className="text-pickle-500 text-lg">Species</p>
+              <p className="whitespace-nowrap">
+                {data.species.toLocaleLowerCase()}
+              </p>
+            </div>
+            <div>
+              <p className="text-pickle-500 text-lg">Type</p>
+              <p className="whitespace-nowrap">
+                {data.type ? data.type.toLocaleLowerCase() : "none"}
+              </p>
+            </div>
+            <div>
+              <p className="text-pickle-500 text-lg">Location</p>
+              <p className="whitespace-nowrap">{data.location.name}</p>
+            </div>
+            <div>
+              <p className="text-pickle-500 text-lg">Episodes</p>
+              <p className="whitespace-nowrap">{data.episode.length}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <Link to="/character" className="m-auto">
+        <Button>Go back</Button>
+      </Link>
+    </>
   );
 };
 
