@@ -1,18 +1,14 @@
-import oops from '@/assets/oops.svg';
-
 const DataNotFound = () => {
   return (
-    <div className="flex flex-col gap-2 items-center bg-green-500">
-      <img
-        src={oops}
-        alt="Oops"
-        className="bg-green-400 max-h-96"
-      />
-      <div className="bg-green-400">No results found</div>
-      <div className="bg-green-400">
-        We could not find what you searched for.
+    <div className="flex items-center justify-center">
+      <div className="grid gap-4 justify-items-center p-4 backdrop-blur-xs rounded-xl m-auto">
+        <h1 className="text-pickle-500 text-9xl">Oops!</h1>
+        <h5 className="text-white text-5xl">No results found</h5>
+        <h5 className="text-white text-4xl">
+          We could not find what you searched for.
+        </h5>
+        <h5 className="text-white text-3xl">Try searching again.</h5>
       </div>
-      <div className="bg-green-400">Try searching again.</div>
     </div>
   );
 };
