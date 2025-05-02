@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import HeartToggle from '@/components/heart-toggle';
 import { Button } from '@/components/ui/button';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
+import DataNotFound from '@/features/dataNotFound';
+import PaginationList from '@/features/pagination/paginationList';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -16,10 +19,6 @@ import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/fi
 import { useAppSelector } from '@/store/redux-hooks';
 import { CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-
-import HeartToggle from '../components/heart-toggle';
-import DataNotFound from '../features/dataNotFound';
-import PaginationList from '../features/pagination/paginationList';
 
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
@@ -125,40 +124,43 @@ const CharactersPage = () => {
           />
         </div>
         {/* Filter Bar */}
-        <div className={cn("grid gap-2 text-white m-auto", isExpanded ? 'grid-cols-5' : 'grid-cols-1')}>
-          <div className={cn(isExpanded ? 'grid grid-cols-4 gap-2 col-span-4' : 'hidden')}>
-            <SelectField
-              placeholder="Status"
-              value={filters.status}
-              data={statusOptions}
-              onChange={(e) => setFilters("status", e)}
-              classnames="w-full"
-            />
-            <SelectField
-              placeholder="Gender"
-              value={filters.gender}
-              data={genderOptions}
-              onChange={(e) => setFilters("gender", e)}
-              classnames="w-full"
-            />
-            <SelectField
-              placeholder="Species"
-              value={filters.species}
-              data={speciesOptions}
-              onChange={(e) => setFilters("species", e)}
-              classnames="w-full"
-            />
-            <SelectField
-              placeholder="Sub-species"
-              value={filters.characterType}
-              data={characterTypeOptions}
-              onChange={(e) => setFilters("characterType", e)}
-              classnames="w-full"
-            />
-          </div>
-          <Button onClick={() => setIsExpanded(!isExpanded)} className='col-span-1'>
-            + Add Filter
-          </Button>
+        <Button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="w-fit justify-self-center"
+        >
+          + Add Filters
+        </Button>
+        <div
+          className={cn(isExpanded ? "grid md:grid-cols-4 gap-2 text-white m-auto" : "hidden")}
+        >
+          <SelectField
+            placeholder="Status"
+            value={filters.status}
+            data={statusOptions}
+            onChange={(e) => setFilters("status", e)}
+            classnames="w-full"
+          />
+          <SelectField
+            placeholder="Gender"
+            value={filters.gender}
+            data={genderOptions}
+            onChange={(e) => setFilters("gender", e)}
+            classnames="w-full"
+          />
+          <SelectField
+            placeholder="Species"
+            value={filters.species}
+            data={speciesOptions}
+            onChange={(e) => setFilters("species", e)}
+            classnames="w-full"
+          />
+          <SelectField
+            placeholder="Sub-species"
+            value={filters.characterType}
+            data={characterTypeOptions}
+            onChange={(e) => setFilters("characterType", e)}
+            classnames="w-[220px]"
+          />
         </div>
         <FilterBadges
           filters={filters}
