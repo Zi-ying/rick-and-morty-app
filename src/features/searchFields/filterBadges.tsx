@@ -129,8 +129,8 @@ const FilterBadges = ({
         filters.episodeName ||
         filters.locationName ||
         filters.locationType) && (
-        <Button variant="ghost" onClick={onClearAll}>
-          Clear all
+        <Button variant="outline" size='sm' onClick={onClearAll}>
+          Clear
         </Button>
       )}
     </div>

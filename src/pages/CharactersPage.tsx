@@ -95,7 +95,7 @@ const CharactersPage = () => {
           <SearchField
             placeholder="Search by character name"
             value={name2}
-            className="max-w-96 p-4"
+            className="max-w-96 p-4 text-white"
             onChange={(e) => setName2(e.target.value)}
           />
           <HeartToggle
@@ -110,7 +110,7 @@ const CharactersPage = () => {
 
   return (
     <>
-      <div className="grid gap-2 px-2 sticky top-12 z-10 bg-home bg-fixed">
+      <div className="grid gap-2 px-2 sticky top-14 z-10 bg-home bg-fixed">
         <div className="flex justify-center items-center">
           <SearchField
             placeholder="Search by character name"
