@@ -77,10 +77,6 @@ export const characterTypeOptions = [
   { label: "Snake", value: "snake" },
   { label: "Stair Goblin", value: "stair goblin" },
   { label: "Superhuman", value: "superhuman" },
-  {
-    label: "Superhuman (Ghost trains summoner)",
-    value: "superhuman (ghost trains summoner)",
-  },
   { label: "Time Gop", value: "time gop" },
   { label: "Traflorkian", value: "traflorkian" },
   { label: "Trunk Person", value: "trunk-person" },
