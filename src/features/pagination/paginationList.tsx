@@ -13,10 +13,10 @@ import { getPagination } from './get-pagination';
 interface PaginationListProps {
   currentPage: number;
   maxPage: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const PaginationList = ({ currentPage, maxPage, setPage }: PaginationListProps) => {
+const PaginationList = ({ currentPage, maxPage, setCurrentPage }: PaginationListProps) => {
 
   const {
     page,
@@ -26,7 +26,7 @@ const PaginationList = ({ currentPage, maxPage, setPage }: PaginationListProps) 
     setLastPage,
     setNextPage,
     setPreviousPage,
-  } = getPagination(currentPage, maxPage, setPage);
+  } = getPagination(currentPage, maxPage, setCurrentPage);
 
   return (
     <Pagination>

@@ -43,7 +43,7 @@ const LocationsList = ({ data, currentPage, setPage }: LocationsListProps) => {
         maxPage={maxPage}
         isFirstPage={isFirstPage}
         isLastPage={isLastPage}
-        setPage={setPage}
+        setCurrentPage={setPage}
         onFirstPage={setFirstPage}
         onLastPage={setLastPage}
         onPreviousPage={setPreviousPage}

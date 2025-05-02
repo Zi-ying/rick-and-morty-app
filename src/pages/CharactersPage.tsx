@@ -90,21 +90,23 @@ const CharactersPage = () => {
     const filteredData = favdata?.filter((d) => d.name.includes(value));
 
     return (
-      <div>
-        <div className="flex justify-center">
+      <>
+        <div className="grid grid-cols-4">
           <SearchField
             placeholder="Search by character name"
-            value={name2}
-            className="max-w-96 p-4 text-white"
+            value={name}
+            className="p-4 text-white col-start-2 col-end-4"
             onChange={(e) => setName2(e.target.value)}
           />
-          <HeartToggle
-            isToggled={isFavoritePage}
-            onToggle={() => setIsFavoritePage(!isFavoritePage)}
-          />
+          <div>
+            <HeartToggle
+              isToggled={isFavoritePage}
+              onToggle={() => setIsFavoritePage(!isFavoritePage)}
+            />
+          </div>
         </div>
         <CharactersList data={filteredData} isPending={isFavDataPending} />
-      </div>
+      </>
     );
   }
 
@@ -178,7 +180,7 @@ const CharactersPage = () => {
           <PaginationList
             currentPage={currentPage}
             maxPage={data.info.pages}
-            setPage={setCurrentPage}
+            setCurrentPage={setCurrentPage}
           />
         )}
       </div>
