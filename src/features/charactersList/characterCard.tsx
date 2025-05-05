@@ -1,3 +1,4 @@
+import { Circle } from 'lucide-react';
 
 import HeartToggle from '@/components/heart-toggle';
 import Image from '@/components/image';
@@ -12,7 +13,6 @@ interface CharacterCardProps {
 }
 
 const CharacterCard = ({ data, isFavorite, onClick }: CharacterCardProps) => {
-
   return (
     <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
       <Image
@@ -20,19 +20,20 @@ const CharacterCard = ({ data, isFavorite, onClick }: CharacterCardProps) => {
         alt={`image of ${data.name} from Rick and Morty`}
         className="rounded-t-xl"
       />
-      <CardHeader className="flex p-4 items-center w-full">
-        <CardTitle className="text-pickle-500 grow flex items-center justify-center gap-2">
-          {data.name}
-          <div
-            className={cn(
-              "rounded-full w-2 h-2",
-              data.status === "Alive" && "bg-green-400",
-              data.status === "unknown" && "bg-slate-500",
-              data.status === "Dead" && "bg-red-500"
+      <CardHeader className="grid grid-cols-5 p-4 items-center">
+        <CardTitle className="flex items-center justify-center gap-1 col-start-2 col-span-3">
+          <span className="text-align text-pickle-500">{data.name}</span>
+          <Circle
+            className={cn('h-2.5 stroke-2.5',
+              data.status === "Alive" && "stroke-green-400 fill-green-400",
+              data.status === "unknown" && "stroke-green-400",
+              data.status === "Dead" && "stroke-slate-700 fill-slate-700"
             )}
           />
         </CardTitle>
-       <HeartToggle isToggled={isFavorite} onToggle={() => onClick}/>
+        <div className="justify-self-end">
+          <HeartToggle isToggled={isFavorite} onToggle={() => onClick} />
+        </div>
       </CardHeader>
     </Card>
   );

@@ -1,3 +1,4 @@
+import { Circle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import Image from '@/components/image';
@@ -73,12 +74,12 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
             <div className="text-pickle-500 font-semibold md:text-start text-md md:text-xl">
               {data.name}
             </div>
-            <div
+            <Circle
               className={cn(
-                "rounded-full w-2 h-2",
-                data.status === "Alive" && "bg-green-400",
-                data.status === "unknown" && "bg-slate-500",
-                data.status === "Dead" && "bg-red-500"
+                "h-2.5 stroke-2.5",
+                data.status === "Alive" && "stroke-green-400 fill-green-400",
+                data.status === "unknown" && "stroke-green-400",
+                data.status === "Dead" && "stroke-slate-700 fill-slate-700"
               )}
             />
           </CardTitle>
