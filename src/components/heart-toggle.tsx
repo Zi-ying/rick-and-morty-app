@@ -14,7 +14,7 @@ const HeartToggle = ({isToggled, onToggle}: HeartToggleProps) => {
       aria-label="Toggle heart"
       onClick={onToggle}
     >
-      <Heart className={cn('stroke-none', isToggled ? "fill-pink-600" : "fill-pink-200")} />
+      <Heart className={cn('stroke-pink-600', isToggled ? "fill-pink-600" : "")} />
     </Toggle>
   );
 };
