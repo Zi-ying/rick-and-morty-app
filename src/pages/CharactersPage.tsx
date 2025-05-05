@@ -185,7 +185,7 @@ const CharactersPage = () => {
         )}
       </div>
       {!data?.info && !data?.results ? (
-        <ResultsNotFound />
+        <ResultsNotFound className='h-[calc(100vh-200px)]' />
       ) : (
         <CharactersList data={data?.results} isPending={isPending} />
       )}
