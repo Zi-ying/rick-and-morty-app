@@ -14,7 +14,11 @@ body {
 }
 
 @theme {
-  --color-brand-500: #01b6a5;
-  --color-pickle-500: #42f47f;
+  --color-pickle-900: #2f4858;
+  --color-pickle-800: #006980;
+  --color-pickle-700: #008d9c;
+  --color-pickle-600: #00b1a5;
+  --color-pickle-500: #00d49b;
+  --color-pickle-400: #42f47f;
   --background-image-home: url("./assets/rick-and-morty-wallpaper.jpg");
 }
