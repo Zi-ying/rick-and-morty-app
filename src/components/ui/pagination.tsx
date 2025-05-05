@@ -13,7 +13,7 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
       className={cn("mx-auto flex w-full justify-center", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PaginationContent({
@@ -26,18 +26,18 @@ function PaginationContent({
       className={cn("flex flex-row items-center gap-1", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PaginationItem({ ...props }: React.ComponentProps<"li">) {
-  return <li data-slot="pagination-item" {...props} />
+  return <li data-slot="pagination-item" {...props} />;
 }
 
 type PaginationLinkProps = {
-  isActive?: boolean
-  disabled?: boolean
+  isActive?: boolean;
+  disabled?: boolean;
 } & Pick<React.ComponentProps<typeof Button>, "size"> &
-  React.ComponentProps<"a">
+  React.ComponentProps<"a">;
 
 function PaginationLink({
   className,
@@ -54,17 +54,16 @@ function PaginationLink({
       data-disabled={disabled}
       className={cn(
         buttonVariants({
-          // variant: isActive ? "bg-brand-500 tex-white" : "ghost",
           size,
         }),
-        'bg-[#f7f7f7] text-brand-500 hover:bg-brand-500 hover:text-white shadow-lg cursor-pointer',
-        isActive && "bg-brand-500 text-white",
-        disabled && 'opacity-50 pointer-events-none cursor-not-allowed',
+        "bg-[#f7f7f7] text-pickle-500 hover:bg-pickle-500 hover:text-white shadow-lg cursor-pointer",
+        isActive && "bg-pickle-500 text-white",
+        disabled && "opacity-50 pointer-events-none cursor-not-allowed",
         className
       )}
       {...props}
     />
-  )
+  );
 }
 
 function PaginationPrevious({
@@ -83,7 +82,7 @@ function PaginationPrevious({
       <ChevronLeftIcon />
       <span className="hidden sm:block">Previous</span>
     </PaginationLink>
-  )
+  );
 }
 
 function PaginationNext({
@@ -100,7 +99,7 @@ function PaginationNext({
       <span className="hidden sm:block">Next</span>
       <ChevronRightIcon />
     </PaginationLink>
-  )
+  );
 }
 
 function PaginationEllipsis({
@@ -117,7 +116,7 @@ function PaginationEllipsis({
       <MoreHorizontalIcon className="size-4" />
       <span className="sr-only">More pages</span>
     </span>
-  )
+  );
 }
 
 export {
@@ -128,4 +127,4 @@ export {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-}
+};

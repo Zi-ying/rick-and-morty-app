@@ -10,11 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "cursor-pointer bg-[#f7f7f7] text-brand-500 hover:bg-brand-500 hover:text-white shadow-lg",
+          "cursor-pointer bg-[#f7f7f7] text-pickle-500 hover:bg-pickle-500 hover:text-white shadow-lg",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "cursor-pointer border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 text-white",
+          "cursor-pointer border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground hover:border-pickle-400 hover:text-pickle-400 dark:bg-input/30 dark:border-input dark:hover:bg-input/50 text-white",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
