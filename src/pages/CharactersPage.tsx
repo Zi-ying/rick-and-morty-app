@@ -129,7 +129,7 @@ const CharactersPage = () => {
             />
             <Button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="w-fit self-stretch"
+              className="w-fit self-stretch [&>svg]:stroke-3"
             >
               {isExpanded ? <Minus /> : <Plus />}
             </Button>
