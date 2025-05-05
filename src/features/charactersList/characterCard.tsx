@@ -1,26 +1,23 @@
-import { Heart } from 'lucide-react';
 
+import HeartToggle from '@/components/heart-toggle';
 import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import { Toggle } from '@/components/ui/toggle';
 import { cn } from '@/lib/utils';
 import { Character } from '@/types/types';
 
 interface CharacterCardProps {
   data: Character;
-  isPending: boolean;
   isFavorite: boolean;
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const CharacterCard = ({ data, isPending, isFavorite, onClick }: CharacterCardProps) => {
+const CharacterCard = ({ data, isFavorite, onClick }: CharacterCardProps) => {
 
   return (
     <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
       <Image
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
-        isPending={isPending}
         className="rounded-t-xl"
       />
       <CardHeader className="flex p-4 items-center w-full">
@@ -35,9 +32,7 @@ const CharacterCard = ({ data, isPending, isFavorite, onClick }: CharacterCardPr
             )}
           />
         </CardTitle>
-        <Toggle onClick={onClick}>
-          <Heart className={cn("fill-pink-200 stroke-none", isFavorite && "fill-pink-600")} />
-        </Toggle>
+       <HeartToggle isToggled={isFavorite} onToggle={() => onClick}/>
       </CardHeader>
     </Card>
   );
