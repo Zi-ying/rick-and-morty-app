@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
-import DataNotFound from '@/features/dataNotFound';
 import PaginationList from '@/features/pagination/paginationList';
+import ResultsNotFound from '@/features/ResultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -185,7 +185,7 @@ const CharactersPage = () => {
         )}
       </div>
       {!data?.info && !data?.results ? (
-        <DataNotFound />
+        <ResultsNotFound />
       ) : (
         <CharactersList data={data?.results} isPending={isPending} />
       )}

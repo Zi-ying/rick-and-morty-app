@@ -2,8 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
 import Character from '@/features/character/character';
-import DataNotFound from '@/features/dataNotFound';
 import { getLocationById } from '@/features/location/get-location-by-id';
+import ResultsNotFound from '@/features/ResultsNotFound';
 import { useQuery } from '@tanstack/react-query';
 
 import type { Location } from "@/types/types";
@@ -26,7 +26,7 @@ const LocationPage = () => {
   }
 
   if (!data) {
-    return <DataNotFound />;
+    return <ResultsNotFound />;
   }
 
   if (!isStatus200(data)) {

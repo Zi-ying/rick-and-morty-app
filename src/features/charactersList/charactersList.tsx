@@ -4,7 +4,7 @@ import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import { addFavorite, allFavorites, removeFavorite } from '@/store/favorites-slice';
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
 
-import DataNotFound from '../dataNotFound';
+import ResultsNotFound from '../ResultsNotFound';
 import CharacterCard from './characterCard';
 
 import type { Character } from "@/types/types";
@@ -32,7 +32,7 @@ const CharactersList = ({ data, isPending }: CharactersListProps) => {
   };
 
   if (!data || data.length === 0) {
-    return <DataNotFound />;
+    return <ResultsNotFound />;
   }
 
   return (

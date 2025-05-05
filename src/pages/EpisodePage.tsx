@@ -2,8 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
 import Character from '@/features/character/character';
-import DataNotFound from '@/features/dataNotFound';
 import { getEpisodeById } from '@/features/episode/get-episode-by-id';
+import ResultsNotFound from '@/features/ResultsNotFound';
 import { useQuery } from '@tanstack/react-query';
 
 import type { Episode } from "@/types/types";
@@ -26,7 +26,7 @@ const EpisodePage = () => {
   }
 
   if (!data) {
-    return <DataNotFound />;
+    return <ResultsNotFound />;
   }
 
   if (!isStatus200(data)) {

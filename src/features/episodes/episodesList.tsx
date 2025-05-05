@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
 
-import DataNotFound from '../dataNotFound';
 import { getPagination } from '../pagination/get-pagination';
 import PaginationList from '../pagination/paginationList';
+import ResultsNotFound from '../ResultsNotFound';
 import EpisodeCard from './episodeCard';
 
 import type { Episode, PaginationParams } from "@/types/types";
@@ -22,7 +22,7 @@ const EpisodesList = ({ data, isPending, currentPage, setPage }: EpisodesListPro
   }
 
   if (!data?.info && !data?.results) {
-    return <DataNotFound />;
+    return <ResultsNotFound />;
   }
 
   const maxPage = data.info.pages;

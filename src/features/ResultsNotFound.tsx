@@ -1,4 +1,4 @@
-const DataNotFound = () => {
+const ResultsNotFound = () => {
   return (
     <div className="flex items-center justify-center">
       <div className="grid gap-4 justify-items-center p-4 backdrop-blur-xs rounded-xl m-auto backdrop-brightness-80">
@@ -13,4 +13,4 @@ const DataNotFound = () => {
   );
 };
 
-export default DataNotFound;
+export default ResultsNotFound;

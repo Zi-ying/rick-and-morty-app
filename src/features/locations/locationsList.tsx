@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import DataNotFound from '../dataNotFound';
 import { getPagination } from '../pagination/get-pagination';
 import PaginationList from '../pagination/paginationList';
+import ResultsNotFound from '../ResultsNotFound';
 import LocationCard from './locationCard';
 
 import type { Location, PaginationParams } from "@/types/types";
@@ -14,7 +14,7 @@ interface LocationsListProps {
 
 const LocationsList = ({ data, currentPage, setPage }: LocationsListProps) => {
   if (!data?.info && !data?.results) {
-    return <DataNotFound />;
+    return <ResultsNotFound />;
   }
 
   const maxPage = data.info.pages;
