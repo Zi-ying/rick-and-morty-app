@@ -1,3 +1,4 @@
+import { Minus, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -113,15 +114,16 @@ const CharactersPage = () => {
   return (
     <>
       <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 gap-2">
           <SearchField
             placeholder="Search by character name"
             value={name}
             className="p-4 text-white col-start-2 col-end-4"
             onChange={(e) => setSearchFilter(e.target.value)}
           />
-          <div>
+          <div className='flex gap-2'>
             <HeartToggle
+              variant="outline"
               isToggled={isFavoritePage}
               onToggle={() => setIsFavoritePage(!isFavoritePage)}
             />
@@ -129,7 +131,7 @@ const CharactersPage = () => {
               onClick={() => setIsExpanded(!isExpanded)}
               className="w-fit self-stretch"
             >
-              {isExpanded ? "-" : "+"}
+              {isExpanded ? <Minus /> : <Plus />}
             </Button>
           </div>
         </div>
@@ -185,7 +187,7 @@ const CharactersPage = () => {
         )}
       </div>
       {!data?.info && !data?.results ? (
-        <ResultsNotFound className='h-[calc(100vh-200px)]' />
+        <ResultsNotFound className="h-[calc(100vh-200px)]" />
       ) : (
         <CharactersList data={data?.results} isPending={isPending} />
       )}
