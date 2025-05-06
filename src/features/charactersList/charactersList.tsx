@@ -32,7 +32,7 @@ const CharactersList = ({ data, isPending }: CharactersListProps) => {
   };
 
   if (!data || data.length === 0) {
-    return <ResultsNotFound />;
+    return <ResultsNotFound className='h-[calc(100vh-200px)]' />;
   }
 
   return (
