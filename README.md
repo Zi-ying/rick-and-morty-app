@@ -10,4 +10,11 @@ To start run the command line:
 
 ### With more time
 - Add testings
-- Add buttons and function to remove or clear a single filter.
+- Fix responsivness for navigation, add burger menu.
+- Fix pagination with more pages
+- Add different languages
+- Uniformize paddings and styles
+- Fix no data found for characters page
+- Fix favorite page not to have search options for now.
+- Add search optiosn for favorites.
+- Add see favorites tooltip
