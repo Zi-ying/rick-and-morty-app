@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import { getPagination } from '../pagination/get-pagination';
 import PaginationList from '../pagination/paginationList';
 import ResultsNotFound from '../ResultsNotFound';
 import LocationCard from './locationCard';
@@ -19,16 +18,6 @@ const LocationsList = ({ data, currentPage, setPage }: LocationsListProps) => {
 
   const maxPage = data.info.pages;
 
-  const {
-    page,
-    isFirstPage,
-    isLastPage,
-    setFirstPage,
-    setLastPage,
-    setNextPage,
-    setPreviousPage,
-  } = getPagination(currentPage, maxPage, setPage);
-
   return (
     <div className="bg-red-300 grid md:grid-cols-2 gap-2">
       {data.results.map((item) => {
@@ -39,15 +28,9 @@ const LocationsList = ({ data, currentPage, setPage }: LocationsListProps) => {
         );
       })}
       <PaginationList
-        page={page}
+        currentPage={currentPage}
         maxPage={maxPage}
-        isFirstPage={isFirstPage}
-        isLastPage={isLastPage}
         setCurrentPage={setPage}
-        onFirstPage={setFirstPage}
-        onLastPage={setLastPage}
-        onPreviousPage={setPreviousPage}
-        onNextPage={setNextPage}
       />
     </div>
   );

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
 
-import { getPagination } from '../pagination/get-pagination';
 import PaginationList from '../pagination/paginationList';
 import ResultsNotFound from '../ResultsNotFound';
 import EpisodeCard from './episodeCard';
@@ -15,10 +14,14 @@ interface EpisodesListProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const EpisodesList = ({ data, isPending, currentPage, setPage }: EpisodesListProps) => {
-
+const EpisodesList = ({
+  data,
+  isPending,
+  currentPage,
+  setPage,
+}: EpisodesListProps) => {
   if (isPending) {
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (!data?.info && !data?.results) {
@@ -27,15 +30,6 @@ const EpisodesList = ({ data, isPending, currentPage, setPage }: EpisodesListPro
 
   const maxPage = data.info.pages;
 
-  const {
-    page,
-    isFirstPage,
-    isLastPage,
-    setFirstPage,
-    setLastPage,
-    setNextPage,
-    setPreviousPage,
-  } = getPagination(currentPage, maxPage, setPage);
 
   return (
     <div className="bg-red-300 grid md:grid-cols-2 gap-2">
@@ -47,15 +41,9 @@ const EpisodesList = ({ data, isPending, currentPage, setPage }: EpisodesListPro
         );
       })}
       <PaginationList
-        page={page}
+        currentPage={currentPage}
         maxPage={maxPage}
-        isFirstPage={isFirstPage}
-        isLastPage={isLastPage}
         setCurrentPage={setPage}
-        onFirstPage={setFirstPage}
-        onLastPage={setLastPage}
-        onPreviousPage={setPreviousPage}
-        onNextPage={setNextPage}
       />
     </div>
   );
