@@ -8,7 +8,6 @@ import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
 import PaginationList from '@/features/pagination/paginationList';
-import ResultsNotFound from '@/features/ResultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -121,7 +120,7 @@ const CharactersPage = () => {
             className="p-4 text-white col-start-2 col-end-4"
             onChange={(e) => setSearchFilter(e.target.value)}
           />
-          <div className='flex gap-2'>
+          <div className="flex gap-2">
             <HeartToggle
               variant="outline"
               isToggled={isFavoritePage}
@@ -186,11 +185,7 @@ const CharactersPage = () => {
           />
         )}
       </div>
-      {!data?.info && !data?.results ? (
-        <ResultsNotFound className="h-[calc(100vh-200px)]" />
-      ) : (
-        <CharactersList data={data?.results} isPending={isPending} />
-      )}
+      {data && <CharactersList data={data?.results} isPending={isPending} />}
     </>
   );
 };
