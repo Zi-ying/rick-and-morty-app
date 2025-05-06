@@ -10,12 +10,15 @@ interface SmallCharacterCardProps {
 
 const SmallCharacterCard = ({ data, isPending }: SmallCharacterCardProps) => {
 
+  if (isPending) {
+    return <Card><LoadingSpinner /></Card>
+  }
+
   return (
     <Card className="p-4 rounded-xl grid grid-cols-3 min-w-[100px] items-center shadow-pickle-500/50 backdrop-blur-sm">
       <Image
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
-        isPending={isPending}
         className="rounded-full"
       />
       <CardHeader onLoad={() => <LoadingSpinner/>} className="col-span-2 text-pickle-500">

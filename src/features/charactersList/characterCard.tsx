@@ -3,16 +3,32 @@ import { Circle } from 'lucide-react';
 import HeartToggle from '@/components/heart-toggle';
 import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import Spinner from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 import { Character } from '@/types/types';
 
 interface CharacterCardProps {
   data: Character;
+  isPending: boolean;
   isFavorite: boolean;
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-const CharacterCard = ({ data, isFavorite, onClick }: CharacterCardProps) => {
+const CharacterCard = ({
+  data,
+  isPending,
+  isFavorite,
+  onClick,
+}: CharacterCardProps) => {
+
+  if (isPending) {
+    return (
+      <Card>
+        <Spinner />
+      </Card>
+    );
+  }
+
   return (
     <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
       <Image
@@ -24,7 +40,8 @@ const CharacterCard = ({ data, isFavorite, onClick }: CharacterCardProps) => {
         <CardTitle className="flex items-center justify-center gap-1 col-start-2 col-span-3">
           <span className="text-align text-pickle-500">{data.name}</span>
           <Circle
-            className={cn('h-2.5 stroke-2.5',
+            className={cn(
+              "h-2.5 stroke-2.5",
               data.status === "Alive" && "stroke-green-400 fill-green-400",
               data.status === "unknown" && "stroke-green-400",
               data.status === "Dead" && "stroke-slate-700 fill-slate-700"
