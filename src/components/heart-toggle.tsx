@@ -20,7 +20,7 @@ const HeartToggle = ({
       aria-label="Toggle heart"
       onClick={onToggle}
       className={cn(
-        " [&>svg]:stroke-pink-600 hover:[&>svg]:fill-pink-600 cursor-pointer",
+        " [&>svg]:stroke-pink-600 hover:[&>svg]:fill-pink-800 hover:[&>svg]:stroke-pink-800 cursor-pointer",
         isToggled && "[&>svg]:fill-pink-600 transition delay-150 [&>svg]:stroke-4",
         variant === "outline" && "border border-white"
       )}
