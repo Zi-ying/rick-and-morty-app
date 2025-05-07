@@ -91,7 +91,7 @@ const CharactersPage = () => {
 
     return (
       <>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-2 p-2">
           <SearchField
             placeholder="Search by character name"
             value={name}
