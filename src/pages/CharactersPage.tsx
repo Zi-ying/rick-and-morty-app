@@ -2,7 +2,6 @@ import { Minus, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import HeartToggle from '@/components/heart-toggle';
 import { Button } from '@/components/ui/button';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
@@ -10,9 +9,9 @@ import { getMultipleCharacters } from '@/features/charactersList/get-multiple-ch
 import PaginationList from '@/features/pagination/paginationList';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
-import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
+import SearchNavigation from '@/features/searchNavigation';
 import { cn } from '@/lib/utils';
 import { allFavorites } from '@/store/favorites-slice';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
@@ -90,51 +89,37 @@ const CharactersPage = () => {
     const filteredData = favdata?.filter((d) => d.name.includes(value));
 
     return (
-      <>
-        <div className="grid grid-cols-4 gap-2 p-2">
-          <SearchField
-            placeholder="Search by character name"
-            value={name}
-            className="p-4 text-white col-start-2 col-end-4"
-            onChange={(e) => setName2(e.target.value)}
-          />
-          <div>
-            <HeartToggle
-              isToggled={isFavoritePage}
-              onToggle={() => setIsFavoritePage(!isFavoritePage)}
-              variant="outline"
-            />
-          </div>
-        </div>
+      <div className='p-2'>
+        <SearchNavigation
+          placeholder="Search by character name"
+          value={name}
+          onSearchChange={(e) => setName2(e.target.value)}
+          toggled={isFavoritePage}
+          onToggle={() => setIsFavoritePage(!isFavoritePage)}
+        />
         <CharactersList data={filteredData} isPending={isFavDataPending} />
-      </>
+      </div>
     );
   }
 
   return (
     <>
       <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
-        <div className="grid grid-cols-4 gap-2">
-          <SearchField
-            placeholder="Search by character name"
-            value={name}
-            className="p-4 text-white col-start-2 col-end-4"
-            onChange={(e) => setSearchFilter(e.target.value)}
-          />
-          <div className="flex gap-2">
-            <HeartToggle
-              variant="outline"
-              isToggled={isFavoritePage}
-              onToggle={() => setIsFavoritePage(!isFavoritePage)}
-            />
-            <Button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="w-fit self-stretch [&>svg]:stroke-3"
-            >
-              {isExpanded ? <Minus /> : <Plus />}
-            </Button>
-          </div>
-        </div>
+        <SearchNavigation
+          placeholder="Search by character name"
+          value={name}
+          onSearchChange={(e) => setSearchFilter(e.target.value)}
+          toggled={isFavoritePage}
+          onToggle={() => setIsFavoritePage(!isFavoritePage)}
+        >
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="w-fit self-stretch [&>svg]:stroke-3"
+          >
+            {isExpanded ? <Minus /> : <Plus />}
+          </Button>
+        </SearchNavigation>
+
         {/* Filter Bar */}
         <div
           className={cn(
