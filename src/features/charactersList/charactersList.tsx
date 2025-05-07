@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import { addFavorite, allFavorites, removeFavorite } from '@/store/favorites-slice';
@@ -16,12 +16,17 @@ interface CharactersListProps {
 const CharactersList = ({ data, isPending }: CharactersListProps) => {
   const keys = useAppSelector(allFavorites);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const getFavorite = (item: Character) => {
     return keys.includes(item.id.toString());
   };
 
-  const onClick = (item: Character) => {
+  const onToggle = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    item: Character
+  ) => {
+    e.stopPropagation();
     const isFavorite = getFavorite(item);
 
     if (!isFavorite) {
@@ -32,7 +37,7 @@ const CharactersList = ({ data, isPending }: CharactersListProps) => {
   };
 
   if (!data || data.length === 0) {
-    return <ResultsNotFound className='h-[calc(100vh-200px)]' />;
+    return <ResultsNotFound className="h-[calc(100vh-200px)]" />;
   }
 
   return (
@@ -42,23 +47,15 @@ const CharactersList = ({ data, isPending }: CharactersListProps) => {
           const isFavorite = getFavorite(item);
 
           return (
-            <Link
-              key={item.id}
-              to={item.id.toString()}
-              className="grid justify-center cursor-pointer"
-            >
-              <CharacterCard
-                data={item}
-                isPending={isPending}
-                isFavorite={isFavorite}
-                onClick={(
-                  e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-                ) => {
-                  onClick(item);
-                  e.preventDefault();
-                }}
-              />
-            </Link>
+            <CharacterCard
+              data={item}
+              isPending={isPending}
+              isFavorite={isFavorite}
+              onClick={() => {
+                navigate(`/character/${item.id}`);
+              }}
+              onToggle={(e) => onToggle(e, item)}
+            />
           );
         })}
       </div>

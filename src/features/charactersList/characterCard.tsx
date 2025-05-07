@@ -11,13 +11,15 @@ interface CharacterCardProps {
   data: Character;
   isPending: boolean;
   isFavorite: boolean;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick: () => void;
+  onToggle: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const CharacterCard = ({
   data,
   isPending,
   isFavorite,
+  onToggle,
   onClick,
 }: CharacterCardProps) => {
 
@@ -30,7 +32,7 @@ const CharacterCard = ({
   }
 
   return (
-    <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs">
+    <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs" onClick={onClick}>
       <Image
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
@@ -48,8 +50,8 @@ const CharacterCard = ({
             )}
           />
         </CardTitle>
-        <div className="justify-self-end">
-          <HeartToggle isToggled={isFavorite} onToggle={() => onClick} />
+        <div className="justify-self-end z-10">
+          <HeartToggle isToggled={isFavorite} onToggle={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => onToggle(e)} />
         </div>
       </CardHeader>
     </Card>

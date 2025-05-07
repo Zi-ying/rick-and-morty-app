@@ -6,7 +6,7 @@ import { Toggle } from './ui/toggle';
 
 interface HeartToggleProps {
   isToggled: boolean;
-  onToggle: () => void;
+  onToggle: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   variant?: "default" | "outline";
 }
 
