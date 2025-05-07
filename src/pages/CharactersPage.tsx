@@ -91,7 +91,7 @@ const CharactersPage = () => {
 
     return (
       <>
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-4 gap-2">
           <SearchField
             placeholder="Search by character name"
             value={name}
@@ -102,6 +102,7 @@ const CharactersPage = () => {
             <HeartToggle
               isToggled={isFavoritePage}
               onToggle={() => setIsFavoritePage(!isFavoritePage)}
+              variant="outline"
             />
           </div>
         </div>
