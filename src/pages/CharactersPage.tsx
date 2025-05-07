@@ -86,18 +86,19 @@ const CharactersPage = () => {
   if (error) return "An error has occurred: " + error.message;
 
   if (isFavoritePage) {
-    const filteredData = favdata?.filter((d) => d.name.includes(value));
+    const filteredData = favdata?.filter((d) => d.name.toLowerCase().includes(value.toLowerCase()));
+    const sortedData = filteredData?.sort((a, b) => a.name.localeCompare(b.name))
 
     return (
       <div className='p-2'>
         <SearchNavigation
           placeholder="Search by character name"
-          value={name}
+          value={name2}
           onSearchChange={(e) => setName2(e.target.value)}
           toggled={isFavoritePage}
           onToggle={() => setIsFavoritePage(!isFavoritePage)}
         />
-        <CharactersList data={filteredData} isPending={isFavDataPending} />
+        <CharactersList data={sortedData} isPending={isFavDataPending} />
       </div>
     );
   }
