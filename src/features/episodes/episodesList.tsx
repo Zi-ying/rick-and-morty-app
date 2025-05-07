@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Spinner from '@/components/ui/spinner';
 
 import PaginationList from '../pagination/paginationList';
-import ResultsNotFound from '../ResultsNotFound';
+import ResultsNotFound from '../resultsNotFound';
 import EpisodeCard from './episodeCard';
 
 import type { Episode, PaginationParams } from "@/types/types";

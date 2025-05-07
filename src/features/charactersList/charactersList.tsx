@@ -4,7 +4,7 @@ import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import { addFavorite, allFavorites, removeFavorite } from '@/store/favorites-slice';
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
 
-import ResultsNotFound from '../ResultsNotFound';
+import ResultsNotFound from '../resultsNotFound';
 import CharacterCard from './characterCard';
 
 import type { Character } from "@/types/types";

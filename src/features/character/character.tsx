@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import ResultsNotFound from '../ResultsNotFound';
+import ResultsNotFound from '../resultsNotFound';
 import { getCharacterById } from './get-character-by-id';
 import SmallCharacterCard from './smallCharacterCard';
 

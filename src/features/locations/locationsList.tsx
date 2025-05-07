@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import PaginationList from '../pagination/paginationList';
-import ResultsNotFound from '../ResultsNotFound';
+import ResultsNotFound from '../resultsNotFound';
 import LocationCard from './locationCard';
 
 import type { Location, PaginationParams } from "@/types/types";
