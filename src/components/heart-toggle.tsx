@@ -21,7 +21,7 @@ const HeartToggle = ({
       onClick={onToggle}
       className={cn(
         " [&>svg]:stroke-pink-600 hover:[&>svg]:fill-pink-600 cursor-pointer",
-        isToggled && "[&>svg]:fill-pink-600",
+        isToggled && "[&>svg]:fill-pink-600 transition delay-150 [&>svg]:stroke-4",
         variant === "outline" && "border border-white"
       )}
     >
