@@ -18,3 +18,4 @@ To start run the command line:
 - Fix favorite page not to have search options for now.
 - Add search optiosn for favorites.
 - Add see favorites tooltip
+- Remove logic from pages.
