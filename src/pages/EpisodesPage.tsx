@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { Button } from '@/components/ui/button';
 import EpisodesList from '@/features/episodes/episodesList';
 import { getAllEpisodes } from '@/features/episodes/get-all-episodes';
+import PaginationList from '@/features/pagination/paginationList';
+import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { episodeOptions } from '@/features/searchFields/options';
 import SelectField from '@/features/searchFields/SelectField';
@@ -14,10 +16,7 @@ import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
 import { EpisodeFilterParams, Filters } from '@/types/types';
-import { useQuery } from '@tanstack/react-query';
-
-import PaginationList from '../features/pagination/paginationList';
-import ResultsNotFound from '../features/resultsNotFound';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const EpisodesPage = () => {
   const filters = useSelector(allFilters);
@@ -53,6 +52,7 @@ const EpisodesPage = () => {
     queryKey: ["episodesData", filterArgs, page],
     queryFn: () =>
       getAllEpisodes({ filters: filterArgs, page: page.toString() }),
+    placeholderData: keepPreviousData,
   });
 
   const handleClear = (filter: keyof Filters) => {
