@@ -9,9 +9,9 @@ import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { episodeOptions } from '@/features/searchFields/options';
+import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
-import SearchNavigation from '@/features/searchNavigation';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
@@ -23,7 +23,6 @@ const EpisodesPage = () => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>(filters.episodeName);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [isFavoritePage, setIsFavoritePage] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const timeout = 500;
@@ -67,20 +66,20 @@ const EpisodesPage = () => {
 
   return (
     <div className="space-y-2">
-      <SearchNavigation
-        placeholder="Search for an episode"
-        value={search}
-        onSearchChange={onChange}
-        toggled={isFavoritePage}
-        onToggle={() => setIsFavoritePage(!isFavoritePage)}
-      >
+      <div className='grid grid-cols-4 gap-2'>
+        <SearchField
+          placeholder="Search for an episode"
+          value={search}
+          className="p-4 text-white col-start-2 col-end-4"
+          onChange={onChange}
+        />
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-fit self-stretch [&>svg]:stroke-3"
         >
           {isExpanded ? <Minus /> : <Plus />}
         </Button>
-      </SearchNavigation>
+      </div>
       <div
         className={cn(
           "justify-center text-white w-full bg-red-500",
