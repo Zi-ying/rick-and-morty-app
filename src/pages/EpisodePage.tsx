@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Spinner from '@/components/ui/spinner';
 import Character from '@/features/character/character';
 import { getEpisodeById } from '@/features/episode/get-episode-by-id';
+import EpisodeCard from '@/features/episodes/episodeCard';
 import ResultsNotFound from '@/features/resultsNotFound';
 import { useQuery } from '@tanstack/react-query';
 
@@ -14,7 +15,7 @@ const EpisodePage = () => {
     episode: Episode | { error: string }
   ): episode is Episode => {
     return (episode as Episode).id !== undefined;
-  }
+  };
 
   const { data, isPending } = useQuery({
     queryKey: ["episodeData", episodeId],
@@ -22,7 +23,7 @@ const EpisodePage = () => {
   });
 
   if (isPending) {
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (!data) {
@@ -34,14 +35,10 @@ const EpisodePage = () => {
   }
 
   return (
-    <div className="bg-pink-600">
-      <div className="bg-pink-500">
-        <div>name: {data.name}</div>
-        <div>dimension: {data.episode}</div>
-        <div>air date: {data.air_date}</div>
-      </div>
-      <div> residents:</div>
-      <div className="grid grid-cols-5">
+    <div className="p-2 space-y-2">
+      <EpisodeCard data={data}/>
+      <div className='text-pickle-400'>Residents:</div>
+      <div className="grid grid-cols-4 gap-2">
         {data.characters.map((resident) => {
           const url = new URL(resident);
           const characterId = url.pathname.slice(
