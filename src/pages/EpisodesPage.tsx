@@ -1,3 +1,4 @@
+import { Minus, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -6,20 +7,23 @@ import EpisodesList from '@/features/episodes/episodesList';
 import { getAllEpisodes } from '@/features/episodes/get-all-episodes';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { episodeOptions } from '@/features/searchFields/options';
-import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { useDebounce } from '@/features/searchFields/use-debounce';
+import SearchNavigation from '@/features/searchNavigation';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
 import { EpisodeFilterParams, Filters } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
 
+import PaginationList from '../features/pagination/paginationList';
+
 const EpisodesPage = () => {
   const filters = useSelector(allFilters);
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>(filters.episodeName);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isFavoritePage, setIsFavoritePage] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const timeout = 500;
@@ -50,60 +54,60 @@ const EpisodesPage = () => {
       getAllEpisodes({ filters: filterArgs, page: page.toString() }),
   });
 
-  const onExpansionClick = () => {
-    setIsExpanded(!isExpanded);
-  };
-
   const handleClear = (filter: keyof Filters) => {
     dispatch(removeOneFilter(filter));
     setPage(1);
   };
 
+  const setFilter = (value: string) => {
+    dispatch(addFilter({ key: "episode", value }));
+    setPage(1);
+  };
+
   return (
-    <>
-      <SearchField
+    <div className="space-y-2">
+      <SearchNavigation
         placeholder="Search for an episode"
         value={search}
-        onChange={onChange}
-        className="justify-self-center max-w-96"
-      />
+        onSearchChange={onChange}
+        toggled={isFavoritePage}
+        onToggle={() => setIsFavoritePage(!isFavoritePage)}
+      >
+        <Button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="w-fit self-stretch [&>svg]:stroke-3"
+        >
+          {isExpanded ? <Minus /> : <Plus />}
+        </Button>
+      </SearchNavigation>
+      <div
+        className={cn(
+          "justify-center text-white w-full bg-red-500",
+          isExpanded ? "inline-flex" : "hidden"
+        )}
+      >
+        <SelectField
+          placeholder="Episodes"
+          value={filters.episode}
+          data={episodeOptions}
+          onChange={setFilter}
+        />
+      </div>
       <FilterBadges
         filters={filters}
         onClearOne={handleClear}
         onClearAll={onResetClick}
         className="flex flex-wrap gap-2 justify-center items-center"
       />
-      <Button
-        onClick={onExpansionClick}
-        className={cn("justify-self-center", isExpanded ? "rotate-180" : "")}
-      >
-        V
-      </Button>
-      <div
-        className={cn(
-          "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
-          isExpanded ? "inline-grid" : "hidden"
-        )}
-      >
-        <SelectField
-          placeholder="type"
-          value={filters.episode}
-          data={episodeOptions}
-          onChange={(e) => {
-            dispatch(addFilter({ key: "episode", value: e }));
-            setPage(1);
-          }}
-          classnames="w-full"
-        />
-      </div>
-      <div>Episodes Page</div>
-      <EpisodesList
-        data={data}
-        isPending={isPending}
+      <PaginationList
         currentPage={page}
-        setPage={setPage}
+        maxPage={data?.info.pages ?? 0}
+        setCurrentPage={setPage}
       />
-    </>
+      <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4 p-2">
+        <EpisodesList data={data} isPending={isPending} />
+      </div>
+    </div>
   );
 };
 
