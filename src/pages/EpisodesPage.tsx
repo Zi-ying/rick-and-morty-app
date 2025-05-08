@@ -65,7 +65,7 @@ const EpisodesPage = () => {
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 pt-2">
       <div className='grid grid-cols-4 gap-2'>
         <SearchField
           placeholder="Search for an episode"
@@ -82,7 +82,7 @@ const EpisodesPage = () => {
       </div>
       <div
         className={cn(
-          "justify-center text-white w-full bg-red-500",
+          "justify-center text-white w-full",
           isExpanded ? "inline-flex" : "hidden"
         )}
       >
