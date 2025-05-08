@@ -17,6 +17,7 @@ import { EpisodeFilterParams, Filters } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
 
 import PaginationList from '../features/pagination/paginationList';
+import ResultsNotFound from '../features/resultsNotFound';
 
 const EpisodesPage = () => {
   const filters = useSelector(allFilters);
@@ -99,14 +100,20 @@ const EpisodesPage = () => {
         onClearAll={onResetClick}
         className="flex flex-wrap gap-2 justify-center items-center"
       />
-      <PaginationList
-        currentPage={page}
-        maxPage={data?.info.pages ?? 0}
-        setCurrentPage={setPage}
-      />
-      <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4 p-2">
-        <EpisodesList data={data} isPending={isPending} />
-      </div>
+      {data?.info && data?.results && (
+        <PaginationList
+          currentPage={page}
+          maxPage={data?.info.pages ?? 0}
+          setCurrentPage={setPage}
+        />
+      )}
+      {!data?.info && !data?.results ? (
+        <ResultsNotFound />
+      ) : (
+        <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4 p-2">
+          <EpisodesList data={data?.results} isPending={isPending} />
+        </div>
+      )}
     </div>
   );
 };
