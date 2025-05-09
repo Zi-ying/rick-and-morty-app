@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
+import BackButton from '@/features/backButton';
 import Character from '@/features/character/character';
 import { getEpisodeById } from '@/features/episode/get-episode-by-id';
 import EpisodeCard from '@/features/episodes/episodeCard';
@@ -52,6 +53,9 @@ const EpisodePage = () => {
             </Link>
           );
         })}
+      </div>
+      <div className="flex justify-center">
+        <BackButton />
       </div>
     </div>
   );

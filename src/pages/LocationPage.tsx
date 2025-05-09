@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
+import BackButton from '@/features/backButton';
 import Character from '@/features/character/character';
 import { getLocationById } from '@/features/location/get-location-by-id';
 import LocationCard from '@/features/locations/locationCard';
@@ -37,7 +38,7 @@ const LocationPage = () => {
   return (
     <div className="p-2 space-y-2">
       <LocationCard data={data} />
-      <div className="text-pickle-400">Residents:</div>
+      <div className="text-pickle-400 px-6">Residents:</div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2">
         {data.residents.map((resident) => {
           const url = new URL(resident);
@@ -52,6 +53,9 @@ const LocationPage = () => {
             </Link>
           );
         })}
+      </div>
+      <div className="flex justify-center">
+        <BackButton />
       </div>
     </div>
   );

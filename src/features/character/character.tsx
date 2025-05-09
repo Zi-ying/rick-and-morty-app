@@ -1,14 +1,13 @@
 import { Circle } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 import Image from '@/components/image';
-import { Button } from '@/components/ui/button';
 import { CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 import NotFoundPage from '@/pages/NotFoundPage';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import BackButton from '../backButton';
 import ResultsNotFound from '../resultsNotFound';
 import { getCharacterById } from './get-character-by-id';
 import SmallCharacterCard from './smallCharacterCard';
@@ -119,9 +118,9 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
           </div>
         </div>
       </div>
-      <Link to="/character" className="m-auto">
-        <Button>Go back</Button>
-      </Link>
+      <div className="m-auto">
+        <BackButton />
+      </div>
     </>
   );
 };
