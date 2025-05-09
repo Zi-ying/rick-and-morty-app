@@ -1,37 +1,29 @@
 import { Link } from 'react-router-dom';
 
-import PaginationList from '../pagination/paginationList';
-import ResultsNotFound from '../resultsNotFound';
+import Spinner from '@/components/ui/spinner';
+
 import LocationCard from './locationCard';
 
-import type { Location, PaginationParams } from "@/types/types";
+import type { Location } from "@/types/types";
 interface LocationsListProps {
-  data?: { results: Location[]; info: PaginationParams };
-  currentPage: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  data: Location[];
+  isPending: boolean;
 }
 
-const LocationsList = ({ data, currentPage, setPage }: LocationsListProps) => {
-  if (!data?.info && !data?.results) {
-    return <ResultsNotFound />;
+const LocationsList = ({ data, isPending }: LocationsListProps) => {
+  if (isPending) {
+    return <Spinner />;
   }
-
-  const maxPage = data.info.pages;
 
   return (
     <div className="bg-red-300 grid md:grid-cols-2 gap-2">
-      {data.results.map((item) => {
+      {data.map((item) => {
         return (
           <Link key={item.id} to={item.id.toString()}>
             <LocationCard data={item} />
           </Link>
         );
       })}
-      <PaginationList
-        currentPage={currentPage}
-        maxPage={maxPage}
-        setCurrentPage={setPage}
-      />
     </div>
   );
 };
