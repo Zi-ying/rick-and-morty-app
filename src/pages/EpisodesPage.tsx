@@ -1,10 +1,9 @@
-import { Minus, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Button } from '@/components/ui/button';
 import EpisodesList from '@/features/episodes/episodesList';
 import { getAllEpisodes } from '@/features/episodes/get-all-episodes';
+import ExpansionButton from '@/features/expansionButton';
 import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
@@ -66,19 +65,17 @@ const EpisodesPage = () => {
 
   return (
     <div className="space-y-2 pt-2">
-      <div className='grid grid-cols-4 gap-2'>
+      <div className="grid grid-cols-4 gap-2">
         <SearchField
           placeholder="Search for an episode"
           value={search}
           className="p-4 text-white col-start-2 col-end-4"
           onChange={onChange}
         />
-        <Button
+        <ExpansionButton
+          expanded={isExpanded}
           onClick={() => setIsExpanded(!isExpanded)}
-          className="w-fit self-stretch [&>svg]:stroke-3"
-        >
-          {isExpanded ? <Minus /> : <Plus />}
-        </Button>
+        />
       </div>
       <div
         className={cn(

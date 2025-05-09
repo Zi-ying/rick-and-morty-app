@@ -1,11 +1,10 @@
-import { Minus, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Button } from '@/components/ui/button';
 import CharactersList from '@/features/charactersList/charactersList';
 import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
+import ExpansionButton from '@/features/expansionButton';
 import PaginationList from '@/features/pagination/paginationList';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
@@ -86,11 +85,15 @@ const CharactersPage = () => {
   if (error) return "An error has occurred: " + error.message;
 
   if (isFavoritePage) {
-    const filteredData = favdata?.filter((d) => d.name.toLowerCase().includes(value.toLowerCase()));
-    const sortedData = filteredData?.sort((a, b) => a.name.localeCompare(b.name))
+    const filteredData = favdata?.filter((d) =>
+      d.name.toLowerCase().includes(value.toLowerCase())
+    );
+    const sortedData = filteredData?.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
 
     return (
-      <div className='p-2'>
+      <div className="p-2">
         <SearchNavigation
           placeholder="Search by character name"
           value={name2}
@@ -113,12 +116,10 @@ const CharactersPage = () => {
           toggled={isFavoritePage}
           onToggle={() => setIsFavoritePage(!isFavoritePage)}
         >
-          <Button
+          <ExpansionButton
+            expanded={isExpanded}
             onClick={() => setIsExpanded(!isExpanded)}
-            className="w-fit self-stretch [&>svg]:stroke-3"
-          >
-            {isExpanded ? <Minus /> : <Plus />}
-          </Button>
+          />
         </SearchNavigation>
 
         {/* Filter Bar */}

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Button } from '@/components/ui/button';
+import ExpansionButton from '@/features/expansionButton';
 import { getAllLocations } from '@/features/locations/get-all-locations';
 import LocationsList from '@/features/locations/locationsList';
 import FilterBadges from '@/features/searchFields/filterBadges';
@@ -14,9 +14,10 @@ import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/fi
 import { useAppDispatch } from '@/store/redux-hooks';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import type { Filters, LocationFilterParams } from '@/types/types';
+import type { Filters, LocationFilterParams } from "@/types/types";
+
 const LocationsPage = () => {
-  const filters = useSelector(allFilters)
+  const filters = useSelector(allFilters);
   const [search, setSearch] = useState<string>(filters.locationName);
   const [page, setPage] = useState<number>(1);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
@@ -42,18 +43,15 @@ const LocationsPage = () => {
   const filterArgs: LocationFilterParams = {
     name: filters.locationName,
     type: filters.locationType,
-    dimension: filters.dimension
-  }
+    dimension: filters.dimension,
+  };
 
   const { data } = useQuery({
     queryKey: ["locationsData", filterArgs, debouncedSearch, page],
-    queryFn: () => getAllLocations({ filters: filterArgs, page: page.toString() }),
+    queryFn: () =>
+      getAllLocations({ filters: filterArgs, page: page.toString() }),
     placeholderData: keepPreviousData,
   });
-
-  const onExpansionClick = () => {
-    setIsExpanded(!isExpanded);
-  };
 
   const handleClear = (filter: keyof Filters) => {
     dispatch(removeOneFilter(filter));
@@ -61,12 +59,44 @@ const LocationsPage = () => {
   };
 
   return (
-    <>
+    <div className="space-y-2 p-2">
+      <div className="grid grid-cols-4 gap-2">
         <SearchField
           placeholder="Search for a location"
           value={search}
+          className="p-4 text-white col-start-2 col-end-4"
           onChange={onChange}
-          className="justify-self-center max-w-96"
+        />
+        <ExpansionButton
+          expanded={isExpanded}
+          onClick={() => setIsExpanded(!isExpanded)}
+        />
+      </div>
+      <div
+        className={cn(
+          "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
+          isExpanded ? "inline-grid" : "hidden"
+        )}
+      >
+        <SelectField
+          placeholder="type"
+          value={filters.locationType}
+          data={locationTypeOptions}
+          onChange={(e) => {
+            dispatch(addFilter({ key: "locationType", value: e }));
+            setPage(1);
+          }}
+          classnames="w-full"
+        />
+        <SelectField
+          placeholder="dimension"
+          value={filters.dimension}
+          data={dimensionOptions}
+          onChange={(e) => {
+            dispatch(addFilter({ key: "dimension", value: e }));
+            setPage(1);
+          }}
+          classnames="w-full"
         />
         <FilterBadges
           filters={filters}
@@ -74,45 +104,12 @@ const LocationsPage = () => {
           onClearAll={onResetClick}
           className="flex flex-wrap gap-2 justify-center items-center"
         />
-        <Button
-          onClick={onExpansionClick}
-          className={cn("justify-self-center", isExpanded ? "rotate-180" : "")}
-        >
-          V
-        </Button>
-        <div
-          className={cn(
-            "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
-            isExpanded ? "inline-grid" : "hidden"
-          )}
-        >
-          <SelectField
-            placeholder="type"
-            value={filters.locationType}
-            data={locationTypeOptions}
-            onChange={(e) => {
-              dispatch(addFilter({ key: "locationType", value: e }));
-              setPage(1);
-            }}
-            classnames="w-full"
-          />
-          <SelectField
-            placeholder="dimension"
-            value={filters.dimension}
-            data={dimensionOptions}
-            onChange={(e) => {
-              dispatch(addFilter({ key: "dimension", value: e }));
-              setPage(1);
-            }}
-            classnames="w-full"
-          />
-
-        </div>
+      </div>
       <div className="bg-red-400 p-2 grid items-center gap-2">
         <div className="bg-red-300 text-center">LOCATIONS</div>
         <LocationsList data={data} currentPage={page} setPage={setPage} />
       </div>
-    </>
+    </div>
   );
 };
 
