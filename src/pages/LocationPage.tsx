@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Spinner from '@/components/ui/spinner';
 import Character from '@/features/character/character';
 import { getLocationById } from '@/features/location/get-location-by-id';
+import LocationCard from '@/features/locations/locationCard';
 import ResultsNotFound from '@/features/resultsNotFound';
 import { useQuery } from '@tanstack/react-query';
 
@@ -14,7 +15,7 @@ const LocationPage = () => {
     location: Location | { error: string }
   ): location is Location => {
     return (location as Location).id !== undefined;
-  }
+  };
 
   const { data, isPending } = useQuery({
     queryKey: ["locationData", locationId],
@@ -22,7 +23,7 @@ const LocationPage = () => {
   });
 
   if (isPending) {
-    return <Spinner/>
+    return <Spinner />;
   }
 
   if (!data) {
@@ -34,13 +35,10 @@ const LocationPage = () => {
   }
 
   return (
-    <div className="bg-pink-600">
-      <div className="bg-pink-500">
-        <div>name: {data.name}</div>
-        <div>dimension: {data.dimension}</div>
-      </div>
-      <div> residents:</div>
-      <div className="grid grid-cols-5">
+    <div className="p-2 space-y-2">
+      <LocationCard data={data} />
+      <div className="text-pickle-400">Residents:</div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2">
         {data.residents.map((resident) => {
           const url = new URL(resident);
           const characterId = url.pathname.slice(

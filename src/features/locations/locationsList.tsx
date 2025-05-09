@@ -16,7 +16,7 @@ const LocationsList = ({ data, isPending }: LocationsListProps) => {
   }
 
   return (
-    <div className="bg-red-300 grid md:grid-cols-2 gap-2">
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
       {data.map((item) => {
         return (
           <Link key={item.id} to={item.id.toString()}>
