@@ -19,3 +19,4 @@ To start run the command line:
 - Add search optiosn for favorites.
 - Add see favorites tooltip
 - Remove logic from pages.
+- Add barrel files for search fields
