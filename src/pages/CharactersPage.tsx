@@ -15,8 +15,10 @@ import { cn } from '@/lib/utils';
 import { allFavorites } from '@/store/favorites-slice';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
-import { CharacterFilterParams, Filters } from '@/types/types';
+import { Character, CharacterFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
+import ResultsNotFound from '../features/resultsNotFound';
 
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
@@ -84,11 +86,29 @@ const CharactersPage = () => {
 
   if (error) return "An error has occurred: " + error.message;
 
+  const isCharacter = (data: Character | Character[]): data is Character => {
+    return (data as Character).created !== undefined;
+  };
+
   if (isFavoritePage) {
-    const filteredData = favdata?.filter((d) =>
+    if (!favdata) {
+      return <ResultsNotFound />;
+    }
+
+    const newArray: Character[] = [];
+
+    if (isCharacter(favdata)) {
+      newArray.push(favdata);
+    }
+
+    if (!isCharacter(favdata) && favdata.length >= 2) {
+      newArray.push(...favdata);
+    }
+
+    const filteredData = newArray.filter((d) =>
       d.name.toLowerCase().includes(value.toLowerCase())
     );
-    const sortedData = filteredData?.sort((a, b) =>
+    const sortedData = filteredData.sort((a, b) =>
       a.name.localeCompare(b.name)
     );
 
@@ -101,7 +121,11 @@ const CharactersPage = () => {
           toggled={isFavoritePage}
           onToggle={() => setIsFavoritePage(!isFavoritePage)}
         />
-        <CharactersList data={sortedData} isPending={isFavDataPending} />
+        {filteredData && filteredData.length !== 0 ? (
+          <CharactersList data={sortedData} isPending={isFavDataPending} />
+        ) : (
+          <ResultsNotFound />
+        )}
       </div>
     );
   }
@@ -173,7 +197,11 @@ const CharactersPage = () => {
           />
         )}
       </div>
-      {data && <CharactersList data={data?.results} isPending={isPending} />}
+      {data?.info && data?.results ? (
+        <CharactersList data={data?.results} isPending={isPending} />
+      ) : (
+        <ResultsNotFound />
+      )}
     </>
   );
 };
