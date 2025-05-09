@@ -20,3 +20,4 @@ To start run the command line:
 - Add see favorites tooltip
 - Remove logic from pages.
 - Add barrel files for search fields
+- Improve loading state
