@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import ExpansionButton from '@/features/expansionButton';
 import { getAllLocations } from '@/features/locations/get-all-locations';
 import LocationsList from '@/features/locations/locationsList';
+import PaginationList from '@/features/pagination/paginationList';
+import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { dimensionOptions, locationTypeOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
@@ -15,7 +17,6 @@ import { useAppDispatch } from '@/store/redux-hooks';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import type { Filters, LocationFilterParams } from "@/types/types";
-
 const LocationsPage = () => {
   const filters = useSelector(allFilters);
   const [search, setSearch] = useState<string>(filters.locationName);
@@ -46,7 +47,7 @@ const LocationsPage = () => {
     dimension: filters.dimension,
   };
 
-  const { data } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["locationsData", filterArgs, debouncedSearch, page],
     queryFn: () =>
       getAllLocations({ filters: filterArgs, page: page.toString() }),
@@ -59,7 +60,7 @@ const LocationsPage = () => {
   };
 
   return (
-    <div className="space-y-2 p-2">
+    <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
       <div className="grid grid-cols-4 gap-2">
         <SearchField
           placeholder="Search for a location"
@@ -74,8 +75,8 @@ const LocationsPage = () => {
       </div>
       <div
         className={cn(
-          "bg-red-300 grid grid-cols-1 gap-2 sm:grid-cols-4",
-          isExpanded ? "inline-grid" : "hidden"
+          "",
+          isExpanded ? "grid grid-cols-2 gap-2 m-auto text-white" : "hidden"
         )}
       >
         <SelectField
@@ -86,7 +87,7 @@ const LocationsPage = () => {
             dispatch(addFilter({ key: "locationType", value: e }));
             setPage(1);
           }}
-          classnames="w-full"
+          classnames='w-full'
         />
         <SelectField
           placeholder="dimension"
@@ -96,19 +97,27 @@ const LocationsPage = () => {
             dispatch(addFilter({ key: "dimension", value: e }));
             setPage(1);
           }}
-          classnames="w-full"
-        />
-        <FilterBadges
-          filters={filters}
-          onClearOne={handleClear}
-          onClearAll={onResetClick}
-          className="flex flex-wrap gap-2 justify-center items-center"
+          classnames='w-full'
         />
       </div>
-      <div className="bg-red-400 p-2 grid items-center gap-2">
-        <div className="bg-red-300 text-center">LOCATIONS</div>
-        <LocationsList data={data} currentPage={page} setPage={setPage} />
-      </div>
+      <FilterBadges
+        filters={filters}
+        onClearOne={handleClear}
+        onClearAll={onResetClick}
+        className="flex flex-wrap gap-2 justify-center items-center"
+      />
+      {data?.info && (
+        <PaginationList
+          currentPage={page}
+          maxPage={data?.info.pages ?? 0}
+          setCurrentPage={setPage}
+        />
+      )}
+      {!data?.info && !data?.results ? (
+        <ResultsNotFound />
+      ) : (
+        <LocationsList data={data.results} isPending={isPending} />
+      )}
     </div>
   );
 };
