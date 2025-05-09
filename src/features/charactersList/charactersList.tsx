@@ -48,6 +48,7 @@ const CharactersList = ({ data, isPending }: CharactersListProps) => {
 
           return (
             <CharacterCard
+              key={item.id}
               data={item}
               isPending={isPending}
               isFavorite={isFavorite}
