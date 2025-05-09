@@ -14,8 +14,9 @@ import { useDebounce } from '@/features/searchFields/use-debounce';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
-import { EpisodeFilterParams, Filters } from '@/types/types';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
+import type { EpisodeFilterParams, Filters } from '@/types/types';
 
 const EpisodesPage = () => {
   const filters = useSelector(allFilters);
