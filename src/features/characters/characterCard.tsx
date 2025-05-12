@@ -1,6 +1,6 @@
 import { Circle } from 'lucide-react';
 
-import HeartToggle from '@/components/heart-toggle';
+import HeartToggle from '@/components/heartToggle';
 import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';

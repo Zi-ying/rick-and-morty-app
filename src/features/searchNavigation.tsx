@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import HeartToggle from '@/components/heart-toggle';
+import HeartToggle from '@/components/heartToggle';
 
 import SearchInput from './inputs/searchInput';
 
