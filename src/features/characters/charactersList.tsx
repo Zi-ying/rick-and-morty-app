@@ -68,10 +68,6 @@ const CharactersList = () => {
     );
   }
 
-  if (!data || data.results.length === 0) {
-    return <ResultsNotFound className="h-[calc(100vh-200px)]" />;
-  }
-
   return (
     <>
       <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
