@@ -12,7 +12,7 @@ import ResultsNotFound from '../resultsNotFound';
 import { getCharacterById } from './get-character-by-id';
 import SmallCharacterCard from './smallCharacterCard';
 
-import type { Character } from "@/types/types";
+import type { Character } from "../characters/types";
 interface CharacterProps {
   id?: string;
   isSmallCard?: boolean;

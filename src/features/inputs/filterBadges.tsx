@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-import type { Filters } from "@/types/types";
+import type { Filters } from "@/types/filters";
 
 interface FilterBadgesProps {
   filters: Filters;

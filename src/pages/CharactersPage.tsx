@@ -15,9 +15,11 @@ import { cn } from '@/lib/utils';
 import { allFavorites } from '@/store/favorites-slice';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
-import { Character, CharacterFilterParams, Filters } from '@/types/types';
 import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+
+import type { Character, CharacterFilters } from "@/features/characters/types";
+import type { Filters } from "@/types/filters";
 
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
@@ -61,7 +63,7 @@ const CharactersPage = () => {
     setCurrentPage(1);
   };
 
-  const filtersArgs: CharacterFilterParams = {
+  const filtersArgs: CharacterFilters = {
     name: filters.characterName,
     gender: filters.gender,
     status: filters.status,

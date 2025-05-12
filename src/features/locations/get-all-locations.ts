@@ -1,9 +1,12 @@
-import type { PaginationParams, Location, LocationFilterParams } from "@/types/types";
+import { Pagination } from '@/types/pagination';
 
+import { LocationFilters } from './types';
+
+import type { Location } from "./types";
 const address = "https://rickandmortyapi.com/api/location";
 
 interface GetAllLocationsParams {
-  filters: LocationFilterParams;
+  filters: LocationFilters;
   page: string;
 }
 
@@ -12,7 +15,7 @@ export const getAllLocations = async ({
   page,
 }: GetAllLocationsParams): Promise<{
   results: Location[];
-  info: PaginationParams;
+  info: Pagination;
 }> => {
   const url = new URL(address);
 

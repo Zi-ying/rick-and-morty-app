@@ -1,4 +1,4 @@
-import type { Location } from "@/types/types";
+import type { Location } from "./types";
 
 export const getLocationById = async (id?: string): Promise<Location | {error: string}> => {
   if (!id) {

@@ -5,7 +5,8 @@ import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
-import { Character } from '@/types/types';
+
+import type { Character } from './types';
 
 interface CharacterCardProps {
   data: Character;

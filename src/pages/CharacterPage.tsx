@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import Character from '@/features/character/character';
+import Character from '../features/character/character';
 
 const CharacterPage = () => {
   const { characterId } = useParams();

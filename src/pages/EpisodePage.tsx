@@ -8,7 +8,8 @@ import { getEpisodeById } from '@/features/episodes/get-episode-by-id';
 import ResultsNotFound from '@/features/resultsNotFound';
 import { useQuery } from '@tanstack/react-query';
 
-import type { Episode } from "@/types/types";
+import type { Episode } from "@/features/episodes/types";
+
 const EpisodePage = () => {
   const { episodeId } = useParams();
 

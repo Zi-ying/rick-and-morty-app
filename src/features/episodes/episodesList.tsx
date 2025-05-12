@@ -19,7 +19,9 @@ import EpisodeCard from './episodeCard';
 import { getAllEpisodes } from './get-all-episodes';
 import { episodeOptions } from './options';
 
-import type { EpisodeFilterParams, Filters } from "@/types/types";
+import type { EpisodeFilters } from './types';
+import type { Filters } from '@/types/filters';
+
 const EpisodesList = () => {
   const filters = useSelector(allFilters);
   const [page, setPage] = useState<number>(1);
@@ -44,7 +46,7 @@ const EpisodesList = () => {
     setPage(1);
   };
 
-  const filterArgs: EpisodeFilterParams = {
+  const filterArgs: EpisodeFilters = {
     name: filters.episodeName,
     episode: filters.episode,
   };

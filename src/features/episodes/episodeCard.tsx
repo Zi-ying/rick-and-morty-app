@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-import type { Episode, } from "@/types/types";
+import type { Episode, } from "./types";
 
 interface EpisodeCardProps {
   data: Episode;

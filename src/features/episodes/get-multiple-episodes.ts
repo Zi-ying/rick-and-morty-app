@@ -1,4 +1,4 @@
-import type { Episode } from "@/types/types";
+import type { Episode } from "./types";
 
 export const getMultipleEpisodes = async (
   ids: string

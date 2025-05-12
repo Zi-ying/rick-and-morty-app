@@ -1,7 +1,8 @@
 import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import LoadingSpinner from '@/components/ui/spinner';
-import { Character } from '@/types/types';
+
+import type { Character } from '../characters/types';
 
 interface SmallCharacterCardProps {
   data: Character;

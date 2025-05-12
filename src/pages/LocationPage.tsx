@@ -8,7 +8,8 @@ import LocationCard from '@/features/locations/locationCard';
 import ResultsNotFound from '@/features/resultsNotFound';
 import { useQuery } from '@tanstack/react-query';
 
-import type { Location } from "@/types/types";
+import type { Location } from "@/features/locations/types";
+
 const LocationPage = () => {
   const { locationId } = useParams();
 

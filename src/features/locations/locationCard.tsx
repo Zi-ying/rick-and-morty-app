@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
-import type { Location } from "@/types/types";
+import type { Location } from "./types";
 
 interface LocationCardProps {
   data: Location;

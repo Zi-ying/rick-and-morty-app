@@ -1,20 +1,20 @@
-import type { PaginationParams, EpisodeFilterParams, Episode } from "@/types/types";
+import { Pagination } from '@/types/pagination';
+
+import type { Episode, EpisodeFilters } from './types';
 
 const address = "https://rickandmortyapi.com/api/episode";
 
 interface GetAllEpisodesParams {
-  filters: EpisodeFilterParams;
+  filters: EpisodeFilters;
   page: string;
 }
 
-export const getAllEpisodes = async (
-  {
+export const getAllEpisodes = async ({
   filters,
   page,
-}: GetAllEpisodesParams
-): Promise<{
+}: GetAllEpisodesParams): Promise<{
   results: Episode[];
-  info: PaginationParams;
+  info: Pagination;
 }> => {
   const url = new URL(address);
 

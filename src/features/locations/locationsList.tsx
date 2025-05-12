@@ -19,7 +19,9 @@ import { getAllLocations } from './get-all-locations';
 import LocationCard from './locationCard';
 import { dimensionOptions, locationTypeOptions } from './options';
 
-import type { Filters, LocationFilterParams } from "@/types/types";
+import type { LocationFilters } from "./types";
+import type { Filters } from "@/types/filters";
+
 const LocationsList = () => {
   const filters = useSelector(allFilters);
   const [search, setSearch] = useState<string>(filters.locationName);
@@ -44,7 +46,7 @@ const LocationsList = () => {
     setPage(1);
   };
 
-  const filterArgs: LocationFilterParams = {
+  const filterArgs: LocationFilters = {
     name: filters.locationName,
     type: filters.locationType,
     dimension: filters.dimension,

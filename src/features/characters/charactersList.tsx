@@ -7,7 +7,8 @@ import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
 import ResultsNotFound from '../resultsNotFound';
 import CharacterCard from './characterCard';
 
-import type { Character } from "@/types/types";
+import type { Character } from './types';
+
 interface CharactersListProps {
   data: Character[] | undefined;
   isPending: boolean;

@@ -1,4 +1,4 @@
-import type { Character } from "@/types/types";
+import type { Character } from './types';
 
 export const getMultipleCharacters = async (
   ids: string
