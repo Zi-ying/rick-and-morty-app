@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div className="h-[calc(100vh-56px)] flex items-center justify-center">
       <Link to="/character">
@@ -12,4 +12,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;
