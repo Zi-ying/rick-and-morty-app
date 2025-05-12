@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Spinner from '@/components/ui/spinner';
 import { allFavorites } from '@/store/favorites-slice';
 import { useAppSelector } from '@/store/redux-hooks';
 import { useDebounce } from '@/utils/use-debounce';
@@ -43,17 +44,13 @@ const CharactersFavorites = ({
     return (data as Character).created !== undefined;
   };
 
-  if (!data) {
-    return <ResultsNotFound />;
-  }
-
   const newArray: Character[] = [];
 
-  if (isCharacter(data)) {
+  if (data && isCharacter(data)) {
     newArray.push(data);
   }
 
-  if (!isCharacter(data) && data.length >= 2) {
+  if (data && !isCharacter(data) && data.length >= 2) {
     newArray.push(...data);
   }
 
@@ -65,6 +62,14 @@ const CharactersFavorites = ({
   const getFavorite = (item: Character) => {
     return keys.includes(item.id.toString());
   };
+
+  if (isPending) {
+    return (
+      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-2 pt-2">
