@@ -64,7 +64,7 @@ const CharactersList = () => {
       <CharactersFavorites
         isFavoritePage={isFavoritePage}
         setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
-        onToggle={() => onToggle}
+        onToggle={onToggle}
       />
     );
   }
