@@ -15,8 +15,6 @@ To start run the command line:
 - Add different languages
 - Uniformize paddings and styles
 - Fix no data found for characters page
-- Fix favorite page not to have search options for now.
-- Add search optiosn for favorites.
 - Add see favorites tooltip
 - Remove logic from pages.
 - Add barrel files for search fields
