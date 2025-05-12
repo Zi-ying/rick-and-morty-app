@@ -6,6 +6,7 @@ import { getAllCharacters } from '@/features/charactersList/get-all-characters';
 import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
 import ExpansionButton from '@/features/expansionButton';
 import PaginationList from '@/features/pagination/paginationList';
+import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SelectField from '@/features/searchFields/SelectField';
@@ -17,8 +18,6 @@ import { useAppSelector } from '@/store/redux-hooks';
 import { Character, CharacterFilterParams, Filters } from '@/types/types';
 import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-
-import ResultsNotFound from '../features/resultsNotFound';
 
 const CharactersPage = () => {
   const filters: Filters = useAppSelector(allFilters);
