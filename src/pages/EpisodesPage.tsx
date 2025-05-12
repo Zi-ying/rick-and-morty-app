@@ -9,7 +9,7 @@ import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import SearchInput from '@/features/searchFields/searchInput';
-import SelectField from '@/features/searchFields/SelectField';
+import SelectInput from '@/features/searchFields/selectInput';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
@@ -84,7 +84,7 @@ const EpisodesPage = () => {
           isExpanded ? "inline-flex" : "hidden"
         )}
       >
-        <SelectField
+        <SelectInput
           placeholder="Episodes"
           value={filters.episode}
           data={episodeOptions}

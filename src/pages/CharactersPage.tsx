@@ -9,7 +9,7 @@ import ExpansionButton from '@/features/expansionButton';
 import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
-import SelectField from '@/features/searchFields/SelectField';
+import SelectInput from '@/features/searchFields/selectInput';
 import SearchNavigation from '@/features/searchNavigation';
 import { cn } from '@/lib/utils';
 import { allFavorites } from '@/store/favorites-slice';
@@ -153,33 +153,33 @@ const CharactersPage = () => {
               : "hidden"
           )}
         >
-          <SelectField
+          <SelectInput
             placeholder="Status"
             value={filters.status}
             data={statusOptions}
             onChange={(e) => setFilters("status", e)}
-            classnames="w-full"
+            className="w-full"
           />
-          <SelectField
+          <SelectInput
             placeholder="Gender"
             value={filters.gender}
             data={genderOptions}
             onChange={(e) => setFilters("gender", e)}
-            classnames="w-full"
+            className="w-full"
           />
-          <SelectField
+          <SelectInput
             placeholder="Species"
             value={filters.species}
             data={speciesOptions}
             onChange={(e) => setFilters("species", e)}
-            classnames="w-full"
+            className="w-full"
           />
-          <SelectField
+          <SelectInput
             placeholder="Sub-species"
             value={filters.characterType}
             data={characterTypeOptions}
             onChange={(e) => setFilters("characterType", e)}
-            classnames="w-[220px]"
+            className="w-[220px]"
           />
         </div>
         <FilterBadges

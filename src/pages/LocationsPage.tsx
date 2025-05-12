@@ -9,7 +9,7 @@ import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import SearchInput from '@/features/searchFields/searchInput';
-import SelectField from '@/features/searchFields/SelectField';
+import SelectInput from '@/features/searchFields/selectInput';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
@@ -79,7 +79,7 @@ const LocationsPage = () => {
           isExpanded ? "grid grid-cols-2 gap-2 m-auto text-white" : "hidden"
         )}
       >
-        <SelectField
+        <SelectInput
           placeholder="type"
           value={filters.locationType}
           data={locationTypeOptions}
@@ -87,9 +87,9 @@ const LocationsPage = () => {
             dispatch(addFilter({ key: "locationType", value: e }));
             setPage(1);
           }}
-          classnames='w-full'
+          className='w-full'
         />
-        <SelectField
+        <SelectInput
           placeholder="dimension"
           value={filters.dimension}
           data={dimensionOptions}
@@ -97,7 +97,7 @@ const LocationsPage = () => {
             dispatch(addFilter({ key: "dimension", value: e }));
             setPage(1);
           }}
-          classnames='w-full'
+          className='w-full'
         />
       </div>
       <FilterBadges

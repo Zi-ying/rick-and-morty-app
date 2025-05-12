@@ -1,16 +1,16 @@
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
-import { cn } from '../../lib/utils';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 
-interface SelectFieldProps {
+interface SelectInputProps {
   placeholder: string;
   value: string;
-  classnames?: string;
   data: {label: string, value: string}[]
   onChange: (value: string) => void;
+  className?: string;
 }
 
-const SelectField = ({placeholder, value, data, classnames, onChange}: SelectFieldProps) => {
+const SelectInput = ({placeholder, value, data, className: classnames, onChange}: SelectInputProps) => {
   return (
       <Select onValueChange={onChange} value={value}>
         <SelectTrigger className={cn(classnames, 'hover:text-pickle-500 cursor-pointer backdrop-blur-sm')}>
@@ -27,4 +27,4 @@ const SelectField = ({placeholder, value, data, classnames, onChange}: SelectFie
   );
 };
 
-export default SelectField;
+export default SelectInput;
