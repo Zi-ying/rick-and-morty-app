@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 
 import EpisodesList from '@/features/episodes/episodesList';
 import { getAllEpisodes } from '@/features/episodes/get-all-episodes';
+import { episodeOptions } from '@/features/episodes/options';
 import ExpansionButton from '@/features/expansionButton';
 import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
-import { episodeOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
 import { cn } from '@/lib/utils';
