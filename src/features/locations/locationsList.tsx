@@ -64,6 +64,14 @@ const LocationsList = () => {
     setPage(1);
   };
 
+  if (isPending) {
+    return (
+      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
+  }
+
   return (
     <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
       <div className="grid grid-cols-4 gap-2">

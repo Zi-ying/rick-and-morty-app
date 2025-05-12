@@ -25,7 +25,11 @@ const EpisodePage = () => {
   });
 
   if (isPending) {
-    return <Spinner />;
+    return (
+      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
   }
 
   if (!data) {
@@ -38,8 +42,8 @@ const EpisodePage = () => {
 
   return (
     <div className="p-2 space-y-2">
-      <EpisodeCard data={data}/>
-      <div className='text-pickle-400'>Residents:</div>
+      <EpisodeCard data={data} />
+      <div className="text-pickle-400">Residents:</div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2">
         {data.characters.map((resident) => {
           const url = new URL(resident);

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import Spinner from '@/components/ui/spinner';
 import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import { addFavorite, allFavorites, removeFavorite } from '@/store/favorites-slice';
 import { allFilters } from '@/store/filters-slice';
@@ -65,6 +66,14 @@ const CharactersList = () => {
         setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
         onToggle={() => onToggle}
       />
+    );
+  }
+
+  if (isPending) {
+    return (
+      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
     );
   }
 

@@ -1,8 +1,8 @@
 import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
-import LoadingSpinner from '@/components/ui/spinner';
+import Spinner from '@/components/ui/spinner';
 
-import type { Character } from '../characters/types';
+import type { Character } from "../characters/types";
 
 interface SmallCharacterCardProps {
   data: Character;
@@ -10,9 +10,12 @@ interface SmallCharacterCardProps {
 }
 
 const SmallCharacterCard = ({ data, isPending }: SmallCharacterCardProps) => {
-
   if (isPending) {
-    return <Card><LoadingSpinner /></Card>
+    return (
+      <Card>
+        <Spinner />
+      </Card>
+    );
   }
 
   return (
@@ -22,7 +25,7 @@ const SmallCharacterCard = ({ data, isPending }: SmallCharacterCardProps) => {
         alt={`image of ${data.name} from Rick and Morty`}
         className="rounded-full"
       />
-      <CardHeader onLoad={() => <LoadingSpinner/>} className="col-span-2 text-pickle-500">
+      <CardHeader className="col-span-2 text-pickle-500">
         <CardTitle>{data.name}</CardTitle>
       </CardHeader>
     </Card>
