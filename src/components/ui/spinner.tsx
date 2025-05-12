@@ -1,16 +1,35 @@
-interface LoadingSpinnerProps {
+import { cva, VariantProps } from 'class-variance-authority';
+
+interface SpinnerProps {
   message?: string;
 }
 
-const LoadingSpinner = ({ message = 'Loading...' }: LoadingSpinnerProps) => {
+const spinnerVariants = cva(
+  "inline-block self-justify-center border-4 rounded-full border-pickle-500 animate-spin",
+  {
+    variants: {
+      size: {
+        default: "size-10",
+        sm: "size-8",
+        lg: "size-16",
+      },
+    },
+    defaultVariants: {
+      size: "default",
+    },
+  }
+);
+
+function Spinner({
+  size,
+  message,
+}: SpinnerProps & VariantProps<typeof spinnerVariants>) {
   return (
     <div className="grid gap-4 items-center justify-center p-4">
-      <div
-      className="inline-block self-justify-center size-10 border-4 rounded-full border-pickle-500 animate-spin"
-      />
+      <div className={spinnerVariants({ size })} />
       <p className="text-pickle-500">{message}</p>
     </div>
   );
-};
+}
 
-export default LoadingSpinner;
+export default Spinner;
