@@ -9,13 +9,13 @@ import PaginationList from '@/features/pagination/paginationList';
 import FilterBadges from '@/features/searchFields/filterBadges';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/searchFields/options';
 import SelectField from '@/features/searchFields/SelectField';
-import { useDebounce } from '@/features/searchFields/use-debounce';
 import SearchNavigation from '@/features/searchNavigation';
 import { cn } from '@/lib/utils';
 import { allFavorites } from '@/store/favorites-slice';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppSelector } from '@/store/redux-hooks';
 import { Character, CharacterFilterParams, Filters } from '@/types/types';
+import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import ResultsNotFound from '../features/resultsNotFound';

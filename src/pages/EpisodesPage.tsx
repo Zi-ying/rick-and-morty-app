@@ -10,10 +10,10 @@ import FilterBadges from '@/features/searchFields/filterBadges';
 import { episodeOptions } from '@/features/searchFields/options';
 import SearchField from '@/features/searchFields/SearchField';
 import SelectField from '@/features/searchFields/SelectField';
-import { useDebounce } from '@/features/searchFields/use-debounce';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
+import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import type { EpisodeFilterParams, Filters } from '@/types/types';
