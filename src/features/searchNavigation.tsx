@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import HeartToggle from '@/components/heart-toggle';
 
-import SearchInput from './searchFields/searchInput';
+import SearchInput from './inputs/searchInput';
 
 interface SearchNavigationProps {
   placeholder: string;

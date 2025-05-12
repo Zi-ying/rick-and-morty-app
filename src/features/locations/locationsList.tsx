@@ -10,11 +10,11 @@ import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import ExpansionButton from '../expansionButton';
+import FilterBadges from '../inputs/filterBadges';
+import SearchInput from '../inputs/searchInput';
+import SelectInput from '../inputs/selectInput';
 import PaginationList from '../pagination/paginationList';
 import ResultsNotFound from '../resultsNotFound';
-import FilterBadges from '../searchFields/filterBadges';
-import SearchInput from '../searchFields/searchInput';
-import SelectInput from '../searchFields/selectInput';
 import { getAllLocations } from './get-all-locations';
 import LocationCard from './locationCard';
 import { dimensionOptions, locationTypeOptions } from './options';
