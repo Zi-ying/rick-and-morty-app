@@ -8,19 +8,18 @@ interface SearchNavigationProps {
   placeholder: string;
   value: string;
   toggled: boolean;
-  children?: ReactNode;
-  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onToggle: () => void;
-
+  children?: ReactNode;
 }
 
 const SearchNavigation = ({
   placeholder,
   value,
   toggled,
-  children,
-  onSearchChange,
+  onChange,
   onToggle,
+  children,
 }: SearchNavigationProps) => {
   return (
     <div className="grid grid-cols-4 gap-2">
@@ -28,7 +27,7 @@ const SearchNavigation = ({
         placeholder={placeholder}
         value={value}
         className="p-4 text-white col-start-2 col-end-4"
-        onChange={onSearchChange}
+        onChange={onChange}
       />
       <div className="flex gap-2">
         <HeartToggle

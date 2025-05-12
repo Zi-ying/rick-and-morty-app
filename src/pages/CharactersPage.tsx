@@ -116,7 +116,7 @@ const CharactersPage = () => {
         <SearchNavigation
           placeholder="Search by character name"
           value={name2}
-          onSearchChange={(e) => setName2(e.target.value)}
+          onChange={(e) => setName2(e.target.value)}
           toggled={isFavoritePage}
           onToggle={() => setIsFavoritePage(!isFavoritePage)}
         />
@@ -135,7 +135,7 @@ const CharactersPage = () => {
         <SearchNavigation
           placeholder="Search by character name"
           value={name}
-          onSearchChange={(e) => setSearchFilter(e.target.value)}
+          onChange={(e) => setSearchFilter(e.target.value)}
           toggled={isFavoritePage}
           onToggle={() => setIsFavoritePage(!isFavoritePage)}
         >
