@@ -14,7 +14,7 @@ import FilterBadges from '../inputs/filterBadges';
 import SearchInput from '../inputs/searchInput';
 import SelectInput from '../inputs/selectInput';
 import PaginationList from '../pagination/paginationList';
-import ResultsNotFound from '../resultsNotFound';
+import ResultNotFound from '../resultNotFound';
 import EpisodeCard from './episodeCard';
 import { getAllEpisodes } from './get-all-episodes';
 import { episodeOptions } from './options';
@@ -117,7 +117,7 @@ const EpisodesList = () => {
         />
       )}
       {!data?.info && !data?.results ? (
-        <ResultsNotFound />
+        <ResultNotFound />
       ) : (
         <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-4 p-2">
           {data.results.map((item) => {

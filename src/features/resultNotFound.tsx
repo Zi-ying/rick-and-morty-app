@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 
-interface ResultsNotFoundProps {
+interface ResultNotFoundProps {
   className?: string;
 }
 
-const ResultsNotFound = ({className}: ResultsNotFoundProps) => {
+const ResultNotFound = ({className}: ResultNotFoundProps) => {
   return (
     <div className={cn("flex items-center justify-center", className)}>
       <div className="grid gap-4 justify-items-center p-4 backdrop-blur-md rounded-xl m-auto">
@@ -19,4 +19,4 @@ const ResultsNotFound = ({className}: ResultsNotFoundProps) => {
   );
 };
 
-export default ResultsNotFound;
+export default ResultNotFound;

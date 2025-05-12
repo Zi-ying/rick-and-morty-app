@@ -5,7 +5,7 @@ import BackButton from '@/features/backButton';
 import Character from '@/features/character/character';
 import { getLocationById } from '@/features/locations/get-location-by-id';
 import LocationCard from '@/features/locations/locationCard';
-import ResultsNotFound from '@/features/resultsNotFound';
+import ResultNotFound from '@/features/resultNotFound';
 import { useQuery } from '@tanstack/react-query';
 
 import type { Location } from "@/features/locations/types";
@@ -33,7 +33,7 @@ const LocationPage = () => {
   }
 
   if (!data) {
-    return <ResultsNotFound />;
+    return <ResultNotFound />;
   }
 
   if (!isStatus200(data)) {

@@ -5,7 +5,7 @@ import BackButton from '@/features/backButton';
 import Character from '@/features/character/character';
 import EpisodeCard from '@/features/episodes/episodeCard';
 import { getEpisodeById } from '@/features/episodes/get-episode-by-id';
-import ResultsNotFound from '@/features/resultsNotFound';
+import ResultNotFound from '@/features/resultNotFound';
 import { useQuery } from '@tanstack/react-query';
 
 import type { Episode } from "@/features/episodes/types";
@@ -33,7 +33,7 @@ const EpisodePage = () => {
   }
 
   if (!data) {
-    return <ResultsNotFound />;
+    return <ResultNotFound />;
   }
 
   if (!isStatus200(data)) {

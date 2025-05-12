@@ -8,7 +8,7 @@ import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import SmallCharacterCard from '../character/smallCharacterCard';
-import ResultsNotFound from '../resultsNotFound';
+import ResultNotFound from '../resultNotFound';
 import SearchNavigation from '../searchNavigation';
 import CharacterCard from './characterCard';
 import { getMultipleCharacters } from './get-multiple-characters';
@@ -115,7 +115,7 @@ const CharactersFavorites = ({
           </div>
         </>
       ) : (
-        <ResultsNotFound />
+        <ResultNotFound />
       )}
     </div>
   );

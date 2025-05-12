@@ -8,7 +8,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import BackButton from '../backButton';
-import ResultsNotFound from '../resultsNotFound';
+import ResultNotFound from '../resultNotFound';
 import { getCharacterById } from './get-character-by-id';
 import SmallCharacterCard from './smallCharacterCard';
 
@@ -53,7 +53,7 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   }
 
   if (!data) {
-    return <ResultsNotFound />;
+    return <ResultNotFound />;
   }
 
   if (isSmallCard) {

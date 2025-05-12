@@ -14,7 +14,7 @@ import FilterBadges from '../inputs/filterBadges';
 import SearchInput from '../inputs/searchInput';
 import SelectInput from '../inputs/selectInput';
 import PaginationList from '../pagination/paginationList';
-import ResultsNotFound from '../resultsNotFound';
+import ResultNotFound from '../resultNotFound';
 import { getAllLocations } from './get-all-locations';
 import LocationCard from './locationCard';
 import { dimensionOptions, locationTypeOptions } from './options';
@@ -128,7 +128,7 @@ const LocationsList = () => {
       )}
       {isPending && <Spinner />}
       {!data?.info && !data?.results ? (
-        <ResultsNotFound />
+        <ResultNotFound />
       ) : (
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
           {data.results.map((item) => {

@@ -10,7 +10,7 @@ import { Filters } from '@/types/filters';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import PaginationList from '../pagination/paginationList';
-import ResultsNotFound from '../resultsNotFound';
+import ResultNotFound from '../resultNotFound';
 import CharacterCard from './characterCard';
 import CharactersFavorites from './charactersFavorites';
 import CharactersInputs from './charactersInputs';
@@ -129,7 +129,7 @@ const CharactersList = () => {
           </div>
         </>
       ) : (
-        <ResultsNotFound />
+        <ResultNotFound />
       )}
     </>
   );
