@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import Spinner from '@/components/ui/spinner';
 import BackButton from '@/features/backButton';
 import Character from '@/features/character/character';
-import { getLocationById } from '@/features/location/get-location-by-id';
+import { getLocationById } from '@/features/locations/get-location-by-id';
 import LocationCard from '@/features/locations/locationCard';
 import ResultsNotFound from '@/features/resultsNotFound';
 import { useQuery } from '@tanstack/react-query';

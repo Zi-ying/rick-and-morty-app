@@ -3,8 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import Spinner from '@/components/ui/spinner';
 import BackButton from '@/features/backButton';
 import Character from '@/features/character/character';
-import { getEpisodeById } from '@/features/episode/get-episode-by-id';
 import EpisodeCard from '@/features/episodes/episodeCard';
+import { getEpisodeById } from '@/features/episodes/get-episode-by-id';
 import ResultsNotFound from '@/features/resultsNotFound';
 import { useQuery } from '@tanstack/react-query';
 
