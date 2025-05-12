@@ -1,23 +1,42 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import { addFavorite, allFavorites, removeFavorite } from '@/store/favorites-slice';
+import { allFilters } from '@/store/filters-slice';
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
+import { Filters } from '@/types/filters';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import PaginationList from '../pagination/paginationList';
 import ResultsNotFound from '../resultsNotFound';
 import CharacterCard from './characterCard';
+import CharactersFavorites from './charactersFavorites';
+import CharactersInputs from './charactersInputs';
+import { getAllCharacters } from './get-all-characters';
 
-import type { Character } from './types';
-
-interface CharactersListProps {
-  data: Character[] | undefined;
-  isPending: boolean;
-}
-
-const CharactersList = ({ data, isPending }: CharactersListProps) => {
+import type { Character, CharacterFilters } from "./types";
+const CharactersList = () => {
   const keys = useAppSelector(allFavorites);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const filters: Filters = useAppSelector(allFilters);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isFavoritePage, setIsFavoritePage] = useState<boolean>(false);
+
+  const filtersArgs: CharacterFilters = {
+    name: filters.characterName,
+    gender: filters.gender,
+    status: filters.status,
+    species: filters.species,
+    type: filters.characterType,
+  };
+
+  const { data, isPending, error } = useQuery({
+    queryKey: ["charactersData", filtersArgs, currentPage],
+    queryFn: async () => getAllCharacters(filtersArgs, currentPage.toString()),
+    placeholderData: keepPreviousData,
+  });
 
   const getFavorite = (item: Character) => {
     return keys.includes(item.id.toString());
@@ -37,43 +56,76 @@ const CharactersList = ({ data, isPending }: CharactersListProps) => {
     }
   };
 
-  if (!data || data.length === 0) {
+  if (error) return "An error has occurred: " + error.message;
+
+  if (isFavoritePage) {
+    return (
+      <CharactersFavorites
+        isFavoritePage={isFavoritePage}
+        setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
+        onToggle={() => onToggle}
+      />
+    );
+  }
+
+  if (!data || data.results.length === 0) {
     return <ResultsNotFound className="h-[calc(100vh-200px)]" />;
   }
 
   return (
     <>
-      <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 p-6">
-        {data.map((item) => {
-          const isFavorite = getFavorite(item);
+      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
+        <CharactersInputs
+          filters={filters}
+          isFavoritePage={isFavoritePage}
+          setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
+          setCurrentPage={setCurrentPage}
+        />
+        {data?.info && data?.results && (
+          <PaginationList
+            currentPage={currentPage}
+            maxPage={data.info.pages}
+            setCurrentPage={setCurrentPage}
+          />
+        )}
+      </div>
+      {data?.info && data?.results ? (
+        <>
+          <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 p-6">
+            {data.results.map((item) => {
+              const isFavorite = getFavorite(item);
 
-          return (
-            <CharacterCard
-              key={item.id}
-              data={item}
-              isPending={isPending}
-              isFavorite={isFavorite}
-              onClick={() => {
-                navigate(`/character/${item.id}`);
-              }}
-              onToggle={(e) => onToggle(e, item)}
-            />
-          );
-        })}
-      </div>
-      <div className="w-full grid sm:grid-cols-2 gap-2 md:hidden p-4">
-        {data.map((item) => {
-          return (
-            <Link
-              key={item.id}
-              to={item.id.toString()}
-              className="grid justify-center cursor-pointer"
-            >
-              <SmallCharacterCard data={item} isPending={isPending} />
-            </Link>
-          );
-        })}
-      </div>
+              return (
+                <CharacterCard
+                  key={item.id}
+                  data={item}
+                  isPending={isPending}
+                  isFavorite={isFavorite}
+                  onClick={() => {
+                    navigate(`/character/${item.id}`);
+                  }}
+                  onToggle={(e) => onToggle(e, item)}
+                />
+              );
+            })}
+          </div>
+          <div className="w-full grid sm:grid-cols-2 gap-2 md:hidden p-4">
+            {data.results.map((item) => {
+              return (
+                <Link
+                  key={item.id}
+                  to={item.id.toString()}
+                  className="grid justify-center cursor-pointer"
+                >
+                  <SmallCharacterCard data={item} isPending={isPending} />
+                </Link>
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <ResultsNotFound />
+      )}
     </>
   );
 };
