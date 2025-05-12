@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import CharactersList from '@/features/charactersList/charactersList';
-import { getAllCharacters } from '@/features/charactersList/get-all-characters';
-import { getMultipleCharacters } from '@/features/charactersList/get-multiple-characters';
-import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/charactersList/options';
+import CharactersList from '@/features/characters/charactersList';
+import { getAllCharacters } from '@/features/characters/get-all-characters';
+import { getMultipleCharacters } from '@/features/characters/get-multiple-characters';
+import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/characters/options';
 import ExpansionButton from '@/features/expansionButton';
 import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
