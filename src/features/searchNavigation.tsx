@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import HeartToggle from '@/components/heart-toggle';
 
-import SearchField from './searchFields/SearchField';
+import SearchInput from './searchFields/searchInput';
 
 interface SearchNavigationProps {
   placeholder: string;
@@ -24,7 +24,7 @@ const SearchNavigation = ({
 }: SearchNavigationProps) => {
   return (
     <div className="grid grid-cols-4 gap-2">
-      <SearchField
+      <SearchInput
         placeholder={placeholder}
         value={value}
         className="p-4 text-white col-start-2 col-end-4"

@@ -8,7 +8,7 @@ import ExpansionButton from '@/features/expansionButton';
 import PaginationList from '@/features/pagination/paginationList';
 import ResultsNotFound from '@/features/resultsNotFound';
 import FilterBadges from '@/features/searchFields/filterBadges';
-import SearchField from '@/features/searchFields/SearchField';
+import SearchInput from '@/features/searchFields/searchInput';
 import SelectField from '@/features/searchFields/SelectField';
 import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
@@ -67,7 +67,7 @@ const EpisodesPage = () => {
   return (
     <div className="space-y-2 pt-2">
       <div className="grid grid-cols-4 gap-2">
-        <SearchField
+        <SearchInput
           placeholder="Search for an episode"
           value={search}
           className="p-4 text-white col-start-2 col-end-4"

@@ -3,19 +3,19 @@ import { ChangeEvent } from 'react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
-interface SearchFieldProps {
+interface SearchInputProps {
   placeholder: string;
   value: string;
   className: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SearchField = ({
+const SearchInput = ({
   placeholder,
   value,
   className,
   onChange,
-}: SearchFieldProps) => {
+}: SearchInputProps) => {
   return (
       <Input
         type="search"
@@ -27,4 +27,4 @@ const SearchField = ({
   );
 };
 
-export default SearchField;
+export default SearchInput;
