@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
-import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
 import { useDebounce } from '@/utils/use-debounce';
@@ -87,10 +86,9 @@ const LocationsList = () => {
         />
       </div>
       <div
-        className={cn(
-          "",
+        className={
           isExpanded ? "grid grid-cols-2 gap-2 m-auto text-white" : "hidden"
-        )}
+        }
       >
         <SelectInput
           placeholder="type"
