@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 
 import HeartToggle from '@/components/heartToggle';
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../components/ui/tooltip';
 import SearchInput from './inputs/searchInput';
 
 interface SearchNavigationProps {
@@ -30,11 +31,20 @@ const SearchNavigation = ({
         onChange={onChange}
       />
       <div className="flex gap-2">
-        <HeartToggle
-          variant="outline"
-          isToggled={toggled}
-          onToggle={onToggle}
-        />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <HeartToggle
+                variant="outline"
+                isToggled={toggled}
+                onToggle={onToggle}
+              />
+            </TooltipTrigger>
+            <TooltipContent className="text-white bg-black">
+              <p>Go see favorites</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         {children}
       </div>
     </div>
