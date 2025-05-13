@@ -1,69 +1,7 @@
-import { Link, useParams } from 'react-router-dom';
-
-import Spinner from '@/components/ui/spinner';
-import BackButton from '@/features/backButton';
-import Character from '@/features/character/character';
-import { getLocationById } from '@/features/locations/get-location-by-id';
-import LocationCard from '@/features/locations/locationCard';
-import ResultNotFound from '@/features/resultNotFound';
-import { useQuery } from '@tanstack/react-query';
-
-import type { Location } from "@/features/locations/types";
+import Location from '@/features/locations/location';
 
 const LocationPage = () => {
-  const { locationId } = useParams();
-
-  const isStatus200 = (
-    location: Location | { error: string }
-  ): location is Location => {
-    return (location as Location).id !== undefined;
-  };
-
-  const { data, isPending } = useQuery({
-    queryKey: ["locationData", locationId],
-    queryFn: async () => getLocationById(locationId),
-  });
-
-  if (isPending) {
-    return (
-      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
-        <Spinner size="lg" />
-      </div>
-    );
-  }
-
-  if (!data) {
-    return <ResultNotFound />;
-  }
-
-  if (!isStatus200(data)) {
-    return <>{data.error}</>;
-  }
-
-  return (
-    <div className="p-2 space-y-2">
-      <LocationCard data={data} />
-      <div className="text-pickle-400 px-6">Residents:</div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2">
-        {data.residents.map((resident) => {
-          const url = new URL(resident);
-          const characterId = url.pathname.slice(
-            url.pathname.lastIndexOf("/"),
-            url.pathname.length
-          );
-
-          return (
-            <Link key={characterId} to={`/character${characterId}`}>
-              <Character id={characterId} isSmallCard />
-            </Link>
-          );
-        })}
-      </div>
-      <div className="flex justify-center">
-        <BackButton />
-      </div>
-    </div>
-  );
+  return <Location />
 };
 
 export default LocationPage;
