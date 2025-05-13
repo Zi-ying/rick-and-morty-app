@@ -13,7 +13,7 @@ interface CharacterCardProps {
   isPending: boolean;
   isFavorite: boolean;
   onClick: () => void;
-  onToggle: (e: React.ToggleEvent<HTMLDivElement>) => void;
+  onToggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const CharacterCard = ({
@@ -54,7 +54,7 @@ const CharacterCard = ({
           />
         </CardTitle>
         <div className="justify-self-end h-full flex">
-          <HeartToggle isToggled={isFavorite} onToggle={onToggle}/>
+          <HeartToggle isToggled={isFavorite} onToggle={(e) => onToggle(e)}/>
         </div>
       </CardHeader>
     </Card>

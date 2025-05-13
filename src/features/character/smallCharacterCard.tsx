@@ -9,7 +9,7 @@ interface SmallCharacterCardProps {
   isPending: boolean;
   isFavorite: boolean;
   onClick: () => void;
-  onToggle: (e: React.ToggleEvent<HTMLDivElement>) => void;
+  onToggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const SmallCharacterCard = ({

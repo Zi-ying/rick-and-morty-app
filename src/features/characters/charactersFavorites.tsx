@@ -17,7 +17,7 @@ import type { Character } from "./types";
 interface CharactersFavoritesProps {
   isFavoritePage: boolean;
   setIsFavoritePage: React.Dispatch<React.SetStateAction<boolean>>;
-  onToggle: (e: React.ToggleEvent<HTMLDivElement>, item: Character) => void;
+  onToggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, item: Character) => void;
 }
 
 const CharactersFavorites = ({

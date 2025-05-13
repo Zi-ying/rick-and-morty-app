@@ -43,7 +43,7 @@ const CharactersList = () => {
     return keys.includes(item.id.toString());
   };
 
-  const onToggle = (e: React.ToggleEvent<HTMLDivElement>, item: Character) => {
+  const onToggle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, item: Character) => {
     e.stopPropagation();
     const isFavorite = getFavorite(item);
 
