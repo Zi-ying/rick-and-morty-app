@@ -61,7 +61,7 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   }
 
   return (
-    <>
+    <div className="h-[calc(100vh-56px)] grid place-content-center gap-2">
       <div className="flex flex-col md:flex-row gap-4 rounded-xl shadow-md justify-center text-white backdrop-blur-md">
         <Image
           src={data.image}
@@ -70,9 +70,9 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
         />
         <div className="flex flex-col gap-4 p-4 md:items-start md:justify-center md:grow">
           <CardTitle className="flex gap-2 items-center justify-center">
-            <div className="text-pickle-500 font-semibold md:text-start text-md md:text-xl">
+            <p className="text-pickle-500 font-semibold md:text-start text-md md:text-xl">
               {data.name}
-            </div>
+            </p>
             <Circle
               className={cn(
                 "h-2.5 stroke-2.5",
@@ -121,7 +121,7 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
       <div className="m-auto">
         <BackButton />
       </div>
-    </>
+    </div>
   );
 };
 
