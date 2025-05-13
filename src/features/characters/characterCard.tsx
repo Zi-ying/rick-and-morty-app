@@ -6,14 +6,14 @@ import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 
-import type { Character } from './types';
+import type { Character } from "./types";
 
 interface CharacterCardProps {
   data: Character;
   isPending: boolean;
   isFavorite: boolean;
   onClick: () => void;
-  onToggle: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onToggle: (e: React.ToggleEvent<HTMLDivElement>) => void;
 }
 
 const CharacterCard = ({
@@ -23,7 +23,6 @@ const CharacterCard = ({
   onToggle,
   onClick,
 }: CharacterCardProps) => {
-
   if (isPending) {
     return (
       <Card>
@@ -33,7 +32,10 @@ const CharacterCard = ({
   }
 
   return (
-    <Card className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs" onClick={onClick}>
+    <Card
+      className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs"
+      onClick={onClick}
+    >
       <Image
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
@@ -51,8 +53,8 @@ const CharacterCard = ({
             )}
           />
         </CardTitle>
-        <div className="justify-self-end z-10">
-          <HeartToggle isToggled={isFavorite} onToggle={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => onToggle(e)} />
+        <div className="justify-self-end h-full flex">
+          <HeartToggle isToggled={isFavorite} onToggle={onToggle}/>
         </div>
       </CardHeader>
     </Card>

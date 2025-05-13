@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
 import { allFavorites } from '@/store/favorites-slice';
@@ -17,10 +17,7 @@ import type { Character } from "./types";
 interface CharactersFavoritesProps {
   isFavoritePage: boolean;
   setIsFavoritePage: React.Dispatch<React.SetStateAction<boolean>>;
-  onToggle: (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    item: Character
-  ) => void;
+  onToggle: (e: React.ToggleEvent<HTMLDivElement>, item: Character) => void;
 }
 
 const CharactersFavorites = ({
@@ -102,14 +99,19 @@ const CharactersFavorites = ({
           </div>
           <div className="w-full grid sm:grid-cols-2 gap-2 md:hidden p-4">
             {sortedData.map((item) => {
+              const isFavorite = getFavorite(item);
+
               return (
-                <Link
+                <SmallCharacterCard
                   key={item.id}
-                  to={item.id.toString()}
-                  className="grid justify-center cursor-pointer"
-                >
-                  <SmallCharacterCard data={item} isPending={isPending} />
-                </Link>
+                  data={item}
+                  isPending={isPending}
+                  isFavorite={isFavorite}
+                  onClick={() => {
+                    navigate(`/character/${item.id}`);
+                  }}
+                  onToggle={(e) => onToggle(e, item)}
+                />
               );
             })}
           </div>
