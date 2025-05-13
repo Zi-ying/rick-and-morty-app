@@ -41,7 +41,7 @@ const CharacterCard = ({
         alt={`image of ${data.name} from Rick and Morty`}
         className="rounded-t-xl"
       />
-      <CardHeader className="grid grid-cols-5 p-4 items-center">
+      <CardHeader className="grid grid-cols-5 p-4 items-center h-full">
         <CardTitle className="flex items-center justify-center gap-1 col-start-2 col-span-3">
           <p className="text-align text-pickle-500">{data.name}</p>
           <Circle
@@ -53,7 +53,7 @@ const CharacterCard = ({
             )}
           />
         </CardTitle>
-        <div className="justify-self-end h-full flex">
+        <div className="justify-self-end flex">
           <HeartToggle isToggled={isFavorite} onToggle={(e) => onToggle(e)}/>
         </div>
       </CardHeader>

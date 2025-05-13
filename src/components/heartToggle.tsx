@@ -14,7 +14,7 @@ const heartToggleVariants = cva(
   {
     variants: {
       variant: {
-        default: "[&>svg]:stroke-1.5 [&>svg]:size-5",
+        default: "[&>svg]:stroke-1.5 [&>svg]:size-4",
         outline: "border border-white [&>svg]:stroke-2 [&>svg]:size-6 h-9 px-2",
       },
     },
