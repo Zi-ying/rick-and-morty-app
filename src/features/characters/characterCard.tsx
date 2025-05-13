@@ -41,7 +41,7 @@ const CharacterCard = ({
       />
       <CardHeader className="grid grid-cols-5 p-4 items-center">
         <CardTitle className="flex items-center justify-center gap-1 col-start-2 col-span-3">
-          <span className="text-align text-pickle-500">{data.name}</span>
+          <p className="text-align text-pickle-500">{data.name}</p>
           <Circle
             className={cn(
               "h-2.5 stroke-2.5",
