@@ -1,15 +1,7 @@
-import { Link } from 'react-router-dom';
-
-import { Button } from '@/components/ui/button';
+import Home from '@/features/home';
 
 const HomePage = () => {
-  return (
-    <div className="h-[calc(100vh-56px)] flex items-center justify-center">
-      <Link to="/character">
-        <Button>Get Started!</Button>
-      </Link>
-    </div>
-  );
+  return <Home />;
 };
 
 export default HomePage;
