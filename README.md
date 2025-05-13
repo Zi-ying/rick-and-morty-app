@@ -16,5 +16,4 @@ To start run the command line:
 - Fix responsivness for navigation, add burger menu.
 - Add different languages
 - Uniformize paddings and styles
-- Remove logic from pages.
 - Add barrel files for search fields
