@@ -11,7 +11,6 @@ To start run the command line:
 ### With more time
 - Add testings
 - Fix responsivness for navigation, add burger menu.
-- Fix pagination with more pages
 - Add different languages
 - Uniformize paddings and styles
 - Fix no data found for characters page
