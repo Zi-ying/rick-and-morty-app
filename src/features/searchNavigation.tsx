@@ -32,10 +32,11 @@ const SearchNavigation = ({
       />
       <div className="flex gap-2">
         <Tooltip>
-          <TooltipTrigger onClick={onToggle}>
+          <TooltipTrigger>
             <HeartToggle
               variant="outline"
               isToggled={toggled}
+              onToggle={onToggle}
             />
           </TooltipTrigger>
           <TooltipContent className="text-white bg-black">
