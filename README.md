@@ -5,6 +5,9 @@ A paginated list will help you go through the extensive list of characters.
 
 I used components from shadcn ui, tailwindCSS for styling, Redux for state management and tanStack to fetch data from the API.
 
+First run the command line:
+`yarn build`
+
 To start run the command line:
 `yarn run dev`
 
