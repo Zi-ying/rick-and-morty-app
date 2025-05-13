@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import HeartToggle from '@/components/heartToggle';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 import SearchInput from './inputs/searchInput';
 
@@ -31,20 +31,17 @@ const SearchNavigation = ({
         onChange={onChange}
       />
       <div className="flex gap-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <HeartToggle
-                variant="outline"
-                isToggled={toggled}
-                onToggle={onToggle}
-              />
-            </TooltipTrigger>
-            <TooltipContent className="text-white bg-black">
-              <p>Go see favorites</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger onClick={onToggle}>
+            <HeartToggle
+              variant="outline"
+              isToggled={toggled}
+            />
+          </TooltipTrigger>
+          <TooltipContent className="text-white bg-black">
+            <p>Go see favorites</p>
+          </TooltipContent>
+        </Tooltip>
         {children}
       </div>
     </div>
