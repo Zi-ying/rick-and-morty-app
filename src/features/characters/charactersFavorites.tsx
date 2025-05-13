@@ -72,7 +72,7 @@ const CharactersFavorites = ({
   }
 
   return (
-    <div className="space-y-2 pt-2">
+    <>
       <SearchNavigation
         placeholder="Search by character name"
         value={value}
@@ -117,7 +117,7 @@ const CharactersFavorites = ({
       ) : (
         <ResultNotFound />
       )}
-    </div>
+    </>
   );
 };
 

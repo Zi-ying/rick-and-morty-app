@@ -61,11 +61,13 @@ const CharactersList = () => {
 
   if (isFavoritePage) {
     return (
-      <CharactersFavorites
-        isFavoritePage={isFavoritePage}
-        setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
-        onToggle={onToggle}
-      />
+      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
+        <CharactersFavorites
+          isFavoritePage={isFavoritePage}
+          setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
+          onToggle={onToggle}
+        />
+      </div>
     );
   }
 
