@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '@/features/characters/options';
-import ExpansionButton from '@/features/expansionButton';
-import FilterBadges from '@/features/inputs/filterBadges';
-import SelectInput from '@/features/inputs/selectInput';
-import SearchNavigation from '@/features/searchNavigation';
 import { cn } from '@/lib/utils';
 import { addFilter, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useDebounce } from '@/utils/use-debounce';
+
+import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from '../characters/options';
+import ExpansionButton from '../expansionButton';
+import { FilterBadges, SelectInput } from '../inputs';
+import SearchNavigation from '../searchNavigation';
 
 import type { Filters } from "@/types/filters";
 

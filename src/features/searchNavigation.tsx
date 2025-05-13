@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
 import HeartToggle from '@/components/heartToggle';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../components/ui/tooltip';
 import SearchInput from './inputs/searchInput';
 
 interface SearchNavigationProps {

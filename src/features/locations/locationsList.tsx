@@ -9,9 +9,7 @@ import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import ExpansionButton from '../expansionButton';
-import FilterBadges from '../inputs/filterBadges';
-import SearchInput from '../inputs/searchInput';
-import SelectInput from '../inputs/selectInput';
+import { FilterBadges, SearchInput, SelectInput } from '../inputs';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import { getAllLocations } from './get-all-locations';
