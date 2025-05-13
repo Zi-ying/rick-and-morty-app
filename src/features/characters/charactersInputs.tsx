@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { cn } from '@/lib/utils';
 import { addFilter, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useDebounce } from '@/utils/use-debounce';
 
@@ -78,9 +77,9 @@ const CharactersInputs = ({
 
       {/* Filter Bar */}
       <div
-        className={cn(
+        className={
           isExpanded ? "grid md:grid-cols-4 gap-2 text-white m-auto" : "hidden"
-        )}
+        }
       >
         <SelectInput
           placeholder="Status"

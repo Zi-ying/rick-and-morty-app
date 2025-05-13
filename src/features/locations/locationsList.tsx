@@ -70,59 +70,60 @@ const LocationsList = () => {
   }
 
   return (
-    <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
-      <div className="grid grid-cols-4 gap-2">
-        <SearchInput
-          placeholder="Search for a location"
-          value={search}
-          className="p-4 text-white col-start-2 col-end-4"
-          onChange={onChange}
+    <>
+      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
+        <div className="grid grid-cols-4 gap-2">
+          <SearchInput
+            placeholder="Search for a location"
+            value={search}
+            className="p-4 text-white col-start-2 col-end-4"
+            onChange={onChange}
+          />
+          <ExpansionButton
+            expanded={isExpanded}
+            onClick={() => setIsExpanded(!isExpanded)}
+          />
+        </div>
+        <div
+          className={
+            isExpanded ? "grid grid-cols-2 gap-2 m-auto text-white" : "hidden"
+          }
+        >
+          <SelectInput
+            placeholder="type"
+            value={filters.locationType}
+            data={locationTypeOptions}
+            onChange={(e) => {
+              dispatch(addFilter({ key: "locationType", value: e }));
+              setPage(1);
+            }}
+            className="w-full"
+          />
+          <SelectInput
+            placeholder="dimension"
+            value={filters.dimension}
+            data={dimensionOptions}
+            onChange={(e) => {
+              dispatch(addFilter({ key: "dimension", value: e }));
+              setPage(1);
+            }}
+            className="w-full"
+          />
+        </div>
+        <FilterBadges
+          filters={filters}
+          onClearOne={handleClear}
+          onClearAll={onResetClick}
+          className="flex flex-wrap gap-2 justify-center items-center"
         />
-        <ExpansionButton
-          expanded={isExpanded}
-          onClick={() => setIsExpanded(!isExpanded)}
-        />
+        {data?.info && (
+          <PaginationList
+            currentPage={page}
+            maxPage={data?.info.pages ?? 0}
+            setCurrentPage={setPage}
+          />
+        )}
       </div>
-      <div
-        className={
-          isExpanded ? "grid grid-cols-2 gap-2 m-auto text-white" : "hidden"
-        }
-      >
-        <SelectInput
-          placeholder="type"
-          value={filters.locationType}
-          data={locationTypeOptions}
-          onChange={(e) => {
-            dispatch(addFilter({ key: "locationType", value: e }));
-            setPage(1);
-          }}
-          className="w-full"
-        />
-        <SelectInput
-          placeholder="dimension"
-          value={filters.dimension}
-          data={dimensionOptions}
-          onChange={(e) => {
-            dispatch(addFilter({ key: "dimension", value: e }));
-            setPage(1);
-          }}
-          className="w-full"
-        />
-      </div>
-      <FilterBadges
-        filters={filters}
-        onClearOne={handleClear}
-        onClearAll={onResetClick}
-        className="flex flex-wrap gap-2 justify-center items-center"
-      />
-      {data?.info && (
-        <PaginationList
-          currentPage={page}
-          maxPage={data?.info.pages ?? 0}
-          setCurrentPage={setPage}
-        />
-      )}
-      {isPending && <Spinner />}
       {!data?.info && !data?.results ? (
         <ResultNotFound />
       ) : (
@@ -136,7 +137,7 @@ const LocationsList = () => {
           })}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

@@ -75,45 +75,48 @@ const EpisodesList = () => {
   }
 
   return (
-    <div className="space-y-2 pt-2">
-      <div className="grid grid-cols-4 gap-2">
-        <SearchInput
-          placeholder="Search for an episode"
-          value={search}
-          className="p-4 text-white col-start-2 col-end-4"
-          onChange={onChange}
+    <>
+      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
+        <div className="grid grid-cols-4 gap-2">
+          <SearchInput
+            placeholder="Search for an episode"
+            value={search}
+            className="p-4 text-white col-start-2 col-end-4"
+            onChange={onChange}
+          />
+          <ExpansionButton
+            expanded={isExpanded}
+            onClick={() => setIsExpanded(!isExpanded)}
+          />
+        </div>
+        <div
+          className={cn(
+            "justify-center text-white w-full",
+            isExpanded ? "inline-flex" : "hidden"
+          )}
+        >
+          <SelectInput
+            placeholder="Episodes"
+            value={filters.episode}
+            data={episodeOptions}
+            onChange={setFilter}
+          />
+        </div>
+        <FilterBadges
+          filters={filters}
+          onClearOne={handleClear}
+          onClearAll={onResetClick}
+          className="flex flex-wrap gap-2 justify-center items-center"
         />
-        <ExpansionButton
-          expanded={isExpanded}
-          onClick={() => setIsExpanded(!isExpanded)}
-        />
-      </div>
-      <div
-        className={cn(
-          "justify-center text-white w-full",
-          isExpanded ? "inline-flex" : "hidden"
+        {data?.info && data?.results && (
+          <PaginationList
+            currentPage={page}
+            maxPage={data?.info.pages ?? 0}
+            setCurrentPage={setPage}
+          />
         )}
-      >
-        <SelectInput
-          placeholder="Episodes"
-          value={filters.episode}
-          data={episodeOptions}
-          onChange={setFilter}
-        />
       </div>
-      <FilterBadges
-        filters={filters}
-        onClearOne={handleClear}
-        onClearAll={onResetClick}
-        className="flex flex-wrap gap-2 justify-center items-center"
-      />
-      {data?.info && data?.results && (
-        <PaginationList
-          currentPage={page}
-          maxPage={data?.info.pages ?? 0}
-          setCurrentPage={setPage}
-        />
-      )}
+
       {!data?.info && !data?.results ? (
         <ResultNotFound />
       ) : (
@@ -127,7 +130,7 @@ const EpisodesList = () => {
           })}
         </div>
       )}
-    </div>
+    </>
   );
 };
 
