@@ -57,7 +57,9 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   }
 
   if (isSmallCard) {
-    return <SmallCharacterCard data={data} isPending={isPending} />;
+    return (
+      <SmallCharacterCard data={data} isPending={isPending} />
+    );
   }
 
   return (

@@ -4,9 +4,9 @@ import { Heart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface HeartToggleProps {
-  isToggled: boolean;
+  isToggled?: boolean;
   variant?: "default" | "outline";
-  onToggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  onToggle?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const heartToggleVariants = cva(

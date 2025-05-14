@@ -7,9 +7,9 @@ import type { Character } from "../characters/types";
 interface SmallCharacterCardProps {
   data: Character;
   isPending: boolean;
-  isFavorite: boolean;
-  onClick: () => void;
-  onToggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  isFavorite?: boolean;
+  onClick?: () => void;
+  onToggle?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const SmallCharacterCard = ({
