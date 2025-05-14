@@ -10,15 +10,13 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import BackButton from '../backButton';
 import ResultNotFound from '../resultNotFound';
 import { getCharacterById } from './get-character-by-id';
-import SmallCharacterCard from './smallCharacterCard';
 
 import type { Character } from "../characters/types";
 interface CharacterProps {
-  id?: string;
-  isSmallCard?: boolean;
+  id: string | undefined;
 }
 
-const Character = ({ id, isSmallCard }: CharacterProps) => {
+const Character = ({ id }: CharacterProps) => {
   const { data, isPending, error, isError } = useQuery<Character>({
     queryKey: ["characterData", id],
     queryFn: async () => {
@@ -54,12 +52,6 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
 
   if (!data) {
     return <ResultNotFound />;
-  }
-
-  if (isSmallCard) {
-    return (
-      <SmallCharacterCard data={data} isPending={isPending} />
-    );
   }
 
   return (
