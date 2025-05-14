@@ -36,7 +36,7 @@ const Navigation = () => {
   ];
 
   return (
-    <div className="text-white sm:sticky left-0 top-0 shadow-2xl z-10 bg-home flex px-2">
+    <div className="text-white sticky left-0 top-0 shadow-2xl z-10 bg-home flex px-2">
       <Link to="/" className="flex-none">
         <img src={svg} alt="Rick and Morty" className="h-14" />
       </Link>
