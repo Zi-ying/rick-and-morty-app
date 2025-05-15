@@ -32,7 +32,8 @@ const HeartToggle = ({
   return (
     <div
       aria-label="Toggle heart"
-      onClick={onToggle}
+      data-testid="heart-toggle"
+      onClick={(e) => onToggle?.(e)}
       className={cn(
         heartToggleVariants({ variant }),
         isToggled &&
