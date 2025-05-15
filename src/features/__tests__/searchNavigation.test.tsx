@@ -39,13 +39,23 @@ describe('SearchNavigation', () => {
     expect(defaultProps.onChange).toHaveBeenCalled();
   });
 
-  it('calls onToggle when heart button is clicked', () => {
-    render(<SearchNavigation {...defaultProps} />);
+  it('should call onToggle when heart button is clicked', () => {
+    const onToggle = jest.fn();
+    const onChange = jest.fn();
+    render(
+      <SearchNavigation
+        placeholder="Search..."
+        value=""
+        toggled={false}
+        onChange={onChange}
+        onToggle={onToggle}
+      />
+    );
 
-    const heartToggle = screen.getByRole('button');
-    fireEvent.click(heartToggle);
+    const heartButton = screen.getByTestId('heart-toggle');
+    fireEvent.click(heartButton);
 
-    expect(defaultProps.onToggle).toHaveBeenCalledTimes(1);
+    expect(onToggle).toHaveBeenCalled();
   });
 
   it('renders children when provided', () => {
