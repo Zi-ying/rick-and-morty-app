@@ -55,12 +55,12 @@ const Navigation = () => {
           );
         })}
       </div>
-      <div className="flex sm:hidden justify-end items-center grow">
+      <div className="flex sm:hidden justify-end items-center w-full">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
-                <Menu />
+                <Menu className='ml-10'/>
               </NavigationMenuTrigger>
               <NavigationMenuContent className="grid gap-1 bg-black">
                 {locationOptions.map((option, index) => {
