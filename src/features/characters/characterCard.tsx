@@ -33,7 +33,7 @@ const CharacterCard = ({
 
   return (
     <Card
-      className="rounded-xl hover:shadow-xl shadow-pickle-500/50 backdrop-blur-xs"
+      className="rounded-xl shadow-brand hover:shadow-pickle-500/50 backdrop-blur-md"
       onClick={onClick}
     >
       <Image
@@ -54,7 +54,7 @@ const CharacterCard = ({
           />
         </CardTitle>
         <div className="justify-self-end flex">
-          <HeartToggle isToggled={isFavorite} onToggle={(e) => onToggle(e)}/>
+          <HeartToggle isToggled={isFavorite} onToggle={(e) => onToggle(e)} />
         </div>
       </CardHeader>
     </Card>
