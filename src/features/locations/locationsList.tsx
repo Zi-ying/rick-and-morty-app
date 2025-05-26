@@ -127,7 +127,7 @@ const LocationsList = () => {
       {!data?.info && !data?.results ? (
         <ResultNotFound />
       ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 p-6 md:p-8">
           {data.results.map((item) => {
             return (
               <Link key={item.id} to={item.id.toString()}>

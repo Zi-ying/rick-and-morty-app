@@ -95,7 +95,7 @@ const CharactersList = () => {
       </div>
       {data?.info && data?.results ? (
         <>
-          <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 p-6">
+          <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-8">
             {data.results.map((item) => {
               const isFavorite = getFavorite(item);
 
@@ -113,7 +113,7 @@ const CharactersList = () => {
               );
             })}
           </div>
-          <div className="w-full grid sm:grid-cols-2 gap-2 md:hidden p-4">
+          <div className="w-full grid sm:grid-cols-2 p-6 gap-3 md:hidden">
             {data.results.map((item) => {
               const isFavorite = getFavorite(item);
 
