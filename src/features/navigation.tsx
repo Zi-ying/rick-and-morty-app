@@ -31,6 +31,10 @@ const Navigation = () => {
       value: "/episode",
       label: "Episodes",
     },
+    {
+      value: "/favorite",
+      label: "Favorites",
+    },
   ];
 
   return (
