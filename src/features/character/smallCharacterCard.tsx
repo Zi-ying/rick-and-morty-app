@@ -31,7 +31,7 @@ const SmallCharacterCard = ({
 
   return (
     <Card
-      className="p-4 rounded-xl grid grid-cols-3 items-center hover:shadow-xl shadow-pickle-500/50 backdrop-blur-sm"
+      className="p-4 rounded-xl grid grid-cols-3 items-center shadow-brand-md hover:shadow-pickle-500/50 backdrop-blur-md"
       onClick={onClick}
     >
       <Image

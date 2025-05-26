@@ -33,7 +33,7 @@ const CharacterCard = ({
 
   return (
     <Card
-      className="rounded-xl shadow-brand hover:shadow-pickle-500/50 backdrop-blur-md"
+      className="rounded-xl shadow-brand-xl hover:shadow-pickle-500/50 backdrop-blur-md"
       onClick={onClick}
     >
       <Image
