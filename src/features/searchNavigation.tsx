@@ -5,7 +5,6 @@ import SearchInput from './inputs/searchInput';
 interface SearchNavigationProps {
   placeholder: string;
   value: string;
-
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   children?: ReactNode;
 }
