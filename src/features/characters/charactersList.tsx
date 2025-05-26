@@ -12,7 +12,6 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import CharacterCard from './characterCard';
-import CharactersFavorites from './charactersFavorites';
 import CharactersInputs from './charactersInputs';
 import { getAllCharacters } from './get-all-characters';
 
@@ -55,18 +54,6 @@ const CharactersList = () => {
   };
 
   if (error) return "An error has occurred: " + error.message;
-
-  if (isFavoritePage) {
-    return (
-      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
-        <CharactersFavorites
-          isFavoritePage={isFavoritePage}
-          setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
-          onToggle={onToggle}
-        />
-      </div>
-    );
-  }
 
   if (isPending) {
     return (

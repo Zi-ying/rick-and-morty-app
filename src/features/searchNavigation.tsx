@@ -1,25 +1,19 @@
 import { ReactNode } from 'react';
 
-import HeartToggle from '@/components/heartToggle';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-
 import SearchInput from './inputs/searchInput';
 
 interface SearchNavigationProps {
   placeholder: string;
   value: string;
-  toggled: boolean;
+
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onToggle: () => void;
   children?: ReactNode;
 }
 
 const SearchNavigation = ({
   placeholder,
   value,
-  toggled,
   onChange,
-  onToggle,
   children,
 }: SearchNavigationProps) => {
   return (
@@ -30,21 +24,7 @@ const SearchNavigation = ({
         className="p-4 text-white col-start-2 col-end-4"
         onChange={onChange}
       />
-      <div className="flex gap-2">
-        <Tooltip>
-          <TooltipTrigger>
-            <HeartToggle
-              variant="outline"
-              isToggled={toggled}
-              onToggle={onToggle}
-            />
-          </TooltipTrigger>
-          <TooltipContent className="text-white bg-black">
-            <p>Go see favorites</p>
-          </TooltipContent>
-        </Tooltip>
-        {children}
-      </div>
+      <div>{children}</div>
     </div>
   );
 };

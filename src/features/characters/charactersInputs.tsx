@@ -13,15 +13,11 @@ import type { Filters } from "@/types/filters";
 
 interface CharactersInputsProps {
   filters: Filters;
-  isFavoritePage: boolean;
-  setIsFavoritePage: React.Dispatch<React.SetStateAction<boolean>>;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const CharactersInputs = ({
   filters,
-  isFavoritePage,
-  setIsFavoritePage,
   setCurrentPage,
 }: CharactersInputsProps) => {
   const [name, setName] = useState<string>("");
@@ -66,8 +62,6 @@ const CharactersInputs = ({
         placeholder="Search by character name"
         value={name}
         onChange={(e) => setSearchFilter(e.target.value)}
-        toggled={isFavoritePage}
-        onToggle={() => setIsFavoritePage(!isFavoritePage)}
       >
         <ExpansionButton
           expanded={isExpanded}
