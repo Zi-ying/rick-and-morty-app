@@ -8,6 +8,7 @@ interface SmallCharacterCardProps {
   data: Character;
   isPending: boolean;
   isFavorite?: boolean;
+  hasToggle?: boolean;
   onClick?: () => void;
   onToggle?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
@@ -16,6 +17,7 @@ const SmallCharacterCard = ({
   data,
   isPending,
   isFavorite,
+  hasToggle,
   onClick,
   onToggle,
 }: SmallCharacterCardProps) => {
@@ -38,10 +40,12 @@ const SmallCharacterCard = ({
         className="rounded-full"
       />
       <CardHeader className="col-span-2 text-pickle-500 grid grid-cols-2">
-        <CardTitle className='self-center'>{data.name}</CardTitle>
-        <div className='justify-self-end self-center'>
-          <HeartToggle isToggled={isFavorite} onToggle={onToggle} />
-        </div>
+        <CardTitle className="self-center">{data.name}</CardTitle>
+        {hasToggle && (
+          <div className="justify-self-end self-center">
+            <HeartToggle isToggled={isFavorite} onToggle={onToggle} />
+          </div>
+        )}
       </CardHeader>
     </Card>
   );
