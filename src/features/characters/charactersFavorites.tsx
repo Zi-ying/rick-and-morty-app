@@ -107,6 +107,7 @@ const CharactersFavorites = ({
                   data={item}
                   isPending={isPending}
                   isFavorite={isFavorite}
+                  hasToggle
                   onClick={() => {
                     navigate(`/character/${item.id}`);
                   }}
