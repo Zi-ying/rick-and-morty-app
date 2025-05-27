@@ -13,7 +13,7 @@ interface SelectInputProps {
 const SelectInput = ({placeholder, value, data, className: classnames, onChange}: SelectInputProps) => {
   return (
       <Select onValueChange={onChange} value={value}>
-        <SelectTrigger className={cn(classnames, 'hover:text-pickle-500 cursor-pointer backdrop-blur-sm')}>
+        <SelectTrigger className={cn(classnames, 'hover:text-pickle-500 cursor-pointer backdrop-blur-lg')}>
           <SelectValue placeholder={placeholder}/>
         </SelectTrigger>
         <SelectContent className='text-white backdrop-blur-lg border-none'>
