@@ -1,9 +1,9 @@
 # This is a Rick and Morty app created with React, Typescrit and Vite.
 
-You'll be able to go through Rick and Morty character's list, filter over it and display one character card.
-A paginated list will help you go through the extensive list of characters.
+You'll be able to go through Rick and Morty characters, episodes and locations's lists, filter over it and display one character, episode or location card.
+A paginated list will help you go through the extensive lists.
 
-I used components from shadcn ui, tailwindCSS for styling, Redux for state management and tanStack to fetch data from the API.
+I used components from shadcn UI, tailwindCSS for styling, Redux for state management and TanStack to fetch data from the API.
 
 First run the command line:
 `yarn build`
@@ -11,9 +11,9 @@ First run the command line:
 To start run the command line:
 `yarn run dev`
 
-### With more time
-- Add testings
-- Fix responsivness for navigation, add burger menu.
+### What's lefy
+- Add more testings
 - Add different languages
 - Uniformize paddings and styles
-- Add toaster when removing a favorite card on favorite page.
+- Add toaster when removing a favorite card on favorite page
+- Redesign navigation
