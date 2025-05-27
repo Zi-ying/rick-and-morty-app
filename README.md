@@ -17,3 +17,5 @@ To start run the command line:
 - Uniformize paddings and styles
 - Add toaster when removing a favorite card on favorite page
 - Redesign navigation
+- Move useToggle in its own file
+- Add scrolling area
