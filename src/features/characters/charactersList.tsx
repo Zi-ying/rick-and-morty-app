@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
 import SmallCharacterCard from '@/features/character/smallCharacterCard';
 import { addFavorite, allFavorites, removeFavorite } from '@/store/favorites-slice';
-import { allFilters } from '@/store/filters-slice';
+import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
 import { Filters } from '@/types/filters';
+import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
+import { SearchInput } from '../inputs';
+import Navigation from '../navigation';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import CharacterCard from './characterCard';
-import CharactersInputs from './charactersInputs';
+import CharactersFilterBar from './charactersFilterBar';
 import { getAllCharacters } from './get-all-characters';
 
 import type { Character, CharacterFilters } from "./types";
@@ -22,6 +25,34 @@ const CharactersList = () => {
   const navigate = useNavigate();
   const filters: Filters = useAppSelector(allFilters);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [name, setName] = useState<string>(filters.characterName);
+
+  const timeout = 500;
+
+  const debouncedNameValue = useDebounce(name, timeout);
+
+  useEffect(() => {
+    dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
+  }, [debouncedNameValue, dispatch]);
+
+  const setSearchFilter = (value: string) => {
+    setName(value);
+    setCurrentPage(1);
+  };
+  const setFilters = (key: keyof Filters, value: string) => {
+    dispatch(addFilter({ key, value }));
+    setCurrentPage(1);
+  };
+
+  const handleClear = (filter: keyof Filters) => {
+    dispatch(removeOneFilter(filter));
+    setCurrentPage(1);
+  };
+
+  const onResetClick = () => {
+    dispatch(resetFilters());
+    setCurrentPage(1);
+  };
 
   const filtersArgs: CharacterFilters = {
     name: filters.characterName,
@@ -41,7 +72,10 @@ const CharactersList = () => {
     return keys.includes(item.id.toString());
   };
 
-  const onToggle = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, item: Character) => {
+  const onToggle = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    item: Character
+  ) => {
     e.stopPropagation();
     const isFavorite = getFavorite(item);
 
@@ -64,62 +98,74 @@ const CharactersList = () => {
 
   return (
     <>
-      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
-        <CharactersInputs
-          filters={filters}
-          setCurrentPage={setCurrentPage}
+      <Navigation>
+        <SearchInput
+          placeholder="Search by character name"
+          value={name}
+          onChange={(e) => setSearchFilter(e.target.value)}
+          className="p-4 text-white col-start-2 col-end-4"
         />
-        {data?.info && data?.results && (
-          <PaginationList
-            currentPage={currentPage}
-            maxPage={data.info.pages}
-            setCurrentPage={setCurrentPage}
+      </Navigation>
+      <div className='p-4'>
+        <div className="border border-white rounded-xl p-2">
+          <CharactersFilterBar
+            filters={filters}
+            setFilters={setFilters}
+            onClear={handleClear}
+            onReset={onResetClick}
           />
+        </div>
+        {data?.info && data?.results ? (
+          <>
+            {data?.info && data?.results && (
+              <PaginationList
+                currentPage={currentPage}
+                maxPage={data.info.pages}
+                setCurrentPage={setCurrentPage}
+              />
+            )}
+            <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-8">
+              {data.results.map((item) => {
+                const isFavorite = getFavorite(item);
+
+                return (
+                  <CharacterCard
+                    key={item.id}
+                    data={item}
+                    isPending={isPending}
+                    isFavorite={isFavorite}
+                    onClick={() => {
+                      navigate(`/character/${item.id}`);
+                    }}
+                    onToggle={(e) => onToggle(e, item)}
+                  />
+                );
+              })}
+            </div>
+            <div className="w-full grid sm:grid-cols-2 p-6 gap-3 md:hidden">
+              {data.results.map((item) => {
+                const isFavorite = getFavorite(item);
+
+                return (
+                  <SmallCharacterCard
+                    key={item.id}
+                    data={item}
+                    isPending={isPending}
+                    isFavorite={isFavorite}
+                    hasToggle
+                    onClick={() => {
+                      navigate(`/character/${item.id}`);
+                    }}
+                    onToggle={(e) => onToggle(e, item)}
+                  />
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <ResultNotFound />
         )}
       </div>
-      {data?.info && data?.results ? (
-        <>
-          <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-8">
-            {data.results.map((item) => {
-              const isFavorite = getFavorite(item);
-
-              return (
-                <CharacterCard
-                  key={item.id}
-                  data={item}
-                  isPending={isPending}
-                  isFavorite={isFavorite}
-                  onClick={() => {
-                    navigate(`/character/${item.id}`);
-                  }}
-                  onToggle={(e) => onToggle(e, item)}
-                />
-              );
-            })}
-          </div>
-          <div className="w-full grid sm:grid-cols-2 p-6 gap-3 md:hidden">
-            {data.results.map((item) => {
-              const isFavorite = getFavorite(item);
-
-              return (
-                <SmallCharacterCard
-                  key={item.id}
-                  data={item}
-                  isPending={isPending}
-                  isFavorite={isFavorite}
-                  hasToggle
-                  onClick={() => {
-                    navigate(`/character/${item.id}`);
-                  }}
-                  onToggle={(e) => onToggle(e, item)}
-                />
-              );
-            })}
-          </div>
-        </>
-      ) : (
-        <ResultNotFound />
-      )}
     </>
   );
 };
