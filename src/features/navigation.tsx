@@ -11,7 +11,11 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 
-const Navigation = () => {
+interface NavigationProps {
+  children?: React.ReactNode;
+}
+
+const Navigation = ({ children }: NavigationProps) => {
   const location = useLocation();
 
   const locationOptions = [
@@ -38,11 +42,12 @@ const Navigation = () => {
   ];
 
   return (
-    <div className="text-white sticky left-0 top-0 z-20 flex px-2 bg-home">
+    <div className="text-white px-2 grid grid-cols-3 items-center">
       <Link to="/" className="flex-none">
-        <img src={svg} alt="Rick and Morty" className="h-14" />
+        <img src={svg} alt="Rick and Morty" className="h-14 col-span-1" />
       </Link>
-      <div className="hidden sm:flex justify-end gap-4 items-center grow">
+      <div>{children}</div>
+      <div className="hidden lg:flex justify-end gap-4 items-center">
         {locationOptions.map((option, index) => {
           const isActive = location.pathname === option.value;
           return (
@@ -59,14 +64,15 @@ const Navigation = () => {
           );
         })}
       </div>
-      <div className="flex sm:hidden justify-end items-center w-full">
+
+      <div className="flex lg:hidden justify-end items-center w-full z-10">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
-                <Menu className='ml-10'/>
+                <Menu className="ml-10" />
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="grid gap-1 bg-black">
+              <NavigationMenuContent className="grid gap-1 backdrop-blur-lg">
                 {locationOptions.map((option, index) => {
                   const isActive = location.pathname === option.value;
                   return (
