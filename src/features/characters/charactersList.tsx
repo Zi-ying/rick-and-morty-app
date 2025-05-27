@@ -22,7 +22,6 @@ const CharactersList = () => {
   const navigate = useNavigate();
   const filters: Filters = useAppSelector(allFilters);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isFavoritePage, setIsFavoritePage] = useState<boolean>(false);
 
   const filtersArgs: CharacterFilters = {
     name: filters.characterName,
@@ -68,8 +67,6 @@ const CharactersList = () => {
       <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
         <CharactersInputs
           filters={filters}
-          isFavoritePage={isFavoritePage}
-          setIsFavoritePage={() => setIsFavoritePage(!isFavoritePage)}
           setCurrentPage={setCurrentPage}
         />
         {data?.info && data?.results && (
