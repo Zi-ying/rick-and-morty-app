@@ -6,7 +6,7 @@ interface ResultNotFoundProps {
 
 const ResultNotFound = ({className}: ResultNotFoundProps) => {
   return (
-    <div className={cn("flex items-center justify-center", className)}>
+    <div className={cn("items-center justify-center", className)}>
       <div className="grid gap-4 justify-items-center p-4 backdrop-blur-md rounded-xl m-auto">
         <h1 className="text-pickle-400 text-9xl">Oops!</h1>
         <h5 className="text-white text-5xl">No results found</h5>

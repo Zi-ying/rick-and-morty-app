@@ -42,7 +42,7 @@ const Navigation = ({ children }: NavigationProps) => {
   ];
 
   return (
-    <div className="text-white px-2 grid grid-cols-3 items-center">
+    <div className="text-white p-2 grid grid-cols-3 items-center">
       <Link to="/" className="flex-none">
         <img src={svg} alt="Rick and Morty" className="h-14 col-span-1" />
       </Link>

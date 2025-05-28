@@ -5,19 +5,17 @@ import type { Filters } from "@/types/filters";
 
 interface FilterBadgesProps {
   filters: Filters;
-  className: string;
   onClearOne: (filter: keyof Filters) => void;
   onClearAll: () => void;
 }
 
 const FilterBadges = ({
   filters,
-  className,
   onClearAll,
   onClearOne,
 }: FilterBadgesProps) => {
   return (
-    <div className={className}>
+    <div className='justify-self-center py-2 space-x-2 space-y-2'>
       {filters.characterName && (
         <Badge className="capitalize">
           Name: <p className="font-medium">{filters.characterName}</p>
