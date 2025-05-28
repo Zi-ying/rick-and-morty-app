@@ -13,10 +13,11 @@ import { getPagination } from './get-pagination';
 interface PaginationListProps {
   currentPage: number;
   maxPage: number;
+  className?: string;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const PaginationList = ({ currentPage, maxPage, setCurrentPage }: PaginationListProps) => {
+const PaginationList = ({ currentPage, maxPage, className, setCurrentPage }: PaginationListProps) => {
 
   const {
     page,
@@ -31,7 +32,7 @@ const PaginationList = ({ currentPage, maxPage, setCurrentPage }: PaginationList
   } = getPagination(currentPage, maxPage, setCurrentPage);
 
   return (
-    <Pagination>
+    <Pagination className={className}>
       <PaginationContent>
         <PaginationItem className='backdrop-blur-sm'>
           <PaginationPrevious
