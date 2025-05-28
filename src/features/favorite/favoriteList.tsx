@@ -10,8 +10,9 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import SmallCharacterCard from '../character/smallCharacterCard';
 import CharacterCard from '../characters/characterCard';
 import { Character } from '../characters/types';
+import { SearchInput } from '../inputs';
+import Navigation from '../navigation';
 import ResultNotFound from '../resultNotFound';
-import SearchNavigation from '../searchNavigation';
 import { getMultipleCharacters } from './get-multiple-characters';
 
 const FavoriteList = () => {
@@ -75,14 +76,17 @@ const FavoriteList = () => {
 
   return (
     <>
-      <SearchNavigation
-        placeholder="Search by character name"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
+      <Navigation>
+        <SearchInput
+          placeholder="Search by character name"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className="p-4 text-white col-start-2 col-end-4"
+        />
+      </Navigation>
       {filteredData && filteredData.length !== 0 ? (
-        <>
-          <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6 p-6">
+        <div className='p-4 overflow-auto'>
+          <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6">
             {sortedData.map((item) => {
               const isFavorite = getFavorite(item);
 
@@ -119,7 +123,7 @@ const FavoriteList = () => {
               );
             })}
           </div>
-        </>
+        </div>
       ) : (
         <ResultNotFound />
       )}

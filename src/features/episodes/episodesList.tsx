@@ -3,14 +3,13 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Spinner from '@/components/ui/spinner';
-import { cn } from '@/lib/utils';
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch } from '@/store/redux-hooks';
 import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import ExpansionButton from '../expansionButton';
 import { FilterBadges, SearchInput, SelectInput } from '../inputs';
+import Navigation from '../navigation';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import EpisodeCard from './episodeCard';
@@ -19,12 +18,10 @@ import { episodeOptions } from './options';
 
 import type { EpisodeFilters } from "./types";
 import type { Filters } from "@/types/filters";
-
 const EpisodesList = () => {
   const filters = useSelector(allFilters);
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>(filters.episodeName);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const timeout = 500;
@@ -76,25 +73,16 @@ const EpisodesList = () => {
 
   return (
     <>
-      <div className="grid gap-2 p-2 sticky top-14 z-10 bg-home bg-fixed">
-        <div className="grid grid-cols-4 gap-2">
-          <SearchInput
-            placeholder="Search for an episode"
-            value={search}
-            className="p-4 text-white col-start-2 col-end-4"
-            onChange={onChange}
-          />
-          <ExpansionButton
-            expanded={isExpanded}
-            onClick={() => setIsExpanded(!isExpanded)}
-          />
-        </div>
-        <div
-          className={cn(
-            "justify-center text-white w-full",
-            isExpanded ? "inline-flex" : "hidden"
-          )}
-        >
+      <Navigation>
+        <SearchInput
+          placeholder="Search by character name"
+          value={search}
+          onChange={onChange}
+          className="p-4 text-white col-start-2 col-end-4"
+        />
+      </Navigation>
+      <div className="p-4 overflow-auto">
+        <div className="flex justify-center text-white w-full p-2">
           <SelectInput
             placeholder="Episodes"
             value={filters.episode}
@@ -106,30 +94,30 @@ const EpisodesList = () => {
           filters={filters}
           onClearOne={handleClear}
           onClearAll={onResetClick}
-          className="flex flex-wrap gap-2 justify-center items-center"
         />
-        {data?.info && data?.results && (
-          <PaginationList
-            currentPage={page}
-            maxPage={data?.info.pages ?? 0}
-            setCurrentPage={setPage}
-          />
+
+        {!data?.info && !data?.results ? (
+          <ResultNotFound />
+        ) : (
+          <div className="grow flex flex-col">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+              {data.results.map((item) => {
+                return (
+                  <Link key={item.id} to={item.id.toString()}>
+                    <EpisodeCard data={item} />
+                  </Link>
+                );
+              })}
+            </div>
+            <PaginationList
+              currentPage={page}
+              maxPage={data?.info.pages ?? 0}
+              setCurrentPage={setPage}
+              className="mt-auto pt-2"
+            />
+          </div>
         )}
       </div>
-
-      {!data?.info && !data?.results ? (
-        <ResultNotFound />
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 p-6 md:p-8">
-          {data.results.map((item) => {
-            return (
-              <Link key={item.id} to={item.id.toString()}>
-                <EpisodeCard data={item} />
-              </Link>
-            );
-          })}
-        </div>
-      )}
     </>
   );
 };

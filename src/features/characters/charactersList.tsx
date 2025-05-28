@@ -35,8 +35,8 @@ const CharactersList = () => {
     dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
   }, [debouncedNameValue, dispatch]);
 
-  const setSearchFilter = (value: string) => {
-    setName(value);
+  const setSearchFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.currentTarget.value);
     setCurrentPage(1);
   };
   const setFilters = (key: keyof Filters, value: string) => {
@@ -102,29 +102,20 @@ const CharactersList = () => {
         <SearchInput
           placeholder="Search by character name"
           value={name}
-          onChange={(e) => setSearchFilter(e.target.value)}
+          onChange={setSearchFilter}
           className="p-4 text-white col-start-2 col-end-4"
         />
       </Navigation>
-      <div className='p-4'>
-        <div className="border border-white rounded-xl p-2">
-          <CharactersFilterBar
-            filters={filters}
-            setFilters={setFilters}
-            onClear={handleClear}
-            onReset={onResetClick}
-          />
-        </div>
+      <div className="p-4 overflow-auto">
+        <CharactersFilterBar
+          filters={filters}
+          setFilters={setFilters}
+          onClear={handleClear}
+          onReset={onResetClick}
+        />
         {data?.info && data?.results ? (
-          <>
-            {data?.info && data?.results && (
-              <PaginationList
-                currentPage={currentPage}
-                maxPage={data.info.pages}
-                setCurrentPage={setCurrentPage}
-              />
-            )}
-            <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-8">
+          <div className="grow flex flex-col">
+            <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
               {data.results.map((item) => {
                 const isFavorite = getFavorite(item);
 
@@ -161,7 +152,13 @@ const CharactersList = () => {
                 );
               })}
             </div>
-          </>
+            <PaginationList
+              currentPage={currentPage}
+              maxPage={data.info.pages}
+              setCurrentPage={setCurrentPage}
+              className="mt-auto"
+            />
+          </div>
         ) : (
           <ResultNotFound />
         )}

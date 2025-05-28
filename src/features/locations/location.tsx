@@ -7,6 +7,7 @@ import BackButton from '../backButton';
 import Character from '../character/character';
 import { getLocationById } from '../locations/get-location-by-id';
 import LocationCard from '../locations/locationCard';
+import Navigation from '../navigation';
 import ResultNotFound from '../resultNotFound';
 
 import type { Location } from "../locations/types";
@@ -27,7 +28,7 @@ const Location = () => {
 
   if (isPending) {
     return (
-      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+      <div className="flex items-center justify-center">
         <Spinner size="lg" />
       </div>
     );
@@ -42,28 +43,29 @@ const Location = () => {
   }
 
   return (
-    <div className="p-2 space-y-2">
-      <LocationCard data={data} />
-      <div className="text-pickle-400 px-6">Residents:</div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2">
-        {data.residents.map((resident) => {
-          const url = new URL(resident);
-          const characterId = url.pathname.slice(
-            url.pathname.lastIndexOf("/"),
-            url.pathname.length
-          );
+    <>
+      <Navigation />
+      <div className="p-2 space-y-2 overflow-y-auto">
+        <LocationCard data={data} />
+        <div className="text-pickle-400 px-6">Residents:</div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+          {data.residents.map((resident) => {
+            const url = new URL(resident);
+            const characterId = url.pathname.slice(
+              url.pathname.lastIndexOf("/"),
+              url.pathname.length
+            );
 
-          return (
-            <Link key={characterId} to={`/character${characterId}`}>
-              <Character id={characterId} isSmallCard />
-            </Link>
-          );
-        })}
+            return (
+              <Link key={characterId} to={`/character${characterId}`}>
+                <Character id={characterId} isSmallCard />
+              </Link>
+            );
+          })}
+        </div>
       </div>
-      <div className="flex justify-center">
-        <BackButton />
-      </div>
-    </div>
+      <BackButton className="mx-auto my-2" />
+    </>
   );
 };
 
