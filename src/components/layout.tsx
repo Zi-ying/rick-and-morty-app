@@ -1,11 +1,8 @@
 import { Outlet } from 'react-router-dom';
 
-import Navigation from '@/features/navigation';
-
 const Layout = () => {
   return (
-    <div className="w-full bg-home bg-fixed min-h-screen">
-      <Navigation />
+    <div className="w-full bg-home bg-fixed h-screen flex flex-col">
       <Outlet />
     </div>
   );
