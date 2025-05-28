@@ -19,3 +19,4 @@ To start run the command line:
 - Redesign navigation
 - Move useToggle in its own file
 - Add scrolling area
+- Clear filters when navigating.
