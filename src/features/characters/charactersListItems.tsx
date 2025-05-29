@@ -7,6 +7,7 @@ import { addFavorite, allFavorites, removeFavorite } from '@/store/favorites-sli
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
 
 import SmallCharacterCard from '../character/smallCharacterCard';
+import { getFavorite } from '../get-favorite';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import CharacterCard from './characterCard';
@@ -23,16 +24,13 @@ const CharactersListItems = ({ data, isPending, currentPage, setCurrentPage }: C
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const getFavorite = (item: Character) => {
-    return keys.includes(item.id.toString());
-  };
 
   const onToggle = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     item: Character
   ) => {
     e.stopPropagation();
-    const isFavorite = getFavorite(item);
+    const isFavorite = getFavorite(keys, item);
 
     if (!isFavorite) {
       dispatch(addFavorite({ key: item.id.toString(), value: item.name }));
@@ -53,7 +51,7 @@ const CharactersListItems = ({ data, isPending, currentPage, setCurrentPage }: C
     <>
       <div className="w-full h-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto p-4">
         {data.results.map((item) => {
-          const isFavorite = getFavorite(item);
+          const isFavorite = getFavorite(keys, item);
 
           return (
             <CharacterCard
@@ -71,7 +69,7 @@ const CharactersListItems = ({ data, isPending, currentPage, setCurrentPage }: C
       </div>
       <div className="w-full grid sm:grid-cols-2 p-6 gap-3 md:hidden">
         {data.results.map((item) => {
-          const isFavorite = getFavorite(item);
+          const isFavorite = getFavorite(keys, item);
 
           return (
             <SmallCharacterCard

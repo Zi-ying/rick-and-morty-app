@@ -10,6 +10,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import SmallCharacterCard from '../character/smallCharacterCard';
 import CharacterCard from '../characters/characterCard';
 import { Character } from '../characters/types';
+import { getFavorite } from '../get-favorite';
 import { SearchInput } from '../inputs';
 import Navigation from '../navigation';
 import ResultNotFound from '../resultNotFound';
@@ -26,7 +27,7 @@ const FavoriteList = () => {
     item: Character
   ) => {
     e.stopPropagation();
-    const isFavorite = getFavorite(item);
+    const isFavorite = getFavorite(keys, item);
 
     if (!isFavorite) {
       dispatch(addFavorite({ key: item.id.toString(), value: item.name }));
@@ -62,10 +63,6 @@ const FavoriteList = () => {
   );
   const sortedData = filteredData.sort((a, b) => a.name.localeCompare(b.name));
 
-  const getFavorite = (item: Character) => {
-    return keys.includes(item.id.toString());
-  };
-
   if (isPending) {
     return (
       <div className="h-[calc(100vh-56px)] flex items-center justify-center">
@@ -88,7 +85,7 @@ const FavoriteList = () => {
         <div className='p-4 overflow-auto'>
           <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 md:gap-6">
             {sortedData.map((item) => {
-              const isFavorite = getFavorite(item);
+              const isFavorite = getFavorite(keys, item);
 
               return (
                 <CharacterCard
@@ -106,7 +103,7 @@ const FavoriteList = () => {
           </div>
           <div className="w-full grid sm:grid-cols-2 gap-2 md:hidden p-4">
             {sortedData.map((item) => {
-              const isFavorite = getFavorite(item);
+              const isFavorite = getFavorite(keys, item);
 
               return (
                 <SmallCharacterCard
