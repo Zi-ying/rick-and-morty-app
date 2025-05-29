@@ -1,21 +1,23 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 import type { Filters } from "@/types/filters";
-
 interface FilterBadgesProps {
   filters: Filters;
+  className?: string;
   onClearOne: (filter: keyof Filters) => void;
   onClearAll: () => void;
 }
 
 const FilterBadges = ({
   filters,
+  className,
   onClearAll,
   onClearOne,
 }: FilterBadgesProps) => {
   return (
-    <div className='justify-self-center py-2 space-x-2 space-y-2'>
+    <div className={cn('py-2 space-x-2 space-y-2', className)}>
       {filters.characterName && (
         <Badge className="capitalize">
           Name: <p className="font-medium">{filters.characterName}</p>
