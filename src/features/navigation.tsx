@@ -42,12 +42,12 @@ const Navigation = ({ children }: NavigationProps) => {
   ];
 
   return (
-    <div className="text-white p-2 grid grid-cols-3 items-center">
+    <div className="text-white p-2 grid grid-cols-3 items-center gap-1">
       <Link to="/" className="flex-none">
         <img src={svg} alt="Rick and Morty" className="h-14 col-span-1" />
       </Link>
       <div>{children}</div>
-      <div className="hidden lg:flex justify-end gap-4 items-center">
+      <div className="hidden xl:flex justify-end gap-4 items-center">
         {locationOptions.map((option, index) => {
           const isActive = location.pathname === option.value;
           return (
@@ -65,7 +65,7 @@ const Navigation = ({ children }: NavigationProps) => {
         })}
       </div>
 
-      <div className="flex lg:hidden justify-end items-center w-full z-10">
+      <div className="flex xl:hidden justify-end items-center w-full z-10">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
