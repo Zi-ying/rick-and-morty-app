@@ -81,19 +81,19 @@ const EpisodesList = () => {
           className="p-4 text-white col-start-2 col-end-4"
         />
       </Navigation>
-      <div className="flex justify-center text-white w-full p-4">
+      <div className="grid justify-center items-center text-white w-full p-4">
         <SelectInput
           placeholder="Episodes"
           value={filters.episode}
           data={episodeOptions}
           onChange={setFilter}
         />
+        <FilterBadges
+          filters={filters}
+          onClearOne={handleClear}
+          onClearAll={onResetClick}
+        />
       </div>
-      <FilterBadges
-        filters={filters}
-        onClearOne={handleClear}
-        onClearAll={onResetClick}
-      />
 
       {!data?.info && !data?.results ? (
         <ResultNotFound />

@@ -51,6 +51,7 @@ const CharactersFilterBar = ({
         filters={filters}
         onClearOne={onClear}
         onClearAll={onReset}
+        className='self-center'
       />
     </>
   );

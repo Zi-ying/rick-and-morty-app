@@ -103,6 +103,7 @@ const LocationsList = () => {
         filters={filters}
         onClearOne={handleClear}
         onClearAll={onResetClick}
+        className='self-center'
       />
       {!data?.info && !data?.results ? (
         <ResultNotFound />
