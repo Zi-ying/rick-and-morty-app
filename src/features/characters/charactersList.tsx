@@ -106,63 +106,61 @@ const CharactersList = () => {
           className="p-4 text-white col-start-2 col-end-4"
         />
       </Navigation>
-      <div className="p-4 overflow-auto">
-        <CharactersFilterBar
-          filters={filters}
-          setFilters={setFilters}
-          onClear={handleClear}
-          onReset={onResetClick}
-        />
-        {data?.info && data?.results ? (
-          <div className="grow flex flex-col">
-            <div className="w-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-              {data.results.map((item) => {
-                const isFavorite = getFavorite(item);
+      <CharactersFilterBar
+        filters={filters}
+        setFilters={setFilters}
+        onClear={handleClear}
+        onReset={onResetClick}
+      />
+      {data?.info && data?.results ? (
+        <>
+          <div className="w-full h-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto p-4">
+            {data.results.map((item) => {
+              const isFavorite = getFavorite(item);
 
-                return (
-                  <CharacterCard
-                    key={item.id}
-                    data={item}
-                    isPending={isPending}
-                    isFavorite={isFavorite}
-                    onClick={() => {
-                      navigate(`/character/${item.id}`);
-                    }}
-                    onToggle={(e) => onToggle(e, item)}
-                  />
-                );
-              })}
-            </div>
-            <div className="w-full grid sm:grid-cols-2 p-6 gap-3 md:hidden">
-              {data.results.map((item) => {
-                const isFavorite = getFavorite(item);
-
-                return (
-                  <SmallCharacterCard
-                    key={item.id}
-                    data={item}
-                    isPending={isPending}
-                    isFavorite={isFavorite}
-                    hasToggle
-                    onClick={() => {
-                      navigate(`/character/${item.id}`);
-                    }}
-                    onToggle={(e) => onToggle(e, item)}
-                  />
-                );
-              })}
-            </div>
-            <PaginationList
-              currentPage={currentPage}
-              maxPage={data.info.pages}
-              setCurrentPage={setCurrentPage}
-              className="mt-auto"
-            />
+              return (
+                <CharacterCard
+                  key={item.id}
+                  data={item}
+                  isPending={isPending}
+                  isFavorite={isFavorite}
+                  onClick={() => {
+                    navigate(`/character/${item.id}`);
+                  }}
+                  onToggle={(e) => onToggle(e, item)}
+                />
+              );
+            })}
           </div>
-        ) : (
-          <ResultNotFound />
-        )}
-      </div>
+          <div className="w-full grid sm:grid-cols-2 p-6 gap-3 md:hidden">
+            {data.results.map((item) => {
+              const isFavorite = getFavorite(item);
+
+              return (
+                <SmallCharacterCard
+                  key={item.id}
+                  data={item}
+                  isPending={isPending}
+                  isFavorite={isFavorite}
+                  hasToggle
+                  onClick={() => {
+                    navigate(`/character/${item.id}`);
+                  }}
+                  onToggle={(e) => onToggle(e, item)}
+                />
+              );
+            })}
+          </div>
+          <PaginationList
+            currentPage={currentPage}
+            maxPage={data.info.pages}
+            setCurrentPage={setCurrentPage}
+            className="p-4 mt-auto"
+          />
+        </>
+      ) : (
+        <ResultNotFound />
+      )}
     </>
   );
 };

@@ -17,7 +17,7 @@ const CharactersFilterBar = ({
 }: CharactersFilterBarProps) => {
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-2 text-white w-full">
+      <div className="flex flex-col md:flex-row gap-2 text-white w-full px-4">
         <SelectInput
           placeholder="Status"
           value={filters.status}

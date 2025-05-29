@@ -77,56 +77,54 @@ const LocationsList = () => {
           onChange={onChange}
         />
       </Navigation>
-      <div className="p-4 overflow-auto">
-        <div className="flex flex-col md:flex-row gap-2 text-white w-full">
-          <SelectInput
-            placeholder="type"
-            value={filters.locationType}
-            data={locationTypeOptions}
-            onChange={(e) => {
-              dispatch(addFilter({ key: "locationType", value: e }));
-              setPage(1);
-            }}
-            className="w-full"
-          />
-          <SelectInput
-            placeholder="dimension"
-            value={filters.dimension}
-            data={dimensionOptions}
-            onChange={(e) => {
-              dispatch(addFilter({ key: "dimension", value: e }));
-              setPage(1);
-            }}
-            className="w-full"
-          />
-        </div>
-        <FilterBadges
-          filters={filters}
-          onClearOne={handleClear}
-          onClearAll={onResetClick}
+      <div className="flex flex-col md:flex-row gap-2 text-white w-full p-4">
+        <SelectInput
+          placeholder="type"
+          value={filters.locationType}
+          data={locationTypeOptions}
+          onChange={(e) => {
+            dispatch(addFilter({ key: "locationType", value: e }));
+            setPage(1);
+          }}
+          className="w-full"
         />
-        {!data?.info && !data?.results ? (
-          <ResultNotFound />
-        ) : (
-          <div className="grow flex flex-col">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
-              {data.results.map((item) => {
-                return (
-                  <Link key={item.id} to={item.id.toString()}>
-                    <LocationCard data={item} />
-                  </Link>
-                );
-              })}
-            </div>
-            <PaginationList
-              currentPage={page}
-              maxPage={data?.info.pages ?? 0}
-              setCurrentPage={setPage}
-              className="mt-auto pt-2"
-            />
-          </div>
-        )}
+        <SelectInput
+          placeholder="dimension"
+          value={filters.dimension}
+          data={dimensionOptions}
+          onChange={(e) => {
+            dispatch(addFilter({ key: "dimension", value: e }));
+            setPage(1);
+          }}
+          className="w-full"
+        />
       </div>
+      <FilterBadges
+        filters={filters}
+        onClearOne={handleClear}
+        onClearAll={onResetClick}
+      />
+      {!data?.info && !data?.results ? (
+        <ResultNotFound />
+      ) : (
+        <>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 p-4 overflow-y-auto">
+            {data.results.map((item) => {
+              return (
+                <Link key={item.id} to={item.id.toString()}>
+                  <LocationCard data={item} />
+                </Link>
+              );
+            })}
+          </div>
+          <PaginationList
+            currentPage={page}
+            maxPage={data?.info.pages ?? 0}
+            setCurrentPage={setPage}
+            className="p-4 mt-auto"
+          />
+        </>
+      )}
     </>
   );
 };

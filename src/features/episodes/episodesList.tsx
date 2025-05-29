@@ -81,43 +81,41 @@ const EpisodesList = () => {
           className="p-4 text-white col-start-2 col-end-4"
         />
       </Navigation>
-      <div className="p-4 overflow-auto">
-        <div className="flex justify-center text-white w-full p-2">
-          <SelectInput
-            placeholder="Episodes"
-            value={filters.episode}
-            data={episodeOptions}
-            onChange={setFilter}
-          />
-        </div>
-        <FilterBadges
-          filters={filters}
-          onClearOne={handleClear}
-          onClearAll={onResetClick}
+      <div className="flex justify-center text-white w-full p-4">
+        <SelectInput
+          placeholder="Episodes"
+          value={filters.episode}
+          data={episodeOptions}
+          onChange={setFilter}
         />
-
-        {!data?.info && !data?.results ? (
-          <ResultNotFound />
-        ) : (
-          <div className="grow flex flex-col">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
-              {data.results.map((item) => {
-                return (
-                  <Link key={item.id} to={item.id.toString()}>
-                    <EpisodeCard data={item} />
-                  </Link>
-                );
-              })}
-            </div>
-            <PaginationList
-              currentPage={page}
-              maxPage={data?.info.pages ?? 0}
-              setCurrentPage={setPage}
-              className="mt-auto pt-2"
-            />
-          </div>
-        )}
       </div>
+      <FilterBadges
+        filters={filters}
+        onClearOne={handleClear}
+        onClearAll={onResetClick}
+      />
+
+      {!data?.info && !data?.results ? (
+        <ResultNotFound />
+      ) : (
+        <>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 overflow-y-auto p-4">
+            {data.results.map((item) => {
+              return (
+                <Link key={item.id} to={item.id.toString()}>
+                  <EpisodeCard data={item} />
+                </Link>
+              );
+            })}
+          </div>
+          <PaginationList
+            currentPage={page}
+            maxPage={data?.info.pages ?? 0}
+            setCurrentPage={setPage}
+            className="p-4 mt-auto"
+          />
+        </>
+      )}
     </>
   );
 };
