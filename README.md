@@ -20,3 +20,4 @@ To start run the command line:
 - Move useToggle in its own file
 - Add scrolling area
 - Clear filters when navigating.
+- Redesign homepage 
