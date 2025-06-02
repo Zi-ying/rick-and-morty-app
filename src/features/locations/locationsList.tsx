@@ -8,12 +8,13 @@ import { useAppDispatch } from '@/store/redux-hooks';
 import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { FilterBadges, SearchInput, SelectInput } from '../inputs';
+import { SearchInput, SelectInput } from '../inputs';
 import Navigation from '../navigation';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import { getAllLocations } from './get-all-locations';
 import LocationCard from './locationCard';
+import LocationChips from './locationChips';
 import { dimensionOptions, locationTypeOptions } from './options';
 
 import type { LocationFilters } from "./types";
@@ -99,11 +100,11 @@ const LocationsList = () => {
           className="w-full"
         />
       </div>
-      <FilterBadges
+      <LocationChips
         filters={filters}
         onClearOne={handleClear}
         onClearAll={onResetClick}
-        className='self-center'
+        className="self-center"
       />
       {!data?.info && !data?.results ? (
         <ResultNotFound />

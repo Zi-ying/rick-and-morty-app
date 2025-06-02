@@ -1,4 +1,5 @@
-import { FilterBadges, SelectInput } from '../inputs';
+import { SelectInput } from '../inputs';
+import CharacterChips from './characterChips';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from './options';
 
 import type { Filters } from "@/types/filters";
@@ -47,7 +48,7 @@ const CharactersFilterBar = ({
           className="w-full"
         />
       </div>
-      <FilterBadges
+      <CharacterChips
         filters={filters}
         onClearOne={onClear}
         onClearAll={onReset}

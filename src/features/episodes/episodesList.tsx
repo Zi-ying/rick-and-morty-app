@@ -8,16 +8,18 @@ import { useAppDispatch } from '@/store/redux-hooks';
 import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-import { FilterBadges, SearchInput, SelectInput } from '../inputs';
+import { SearchInput, SelectInput } from '../inputs';
 import Navigation from '../navigation';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import EpisodeCard from './episodeCard';
+import EpisodeChips from './episodeChips';
 import { getAllEpisodes } from './get-all-episodes';
 import { episodeOptions } from './options';
 
 import type { EpisodeFilters } from "./types";
 import type { Filters } from "@/types/filters";
+
 const EpisodesList = () => {
   const filters = useSelector(allFilters);
   const [page, setPage] = useState<number>(1);
@@ -88,7 +90,7 @@ const EpisodesList = () => {
           data={episodeOptions}
           onChange={setFilter}
         />
-        <FilterBadges
+        <EpisodeChips
           filters={filters}
           onClearOne={handleClear}
           onClearAll={onResetClick}
