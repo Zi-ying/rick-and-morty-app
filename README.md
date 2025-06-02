@@ -15,9 +15,6 @@ To start run the command line:
 - Add more testings
 - Add different languages
 - Uniformize paddings and styles
-- Add toaster when removing a favorite card on favorite page
-- Redesign navigation
+- Add toaster when removing a favorite card on favorite page - ?
 - Move useToggle in its own file
-- Add scrolling area
-- Clear filters when navigating.
-- Redesign homepage 
+- Redesign homepage
