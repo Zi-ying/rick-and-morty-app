@@ -49,7 +49,7 @@ const CharactersListItems = ({ data, isPending, currentPage, setCurrentPage }: C
 
   return (
     <>
-      <div className="w-full h-full hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto p-4">
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto p-4">
         {data.results.map((item) => {
           const isFavorite = getFavorite(keys, item);
 
@@ -67,7 +67,7 @@ const CharactersListItems = ({ data, isPending, currentPage, setCurrentPage }: C
           );
         })}
       </div>
-      <div className="w-full grid sm:grid-cols-2 p-6 gap-3 md:hidden">
+      <div className="grid sm:grid-cols-2 p-6 gap-3 overflow-y-auto md:hidden">
         {data.results.map((item) => {
           const isFavorite = getFavorite(keys, item);
 
