@@ -19,11 +19,15 @@ interface CharacterListItemsProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const CharactersListItems = ({ data, isPending, currentPage, setCurrentPage }: CharacterListItemsProps) => {
+const CharactersListItems = ({
+  data,
+  isPending,
+  currentPage,
+  setCurrentPage,
+}: CharacterListItemsProps) => {
   const keys = useAppSelector(allFavorites);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
 
   const onToggle = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -39,12 +43,12 @@ const CharactersListItems = ({ data, isPending, currentPage, setCurrentPage }: C
     }
   };
 
-  if (!data?.info && !data?.results) {
-    return <ResultNotFound />;
-  }
-
   if (isPending) {
     return <Spinner />;
+  }
+
+  if (!data?.info && !data?.results) {
+    return <ResultNotFound />;
   }
 
   return (
