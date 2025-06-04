@@ -25,7 +25,7 @@ function Spinner({
   message,
 }: SpinnerProps & VariantProps<typeof spinnerVariants>) {
   return (
-    <div className="grid gap-4 items-center justify-center p-4">
+    <div className="m-auto">
       <div className={spinnerVariants({ size })} />
       <p className="text-pickle-500">{message}</p>
     </div>
