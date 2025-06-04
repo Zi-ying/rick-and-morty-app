@@ -70,9 +70,9 @@ const Navigation = ({ children }: NavigationProps) => {
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger>
-                <Menu className="ml-10" />
+                <Menu className="ml-12" />
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="grid gap-1 backdrop-blur-lg">
+              <NavigationMenuContent className="grid gap-1.5 backdrop-blur-xl">
                 {locationOptions.map((option, index) => {
                   const isActive = location.pathname === option.value;
                   return (
