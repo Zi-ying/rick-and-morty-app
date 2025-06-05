@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { render, screen } from '@testing-library/react';
 
-import Navigation from '../navigation';
+import Navigation from '../navigation/navigation';
 
 // Mock the SVG import
 jest.mock('@/assets/rick-and-morty.svg', () => 'mocked-svg-path');

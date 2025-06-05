@@ -7,7 +7,7 @@ import BackButton from '../backButton';
 import Character from '../character/character';
 import EpisodeCard from '../episodes/episodeCard';
 import { getEpisodeById } from '../episodes/get-episode-by-id';
-import Navigation from '../navigation';
+import Navigation from '../navigation/navigation';
 import ResultNotFound from '../resultNotFound';
 
 import type { Episode } from "../episodes/types";

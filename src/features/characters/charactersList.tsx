@@ -7,7 +7,7 @@ import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { SearchInput } from '../inputs';
-import Navigation from '../navigation';
+import Navigation from '../navigation/navigation';
 import CharactersFilterBar from './charactersFilterBar';
 import CharactersListItems from './charactersListItems';
 import { getAllCharacters } from './get-all-characters';

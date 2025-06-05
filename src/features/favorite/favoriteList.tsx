@@ -12,7 +12,7 @@ import CharacterCard from '../characters/characterCard';
 import { Character } from '../characters/types';
 import { getFavorite } from '../get-favorite';
 import { SearchInput } from '../inputs';
-import Navigation from '../navigation';
+import Navigation from '../navigation/navigation';
 import ResultNotFound from '../resultNotFound';
 import { getMultipleCharacters } from './get-multiple-characters';
 

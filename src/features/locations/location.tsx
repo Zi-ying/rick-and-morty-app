@@ -7,7 +7,7 @@ import BackButton from '../backButton';
 import Character from '../character/character';
 import { getLocationById } from '../locations/get-location-by-id';
 import LocationCard from '../locations/locationCard';
-import Navigation from '../navigation';
+import Navigation from '../navigation/navigation';
 import ResultNotFound from '../resultNotFound';
 
 import type { Location } from "../locations/types";

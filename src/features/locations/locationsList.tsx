@@ -9,7 +9,7 @@ import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import { SearchInput, SelectInput } from '../inputs';
-import Navigation from '../navigation';
+import Navigation from '../navigation/navigation';
 import PaginationList from '../pagination/paginationList';
 import ResultNotFound from '../resultNotFound';
 import { getAllLocations } from './get-all-locations';

@@ -8,7 +8,7 @@ import NotFoundPage from '@/pages/NotFoundPage';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import BackButton from '../backButton';
-import Navigation from '../navigation';
+import Navigation from '../navigation/navigation';
 import ResultNotFound from '../resultNotFound';
 import { getCharacterById } from './get-character-by-id';
 import SmallCharacterCard from './smallCharacterCard';

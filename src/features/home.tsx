@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 
-import Navigation from './navigation';
+import Navigation from './navigation/navigation';
 
 const Home = () => {
   return (
