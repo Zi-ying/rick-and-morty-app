@@ -1,4 +1,3 @@
-
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 
@@ -8,17 +7,38 @@ interface SelectInputProps {
   data: {label: string, value: string}[]
   onChange: (value: string) => void;
   className?: string;
+  disabled?: boolean;
+  'aria-label'?: string;
 }
 
-const SelectInput = ({placeholder, value, data, className: classnames, onChange}: SelectInputProps) => {
+const SelectInput = ({
+  placeholder,
+  value,
+  data,
+  className,
+  onChange,
+  disabled,
+  'aria-label': ariaLabel,
+}: SelectInputProps) => {
   return (
-      <Select onValueChange={onChange} value={value}>
-        <SelectTrigger className={cn(classnames, 'hover:text-pickle-500 cursor-pointer backdrop-blur-lg')}>
+      <Select onValueChange={onChange} value={value} disabled={disabled}>
+        <SelectTrigger
+          className={cn(
+            className,
+            'hover:text-pickle-500 cursor-pointer backdrop-blur-lg',
+            disabled && 'opacity-50 cursor-not-allowed'
+          )}
+          aria-label={ariaLabel}
+        >
           <SelectValue placeholder={placeholder}/>
         </SelectTrigger>
         <SelectContent className='text-white backdrop-blur-lg border-none'>
           {data.map((item) => (
-            <SelectItem key={item.value} value={item.value} className='hover:text-pickle-500 cursor-pointer'>
+            <SelectItem
+              key={item.value}
+              value={item.value}
+              className='hover:text-pickle-500 cursor-pointer'
+            >
               {item.label}
             </SelectItem>
           ))}
