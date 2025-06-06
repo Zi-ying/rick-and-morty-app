@@ -60,8 +60,10 @@ describe('Navigation', () => {
   it('applies active styles to the current route', () => {
     renderWithRouter(<Navigation />, { route: '/character' });
     const characterLinks = screen.getAllByText('Characters');
-    // At least one of the links should have the underline class
-    const hasUnderline = characterLinks.some(link => link.className.includes('underline'));
+    // Check if any of the links has the underline class applied
+    const hasUnderline = characterLinks.some(link =>
+      link.closest('a')?.className.includes('underline')
+    );
     expect(hasUnderline).toBe(true);
   });
 
