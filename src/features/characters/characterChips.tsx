@@ -9,6 +9,7 @@ interface CharacterChipsProps {
   className?: string;
   onClearOne: (filter: keyof Filters) => void;
   onClearAll: () => void;
+  disabled?: boolean;
 }
 
 const CharacterChips = ({
@@ -16,6 +17,7 @@ const CharacterChips = ({
   className,
   onClearAll,
   onClearOne,
+  disabled,
 }: CharacterChipsProps) => {
   return (
     <div className={cn("py-2 space-x-2 space-y-2", className)}>
@@ -24,6 +26,7 @@ const CharacterChips = ({
           name="Name"
           value={filters.characterName}
           onClick={() => onClearOne("characterName")}
+          disabled={disabled}
         />
       )}
       {filters.gender && (
@@ -31,6 +34,7 @@ const CharacterChips = ({
           name="Gender"
           value={filters.gender}
           onClick={() => onClearOne("gender")}
+          disabled={disabled}
         />
       )}
       {filters.status && (
@@ -38,6 +42,7 @@ const CharacterChips = ({
           name="Status"
           value={filters.status}
           onClick={() => onClearOne("status")}
+          disabled={disabled}
         />
       )}
       {filters.species && (
@@ -45,6 +50,7 @@ const CharacterChips = ({
           name="Species"
           value={filters.species}
           onClick={() => onClearOne("species")}
+          disabled={disabled}
         />
       )}
       {filters.characterType && (
@@ -52,6 +58,7 @@ const CharacterChips = ({
           name="Type"
           value={filters.characterType}
           onClick={() => onClearOne("characterType")}
+          disabled={disabled}
         />
       )}
 
@@ -60,7 +67,12 @@ const CharacterChips = ({
         filters.gender ||
         filters.species ||
         filters.status) && (
-        <Button variant="outline" size="sm" onClick={onClearAll}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onClearAll}
+          disabled={disabled}
+        >
           Clear
         </Button>
       )}
