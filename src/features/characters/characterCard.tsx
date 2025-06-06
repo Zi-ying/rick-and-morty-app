@@ -1,13 +1,11 @@
-import { Circle } from 'lucide-react';
-
 import HeartToggle from '@/components/heartToggle';
 import Image from '@/components/image';
 import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import Spinner from '@/components/ui/spinner';
-import { cn } from '@/lib/utils';
+
+import StatusCircle from './status-circle';
 
 import type { Character } from "./types";
-
 interface CharacterCardProps {
   data: Character;
   isPending: boolean;
@@ -16,7 +14,7 @@ interface CharacterCardProps {
   onToggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-const CharacterCard = ({
+const CharacterCard = (({
   data,
   isPending,
   isFavorite,
@@ -25,7 +23,7 @@ const CharacterCard = ({
 }: CharacterCardProps) => {
   if (isPending) {
     return (
-      <Card>
+      <Card role="status" aria-label="Loading character card">
         <Spinner />
       </Card>
     );
@@ -40,25 +38,24 @@ const CharacterCard = ({
         src={data.image}
         alt={`image of ${data.name} from Rick and Morty`}
         className="rounded-t-xl"
+        loading="lazy"
       />
       <CardHeader className="grid grid-cols-5 p-4 items-center h-full">
         <CardTitle className="flex items-center justify-center gap-1 col-start-2 col-span-3">
           <p className="text-align text-pickle-500">{data.name}</p>
-          <Circle
-            className={cn(
-              "h-2.5 stroke-2.5",
-              data.status === "Alive" && "stroke-green-400 fill-green-400",
-              data.status === "unknown" && "stroke-green-400",
-              data.status === "Dead" && "stroke-slate-700 fill-slate-700"
-            )}
-          />
+          <StatusCircle status={data.status} />
         </CardTitle>
         <div className="justify-self-end flex">
-          <HeartToggle isToggled={isFavorite} onToggle={(e) => onToggle(e)} />
+          <HeartToggle
+            isToggled={isFavorite}
+            onToggle={onToggle}
+            aria-label={`Remore or add ${data.name} to favorites`}
+          />
         </div>
       </CardHeader>
     </Card>
   );
-};
+});
+
 
 export default CharacterCard;
