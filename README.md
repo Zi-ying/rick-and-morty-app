@@ -13,8 +13,5 @@ To start run the command line:
 
 ### What's lefy
 - Add more testings
-- Add different languages
-- Uniformize paddings and styles
-- Add toaster when removing a favorite card on favorite page - ?
 - Move useToggle in its own file
 - Redesign homepage
