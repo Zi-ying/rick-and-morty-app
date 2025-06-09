@@ -43,6 +43,41 @@ const CharactersListItems = ({
     }
   };
 
+  const handleCharacterClick = (id: number) => {
+    navigate(`/character/${id}`);
+  };
+
+  const renderCharacterCards = (item: Character) => {
+    const isFavorite = getFavorite(keys, item);
+    return (
+      <CharacterCard
+        key={item.id}
+        data={item}
+        isPending={isPending}
+        isFavorite={isFavorite}
+        onClick={() => handleCharacterClick(item.id)}
+        onToggle={(e) => onToggle(e, item)}
+        aria-label={`Character card for ${item.name}`}
+      />
+    );
+  };
+
+  const renderSmallCharacterCards = (item: Character) => {
+    const isFavorite = getFavorite(keys, item);
+    return (
+      <SmallCharacterCard
+        key={item.id}
+        data={item}
+        isPending={isPending}
+        isFavorite={isFavorite}
+        hasToggle
+        onClick={() => handleCharacterClick(item.id)}
+        onToggle={(e) => onToggle(e, item)}
+        aria-label={`Small character card for ${item.name}`}
+      />
+    );
+  };
+
   if (isPending) {
     return <Spinner />;
   }
@@ -53,42 +88,19 @@ const CharactersListItems = ({
 
   return (
     <>
-      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto p-4">
-        {data.results.map((item) => {
-          const isFavorite = getFavorite(keys, item);
-
-          return (
-            <CharacterCard
-              key={item.id}
-              data={item}
-              isPending={isPending}
-              isFavorite={isFavorite}
-              onClick={() => {
-                navigate(`/character/${item.id}`);
-              }}
-              onToggle={(e) => onToggle(e, item)}
-            />
-          );
-        })}
+      <div
+        className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto p-4"
+        role="list"
+        aria-label="Character cards grid"
+      >
+        {data.results.map(renderCharacterCards)}
       </div>
-      <div className="grid sm:grid-cols-2 p-6 gap-3 overflow-y-auto md:hidden">
-        {data.results.map((item) => {
-          const isFavorite = getFavorite(keys, item);
-
-          return (
-            <SmallCharacterCard
-              key={item.id}
-              data={item}
-              isPending={isPending}
-              isFavorite={isFavorite}
-              hasToggle
-              onClick={() => {
-                navigate(`/character/${item.id}`);
-              }}
-              onToggle={(e) => onToggle(e, item)}
-            />
-          );
-        })}
+      <div
+        className="grid sm:grid-cols-2 p-6 gap-3 overflow-y-auto md:hidden"
+        role="list"
+        aria-label="Small character cards grid"
+      >
+        {data.results.map(renderSmallCharacterCards)}
       </div>
       <PaginationList
         currentPage={currentPage}
