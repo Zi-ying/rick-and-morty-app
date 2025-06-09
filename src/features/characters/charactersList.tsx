@@ -15,12 +15,10 @@ import { getAllCharacters } from './get-all-characters';
 import type { CharacterFilters } from "./types";
 const CharactersList = () => {
   const dispatch = useAppDispatch();
-  const filters: Filters = useAppSelector(allFilters);
+  const filters = useAppSelector(allFilters);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [name, setName] = useState<string>(filters.characterName);
-
   const timeout = 500;
-
   const debouncedNameValue = useDebounce(name, timeout);
 
   useEffect(() => {
@@ -31,6 +29,7 @@ const CharactersList = () => {
     setName(e.currentTarget.value);
     setCurrentPage(1);
   };
+
   const setFilters = (key: keyof Filters, value: string) => {
     dispatch(addFilter({ key, value }));
     setCurrentPage(1);
@@ -60,7 +59,13 @@ const CharactersList = () => {
     placeholderData: keepPreviousData,
   });
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) {
+    return (
+      <div role="alert" className="p-4 text-red-500">
+        An error has occurred: {error.message}
+      </div>
+    );
+  }
 
   return (
     <>
@@ -70,6 +75,7 @@ const CharactersList = () => {
           value={name}
           onChange={setSearchFilter}
           className="p-4 text-white col-start-2 col-end-4"
+          aria-label="Search characters"
         />
       </Navigation>
       <CharactersFilterBar
@@ -78,7 +84,12 @@ const CharactersList = () => {
         onClear={handleClear}
         onReset={onResetClick}
       />
-      <CharactersListItems data={data} isPending={isPending} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <CharactersListItems
+        data={data}
+        isPending={isPending}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 };
