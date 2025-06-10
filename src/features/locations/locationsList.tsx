@@ -19,25 +19,36 @@ import { dimensionOptions, locationTypeOptions } from './options';
 
 import type { LocationFilters } from "./types";
 import type { Filters } from "@/types/filters";
+
+const DEBOUNCE_TIMEOUT = 500;
+
 const LocationsList = () => {
   const filters = useSelector(allFilters);
   const [search, setSearch] = useState<string>(filters.locationName);
   const [page, setPage] = useState<number>(1);
   const dispatch = useAppDispatch();
+  const debouncedSearch = useDebounce(search, DEBOUNCE_TIMEOUT);
 
-  const timeout = 500;
-  const debouncedSearch = useDebounce(search, timeout);
+  useEffect(() => {
+    dispatch(addFilter({ key: "locationName", value: debouncedSearch }));
+  }, [dispatch, debouncedSearch]);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     setPage(1);
   };
 
-  useEffect(() => {
-    dispatch(addFilter({ key: "locationName", value: debouncedSearch }));
-  }, [dispatch, search, debouncedSearch]);
+  const handleFilterChange = (key: keyof Filters, value: string) => {
+    dispatch(addFilter({ key, value }));
+    setPage(1);
+  };
 
-  const onResetClick = () => {
+  const handleClearFilter = (filter: keyof Filters) => {
+    dispatch(removeOneFilter(filter));
+    setPage(1);
+  };
+
+  const handleResetFilters = () => {
     dispatch(resetFilters());
     setPage(1);
   };
@@ -49,16 +60,10 @@ const LocationsList = () => {
   };
 
   const { data, isPending } = useQuery({
-    queryKey: ["locationsData", filterArgs, debouncedSearch, page],
-    queryFn: () =>
-      getAllLocations({ filters: filterArgs, page: page.toString() }),
+    queryKey: ["locationsData", filterArgs, page],
+    queryFn: () => getAllLocations({ filters: filterArgs, page: page.toString() }),
     placeholderData: keepPreviousData,
   });
-
-  const handleClear = (filter: keyof Filters) => {
-    dispatch(removeOneFilter(filter));
-    setPage(1);
-  };
 
   if (isPending) {
     return (
@@ -75,7 +80,7 @@ const LocationsList = () => {
           placeholder="Search for a location"
           value={search}
           className="p-4 text-white col-start-2 col-end-4"
-          onChange={onChange}
+          onChange={handleSearchChange}
         />
       </Navigation>
       <div className="flex flex-col md:flex-row gap-2 text-white w-full p-4">
@@ -83,27 +88,21 @@ const LocationsList = () => {
           placeholder="type"
           value={filters.locationType}
           data={locationTypeOptions}
-          onChange={(e) => {
-            dispatch(addFilter({ key: "locationType", value: e }));
-            setPage(1);
-          }}
+          onChange={(e) => handleFilterChange("locationType", e)}
           className="w-full"
         />
         <SelectInput
           placeholder="dimension"
           value={filters.dimension}
           data={dimensionOptions}
-          onChange={(e) => {
-            dispatch(addFilter({ key: "dimension", value: e }));
-            setPage(1);
-          }}
+          onChange={(e) => handleFilterChange("dimension", e)}
           className="w-full"
         />
       </div>
       <LocationChips
         filters={filters}
-        onClearOne={handleClear}
-        onClearAll={onResetClick}
+        onClearOne={handleClearFilter}
+        onClearAll={handleResetFilters}
         className="self-center"
       />
       {!data?.info && !data?.results ? (
@@ -111,13 +110,11 @@ const LocationsList = () => {
       ) : (
         <>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 p-4 overflow-y-auto">
-            {data.results.map((item) => {
-              return (
-                <Link key={item.id} to={item.id.toString()}>
-                  <LocationCard data={item} />
-                </Link>
-              );
-            })}
+            {data.results.map((item) => (
+              <Link key={item.id} to={item.id.toString()}>
+                <LocationCard data={item} />
+              </Link>
+            ))}
           </div>
           <PaginationList
             currentPage={page}
