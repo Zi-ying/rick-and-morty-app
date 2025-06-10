@@ -20,28 +20,15 @@ import { episodeOptions } from './options';
 import type { EpisodeFilters } from "./types";
 import type { Filters } from "@/types/filters";
 
+const DEBOUNCE_TIMEOUT = 500;
+
 const EpisodesList = () => {
   const filters = useSelector(allFilters);
-  const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>(filters.episodeName);
   const dispatch = useAppDispatch();
 
-  const timeout = 500;
-  const debouncedSearch = useDebounce(search, timeout);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    setPage(1);
-  };
-
-  useEffect(() => {
-    dispatch(addFilter({ key: "episodeName", value: debouncedSearch }));
-  }, [dispatch, search, debouncedSearch]);
-
-  const onResetClick = () => {
-    dispatch(resetFilters());
-    setPage(1);
-  };
+  const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>(filters.episodeName);
+  const debouncedSearch = useDebounce(search, DEBOUNCE_TIMEOUT);
 
   const filterArgs: EpisodeFilters = {
     name: filters.episodeName,
@@ -50,17 +37,30 @@ const EpisodesList = () => {
 
   const { data, isPending } = useQuery({
     queryKey: ["episodesData", filterArgs, page],
-    queryFn: () =>
-      getAllEpisodes({ filters: filterArgs, page: page.toString() }),
+    queryFn: () => getAllEpisodes({ filters: filterArgs, page: page.toString() }),
     placeholderData: keepPreviousData,
   });
 
-  const handleClear = (filter: keyof Filters) => {
+  useEffect(() => {
+    dispatch(addFilter({ key: "episodeName", value: debouncedSearch }));
+  }, [dispatch, debouncedSearch]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    setPage(1);
+  };
+
+  const handleResetFilters = () => {
+    dispatch(resetFilters());
+    setPage(1);
+  };
+
+  const handleClearFilter = (filter: keyof Filters) => {
     dispatch(removeOneFilter(filter));
     setPage(1);
   };
 
-  const setFilter = (value: string) => {
+  const handleEpisodeFilter = (value: string) => {
     dispatch(addFilter({ key: "episode", value }));
     setPage(1);
   };
@@ -73,13 +73,15 @@ const EpisodesList = () => {
     );
   }
 
+  const hasNoData = !data?.info && !data?.results;
+
   return (
     <>
       <Navigation>
         <SearchInput
           placeholder="Search by character name"
           value={search}
-          onChange={onChange}
+          onChange={handleSearchChange}
           className="p-4 text-white col-start-2 col-end-4"
         />
       </Navigation>
@@ -88,27 +90,25 @@ const EpisodesList = () => {
           placeholder="Episodes"
           value={filters.episode}
           data={episodeOptions}
-          onChange={setFilter}
+          onChange={handleEpisodeFilter}
         />
         <EpisodeChips
           filters={filters}
-          onClearOne={handleClear}
-          onClearAll={onResetClick}
+          onClearOne={handleClearFilter}
+          onClearAll={handleResetFilters}
         />
       </div>
 
-      {!data?.info && !data?.results ? (
+      {hasNoData ? (
         <ResultNotFound />
       ) : (
         <>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 overflow-y-auto p-4">
-            {data.results.map((item) => {
-              return (
-                <Link key={item.id} to={item.id.toString()}>
-                  <EpisodeCard data={item} />
-                </Link>
-              );
-            })}
+            {data.results.map((item) => (
+              <Link key={item.id} to={item.id.toString()}>
+                <EpisodeCard data={item} />
+              </Link>
+            ))}
           </div>
           <PaginationList
             currentPage={page}
