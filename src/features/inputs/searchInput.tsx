@@ -6,8 +6,9 @@ import { cn } from '@/lib/utils';
 interface SearchInputProps {
   placeholder: string;
   value: string;
-  className: string;
+  className?: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  'aria-label'?: string;
 }
 
 const SearchInput = ({
@@ -15,15 +16,18 @@ const SearchInput = ({
   value,
   className,
   onChange,
+  'aria-label': ariaLabel = 'Search',
 }: SearchInputProps) => {
   return (
-      <Input
-        type="search"
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        className={cn('backdrop-blur-sm', className)}
-      />
+    <Input
+      type="search"
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className={cn('backdrop-blur-sm', className)}
+      role="searchbox"
+      aria-label={ariaLabel}
+    />
   );
 };
 
