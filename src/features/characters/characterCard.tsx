@@ -6,6 +6,7 @@ import Spinner from '@/components/ui/spinner';
 import StatusCircle from './status-circle';
 
 import type { Character } from "./types";
+
 interface CharacterCardProps {
   data: Character;
   isPending: boolean;
@@ -14,7 +15,7 @@ interface CharacterCardProps {
   onToggle: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-const CharacterCard = (({
+const CharacterCard = ({
   data,
   isPending,
   isFavorite,
@@ -55,7 +56,6 @@ const CharacterCard = (({
       </CardHeader>
     </Card>
   );
-});
-
+};
 
 export default CharacterCard;
