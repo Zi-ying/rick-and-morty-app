@@ -17,8 +17,12 @@ interface PaginationListProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const PaginationList = ({ currentPage, maxPage, className, setCurrentPage }: PaginationListProps) => {
-
+const PaginationList = ({
+  currentPage,
+  maxPage,
+  className,
+  setCurrentPage
+}: PaginationListProps) => {
   const {
     page,
     isFirstPage,
@@ -30,6 +34,9 @@ const PaginationList = ({ currentPage, maxPage, className, setCurrentPage }: Pag
     setNextPage,
     setPreviousPage,
   } = getPagination(currentPage, maxPage, setCurrentPage);
+
+  const getPageItemClassName = (condition: boolean) =>
+    cn('backdrop-blur-sm', condition ? "hidden" : "hidden sm:inline-flex");
 
   return (
     <Pagination className={className}>
@@ -43,25 +50,25 @@ const PaginationList = ({ currentPage, maxPage, className, setCurrentPage }: Pag
         <PaginationItem className={cn(isFirstPage ? "hidden" : "inline-flex")}>
           <PaginationLink onClick={setFirstPage}>1</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn('backdrop-blur-sm', isFirstPages  ? "hidden" : "hidden sm:inline-flex")}>
+        <PaginationItem className={getPageItemClassName(isFirstPages)}>
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn('backdrop-blur-sm', currentPage <= 2 ? "hidden" : "hidden sm:inline-flex")}>
-          <PaginationLink onClick={() => setCurrentPage(currentPage - 1)}>{currentPage - 1}</PaginationLink>
+        <PaginationItem className={getPageItemClassName(currentPage <= 2)}>
+          <PaginationLink onClick={setPreviousPage}>{currentPage - 1}</PaginationLink>
         </PaginationItem>
         <PaginationItem>
           <PaginationLink isActive>{page}</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn('backdrop-blur-sm', currentPage >= maxPage - 1 ? "hidden" : "hidden sm:inline-flex")}>
-          <PaginationLink onClick={() => setCurrentPage(currentPage + 1)}>{currentPage + 1}</PaginationLink>
+        <PaginationItem className={getPageItemClassName(currentPage >= maxPage - 1)}>
+          <PaginationLink onClick={setNextPage}>{currentPage + 1}</PaginationLink>
         </PaginationItem>
-        <PaginationItem className={cn('blackdrop-blur-sm', isLastPages ? "hidden" : "hidden sm:inline-flex")}>
+        <PaginationItem className={getPageItemClassName(isLastPages)}>
           <PaginationLink disabled>...</PaginationLink>
         </PaginationItem>
         <PaginationItem className={cn('backdrop-blur-sm', isLastPage ? "hidden" : "inline-flex")}>
           <PaginationLink onClick={setLastPage}>{maxPage}</PaginationLink>
         </PaginationItem>
-        <PaginationItem  className='backdrop-blur-sm'>
+        <PaginationItem className='backdrop-blur-sm'>
           <PaginationNext onClick={setNextPage} disabled={isLastPage} />
         </PaginationItem>
       </PaginationContent>
