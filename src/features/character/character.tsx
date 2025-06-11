@@ -14,6 +14,7 @@ import { getCharacterById } from './get-character-by-id';
 import SmallCharacterCard from './smallCharacterCard';
 
 import type { Character } from "../characters/types";
+
 interface CharacterProps {
   id: string | undefined;
   isSmallCard?: boolean;
@@ -24,23 +25,16 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
     queryKey: ["characterData", id],
     queryFn: async () => {
       if (!id) {
-        throw new Error("This id is undefined");
+        throw new Error("Character ID is required");
       }
 
-      try {
-        const response = await getCharacterById(id);
+      const response = await getCharacterById(id);
 
-        if (!response || !response.id) {
-          throw new Error("Character not found.");
-        }
-        return response;
-      } catch (error) {
-        throw new Error(
-          error instanceof Error
-            ? error.message
-            : "An unexpected error occurred."
-        );
+      if (!response?.id) {
+        throw new Error("Character not found");
       }
+
+      return response;
     },
     placeholderData: keepPreviousData,
   });
@@ -50,7 +44,7 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   }
 
   if (isError) {
-    return <NotFoundPage errorMessage={error.message} />;
+    return <NotFoundPage errorMessage={error instanceof Error ? error.message : "An unexpected error occurred"} />;
   }
 
   if (!data) {
@@ -60,6 +54,14 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
   if (isSmallCard) {
     return <SmallCharacterCard data={data} isPending={isPending} />;
   }
+
+  const renderCharacterInfo = (label: string, value: string | number) => (
+    <div>
+      <p className="text-pickle-500 text-lg">{label}</p>
+      <p className="whitespace-nowrap">{value}</p>
+    </div>
+  );
+
   return (
     <>
       <Navigation />
@@ -67,7 +69,7 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
         <div className="flex flex-col md:flex-row gap-4 rounded-xl shadow-md justify-center text-white backdrop-blur-md">
           <Image
             src={data.image}
-            alt={`image of ${data.name} from Rick and Morty`}
+            alt={`${data.name} from Rick and Morty`}
             className="md:rounded-l-md rounded-t-md md:rounded-tr-none flex-none"
           />
           <div className="flex flex-col gap-4 p-4 md:items-start md:justify-center md:grow">
@@ -85,38 +87,12 @@ const Character = ({ id, isSmallCard }: CharacterProps) => {
               />
             </CardTitle>
             <div className="grid md:grid-cols-2 items-center justify-center gap-2">
-              <div>
-                <p className="text-pickle-500 text-lg">Status</p>
-                <p className="whitespace-nowrap">
-                  {data.status.toLocaleLowerCase()}
-                </p>
-              </div>
-              <div>
-                <p className="text-pickle-500 text-lg">Gender</p>
-                <p className="whitespace-nowrap">
-                  {data.gender.toLocaleLowerCase()}
-                </p>
-              </div>
-              <div>
-                <p className="text-pickle-500 text-lg">Species</p>
-                <p className="whitespace-nowrap">
-                  {data.species.toLocaleLowerCase()}
-                </p>
-              </div>
-              <div>
-                <p className="text-pickle-500 text-lg">Type</p>
-                <p className="whitespace-nowrap">
-                  {data.type ? data.type.toLocaleLowerCase() : "none"}
-                </p>
-              </div>
-              <div>
-                <p className="text-pickle-500 text-lg">Location</p>
-                <p className="whitespace-nowrap">{data.location.name}</p>
-              </div>
-              <div>
-                <p className="text-pickle-500 text-lg">Episodes</p>
-                <p className="whitespace-nowrap">{data.episode.length}</p>
-              </div>
+              {renderCharacterInfo("Status", data.status.toLowerCase())}
+              {renderCharacterInfo("Gender", data.gender.toLowerCase())}
+              {renderCharacterInfo("Species", data.species.toLowerCase())}
+              {renderCharacterInfo("Type", data.type?.toLowerCase() || "none")}
+              {renderCharacterInfo("Location", data.location.name)}
+              {renderCharacterInfo("Episodes", data.episode.length)}
             </div>
           </div>
         </div>
