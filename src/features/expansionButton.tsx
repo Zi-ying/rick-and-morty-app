@@ -5,11 +5,23 @@ import { Button } from '@/components/ui/button';
 interface ExpansionButtonProps {
   expanded: boolean;
   onClick: () => void;
+  'aria-label'?: string;
 }
 
-const ExpansionButton = ({ expanded, onClick }: ExpansionButtonProps) => {
+const ExpansionButton = ({
+  expanded,
+  onClick,
+  'aria-label': ariaLabel = expanded ? 'Collapse section' : 'Expand section'
+}: ExpansionButtonProps) => {
   return (
-    <Button onClick={onClick} className="w-fit self-stretch [&>svg]:stroke-3">
+    <Button
+      type="button"
+      onClick={onClick}
+      className="w-fit self-stretch [&>svg]:stroke-3"
+      aria-expanded={expanded}
+      aria-label={ariaLabel}
+      title={ariaLabel}
+    >
       {expanded ? <Minus /> : <Plus />}
     </Button>
   );
