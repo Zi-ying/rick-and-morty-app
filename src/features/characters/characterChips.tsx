@@ -12,6 +12,38 @@ interface CharacterChipsProps {
   disabled?: boolean;
 }
 
+type FilterConfig = {
+  key: keyof CharacterFilters;
+  label: string;
+};
+
+const FILTER_CONFIGS: FilterConfig[] = [
+  { key: 'name', label: 'Name' },
+  { key: 'gender', label: 'Gender' },
+  { key: 'status', label: 'Status' },
+  { key: 'species', label: 'Species' },
+  { key: 'type', label: 'Type' },
+];
+
+const FilterChip = ({
+  config,
+  value,
+  onClear,
+  disabled,
+}: {
+  config: FilterConfig;
+  value: string;
+  onClear: () => void;
+  disabled?: boolean;
+}) => (
+  <Chip
+    name={config.label}
+    value={value}
+    onClick={onClear}
+    disabled={disabled}
+  />
+);
+
 const CharacterChips = ({
   filters,
   className,
@@ -19,54 +51,28 @@ const CharacterChips = ({
   onClearOne,
   disabled,
 }: CharacterChipsProps) => {
+  const hasActiveFilters = FILTER_CONFIGS.some(
+    (config) => filters[config.key]
+  );
+
   return (
     <div className={cn("py-2 space-x-2 space-y-2", className)}>
-      {filters.name && (
-        <Chip
-          name="Name"
-          value={filters.name}
-          onClick={() => onClearOne("name")}
-          disabled={disabled}
-        />
-      )}
-      {filters.gender && (
-        <Chip
-          name="Gender"
-          value={filters.gender}
-          onClick={() => onClearOne("gender")}
-          disabled={disabled}
-        />
-      )}
-      {filters.status && (
-         <Chip
-          name="Status"
-          value={filters.status}
-          onClick={() => onClearOne("status")}
-          disabled={disabled}
-        />
-      )}
-      {filters.species && (
-         <Chip
-          name="Species"
-          value={filters.species}
-          onClick={() => onClearOne("species")}
-          disabled={disabled}
-        />
-      )}
-      {filters.type && (
-        <Chip
-          name="Type"
-          value={filters.type}
-          onClick={() => onClearOne("type")}
-          disabled={disabled}
-        />
-      )}
+      {FILTER_CONFIGS.map((config) => {
+        const value = filters[config.key];
+        if (!value) return null;
 
-      {(filters.name ||
-        filters.type ||
-        filters.gender ||
-        filters.species ||
-        filters.status) && (
+        return (
+          <FilterChip
+            key={config.key}
+            config={config}
+            value={value}
+            onClear={() => onClearOne(config.key)}
+            disabled={disabled}
+          />
+        );
+      })}
+
+      {hasActiveFilters && (
         <Button
           variant="outline"
           size="sm"
