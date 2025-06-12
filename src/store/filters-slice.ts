@@ -1,45 +1,90 @@
-import type { Filters } from "@/types/filters";
+import type { Filters, FilterCategory } from "@/types/filters";
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { RootState } from './store';
+import type { EpisodeFilters } from "@/features/episodes/types";
+import type { CharacterFilters } from "@/features/characters/types";
+import type { LocationFilters } from "@/features/locations/types";
+import type { RootState } from "./store";
 
 type FilterState = {
   filters: Filters;
 };
 
+const initialCharacterFilters: CharacterFilters = {
+  name: "",
+  status: "",
+  species: "",
+  type: "",
+  gender: "",
+};
+
+const initialLocationFilters: LocationFilters = {
+  name: "",
+  type: "",
+  dimension: "",
+};
+
+const initialEpisodeFilters: EpisodeFilters = {
+  name: "",
+  episode: "",
+};
+
 const initialState: FilterState = {
   filters: {
-    characterName: "",
-    locationName: "",
-    episodeName: "",
-    gender: "",
-    status: "",
-    species: "",
-    characterType: "",
-    locationType: "",
-    dimension: "",
-    episode: "",
+    character: initialCharacterFilters,
+    location: initialLocationFilters,
+    episode: initialEpisodeFilters,
   },
 };
+
+export type FilterKey<T extends FilterCategory> = T extends "character"
+  ? keyof CharacterFilters
+  : T extends "location"
+  ? keyof LocationFilters
+  : T extends "episode"
+  ? keyof EpisodeFilters
+  : never;
 
 const FiltersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    addFilter: (
-      state,
+    addFilter: <T extends FilterCategory>(
+      state: FilterState,
       action: PayloadAction<{
-        key: keyof Filters;
-        value: Filters[keyof Filters];
+        category: T;
+        key: FilterKey<T>;
+        value: string;
       }>
     ) => {
-      const { key, value } = action.payload;
-      state.filters[key] = value;
+      const { category, key, value } = action.payload;
+      if (category === "character") {
+        (state.filters.character[key as keyof CharacterFilters] as string) =
+          value;
+      } else if (category === "location") {
+        (state.filters.location[key as keyof LocationFilters] as string) =
+          value;
+      } else if (category === "episode") {
+        (state.filters.episode[key as keyof EpisodeFilters] as string) = value;
+      }
     },
-    removeOneFilter: (state, action: PayloadAction<keyof Filters>) => {
-      state.filters[action.payload] = "";
+    removeOneFilter: <T extends FilterCategory>(
+      state: FilterState,
+      action: PayloadAction<{
+        category: T;
+        key: FilterKey<T>;
+      }>
+    ) => {
+      const { category, key } = action.payload;
+      if (category === "character") {
+        (state.filters.character[key as keyof CharacterFilters] as string) = "";
+      } else if (category === "location") {
+        (state.filters.location[key as keyof LocationFilters] as string) = "";
+      } else if (category === "episode") {
+        (state.filters.episode[key as keyof EpisodeFilters] as string) = "";
+      }
     },
-    resetFilters: (state) => {
+    resetFilters: (state: FilterState) => {
       state.filters = initialState.filters;
     },
   },

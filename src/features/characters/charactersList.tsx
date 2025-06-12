@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { addFilter, allFilters, removeOneFilter, resetFilters } from '@/store/filters-slice';
 import { useAppDispatch, useAppSelector } from '@/store/redux-hooks';
-import { Filters } from '@/types/filters';
 import { useDebounce } from '@/utils/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
@@ -12,17 +11,18 @@ import CharactersFilterBar from './charactersFilterBar';
 import CharactersListItems from './charactersListItems';
 import { getAllCharacters } from './get-all-characters';
 
-import type { CharacterFilters } from "./types";
+import type { CharacterFilters } from './types';
+
 const CharactersList = () => {
   const dispatch = useAppDispatch();
-  const filters = useAppSelector(allFilters);
+  const filters = useAppSelector(allFilters).character;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [name, setName] = useState<string>(filters.characterName);
+  const [name, setName] = useState<string>(filters.name);
   const timeout = 500;
   const debouncedNameValue = useDebounce(name, timeout);
 
   useEffect(() => {
-    dispatch(addFilter({ key: "characterName", value: debouncedNameValue }));
+    dispatch(addFilter({category: 'character', key: "name", value: debouncedNameValue }));
   }, [debouncedNameValue, dispatch]);
 
   const setSearchFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,13 +30,13 @@ const CharactersList = () => {
     setCurrentPage(1);
   };
 
-  const setFilters = (key: keyof Filters, value: string) => {
-    dispatch(addFilter({ key, value }));
+  const setFilters = (key: keyof CharacterFilters, value: string) => {
+    dispatch(addFilter({ category: 'character', key, value }));
     setCurrentPage(1);
   };
 
-  const handleClear = (filter: keyof Filters) => {
-    dispatch(removeOneFilter(filter));
+  const handleClear = (filter: keyof CharacterFilters) => {
+    dispatch(removeOneFilter({ category: 'character', key: filter }));
     setCurrentPage(1);
   };
 
@@ -46,11 +46,11 @@ const CharactersList = () => {
   };
 
   const filtersArgs: CharacterFilters = {
-    name: filters.characterName,
+    name: filters.name,
     gender: filters.gender,
     status: filters.status,
     species: filters.species,
-    type: filters.characterType,
+    type: filters.type,
   };
 
   const { data, isPending, error } = useQuery({

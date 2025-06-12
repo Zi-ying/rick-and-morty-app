@@ -18,31 +18,33 @@ import { getAllEpisodes } from './get-all-episodes';
 import { episodeOptions } from './options';
 
 import type { EpisodeFilters } from "./types";
-import type { Filters } from "@/types/filters";
 
 const DEBOUNCE_TIMEOUT = 500;
 
 const EpisodesList = () => {
-  const filters = useSelector(allFilters);
+  const filters = useSelector(allFilters).episode;
   const dispatch = useAppDispatch();
 
   const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>(filters.episodeName);
+  const [search, setSearch] = useState<string>(filters.name);
   const debouncedSearch = useDebounce(search, DEBOUNCE_TIMEOUT);
 
   const filterArgs: EpisodeFilters = {
-    name: filters.episodeName,
+    name: filters.name,
     episode: filters.episode,
   };
 
   const { data, isPending } = useQuery({
     queryKey: ["episodesData", filterArgs, page],
-    queryFn: () => getAllEpisodes({ filters: filterArgs, page: page.toString() }),
+    queryFn: () =>
+      getAllEpisodes({ filters: filterArgs, page: page.toString() }),
     placeholderData: keepPreviousData,
   });
 
   useEffect(() => {
-    dispatch(addFilter({ key: "episodeName", value: debouncedSearch }));
+    dispatch(
+      addFilter({ category: "episode", key: "name", value: debouncedSearch })
+    );
   }, [dispatch, debouncedSearch]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,13 +57,13 @@ const EpisodesList = () => {
     setPage(1);
   };
 
-  const handleClearFilter = (filter: keyof Filters) => {
-    dispatch(removeOneFilter(filter));
+  const handleClearFilter = (filter: keyof EpisodeFilters) => {
+    dispatch(removeOneFilter({ category: "episode", key: filter }));
     setPage(1);
   };
 
   const handleEpisodeFilter = (value: string) => {
-    dispatch(addFilter({ key: "episode", value }));
+    dispatch(addFilter({ category: "episode", key: "episode", value }));
     setPage(1);
   };
 

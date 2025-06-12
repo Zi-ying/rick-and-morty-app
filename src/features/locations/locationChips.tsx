@@ -2,12 +2,12 @@ import Chip from '@/components/chip';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-import type { Filters } from "@/types/filters";
+import type { LocationFilters } from './types';
 
 interface LocationChipsProps {
-  filters: Filters;
+  filters: LocationFilters;
   className?: string;
-  onClearOne: (filter: keyof Filters) => void;
+  onClearOne: (filter: keyof LocationFilters) => void;
   onClearAll: () => void;
 }
 
@@ -19,18 +19,18 @@ const LocationChips = ({
 }: LocationChipsProps) => {
   return (
     <div className={cn("py-2 space-x-2 space-y-2", className)}>
-      {filters.locationName && (
+      {filters.name && (
         <Chip
           name="Location name"
-          value={filters.locationName}
-          onClick={() => onClearOne("locationName")}
+          value={filters.name}
+          onClick={() => onClearOne("name")}
         />
       )}
-      {filters.locationType && (
+      {filters.type && (
         <Chip
           name="Location type"
-          value={filters.locationType}
-          onClick={() => onClearOne("locationType")}
+          value={filters.type}
+          onClick={() => onClearOne("type")}
         />
       )}
       {filters.dimension && (
@@ -41,7 +41,7 @@ const LocationChips = ({
         />
       )}
 
-      {(filters.dimension || filters.locationName || filters.locationType) && (
+      {(filters.dimension || filters.name || filters.type) && (
         <Button variant="outline" size="sm" onClick={onClearAll}>
           Clear
         </Button>

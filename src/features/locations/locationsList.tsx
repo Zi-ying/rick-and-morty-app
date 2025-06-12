@@ -18,19 +18,18 @@ import LocationChips from './locationChips';
 import { dimensionOptions, locationTypeOptions } from './options';
 
 import type { LocationFilters } from "./types";
-import type { Filters } from "@/types/filters";
 
 const DEBOUNCE_TIMEOUT = 500;
 
 const LocationsList = () => {
-  const filters = useSelector(allFilters);
-  const [search, setSearch] = useState<string>(filters.locationName);
+  const filters = useSelector(allFilters).location;
+  const [search, setSearch] = useState<string>(filters.name);
   const [page, setPage] = useState<number>(1);
   const dispatch = useAppDispatch();
   const debouncedSearch = useDebounce(search, DEBOUNCE_TIMEOUT);
 
   useEffect(() => {
-    dispatch(addFilter({ key: "locationName", value: debouncedSearch }));
+    dispatch(addFilter({ category: 'location', key: "name", value: debouncedSearch }));
   }, [dispatch, debouncedSearch]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,13 +37,13 @@ const LocationsList = () => {
     setPage(1);
   };
 
-  const handleFilterChange = (key: keyof Filters, value: string) => {
-    dispatch(addFilter({ key, value }));
+  const handleFilterChange = (key: keyof LocationFilters, value: string) => {
+    dispatch(addFilter({category: 'location', key, value }));
     setPage(1);
   };
 
-  const handleClearFilter = (filter: keyof Filters) => {
-    dispatch(removeOneFilter(filter));
+  const handleClearFilter = (filter: keyof LocationFilters) => {
+    dispatch(removeOneFilter({category: 'location', key: filter}));
     setPage(1);
   };
 
@@ -54,8 +53,8 @@ const LocationsList = () => {
   };
 
   const filterArgs: LocationFilters = {
-    name: filters.locationName,
-    type: filters.locationType,
+    name: filters.name,
+    type: filters.type,
     dimension: filters.dimension,
   };
 
@@ -86,9 +85,9 @@ const LocationsList = () => {
       <div className="flex flex-col md:flex-row gap-2 text-white w-full p-4">
         <SelectInput
           placeholder="type"
-          value={filters.locationType}
+          value={filters.type}
           data={locationTypeOptions}
-          onChange={(e) => handleFilterChange("locationType", e)}
+          onChange={(e) => handleFilterChange("type", e)}
           className="w-full"
         />
         <SelectInput

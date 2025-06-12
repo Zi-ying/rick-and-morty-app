@@ -2,12 +2,12 @@ import Chip from '@/components/chip';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-import type { Filters } from "@/types/filters";
+import type { CharacterFilters } from './types';
 
 interface CharacterChipsProps {
-  filters: Filters;
+  filters: CharacterFilters;
   className?: string;
-  onClearOne: (filter: keyof Filters) => void;
+  onClearOne: (filter: keyof CharacterFilters) => void;
   onClearAll: () => void;
   disabled?: boolean;
 }
@@ -21,11 +21,11 @@ const CharacterChips = ({
 }: CharacterChipsProps) => {
   return (
     <div className={cn("py-2 space-x-2 space-y-2", className)}>
-      {filters.characterName && (
+      {filters.name && (
         <Chip
           name="Name"
-          value={filters.characterName}
-          onClick={() => onClearOne("characterName")}
+          value={filters.name}
+          onClick={() => onClearOne("name")}
           disabled={disabled}
         />
       )}
@@ -53,17 +53,17 @@ const CharacterChips = ({
           disabled={disabled}
         />
       )}
-      {filters.characterType && (
+      {filters.type && (
         <Chip
           name="Type"
-          value={filters.characterType}
-          onClick={() => onClearOne("characterType")}
+          value={filters.type}
+          onClick={() => onClearOne("type")}
           disabled={disabled}
         />
       )}
 
-      {(filters.characterName ||
-        filters.characterType ||
+      {(filters.name ||
+        filters.type ||
         filters.gender ||
         filters.species ||
         filters.status) && (

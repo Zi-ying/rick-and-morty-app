@@ -2,7 +2,7 @@ import { SelectInput } from '../inputs';
 import CharacterChips from './characterChips';
 import { characterTypeOptions, genderOptions, speciesOptions, statusOptions } from './options';
 
-import type { Filters } from "@/types/filters";
+import type { CharacterFilters } from './types';
 
 type FilterOption = {
   label: string;
@@ -10,7 +10,7 @@ type FilterOption = {
 };
 
 type FilterField = {
-  key: keyof Filters;
+  key: keyof CharacterFilters;
   placeholder: string;
   options: FilterOption[];
 };
@@ -20,16 +20,16 @@ const filterFields: FilterField[] = [
   { key: "gender", placeholder: "Gender", options: genderOptions },
   { key: "species", placeholder: "Species", options: speciesOptions },
   {
-    key: "characterType",
+    key: "type",
     placeholder: "Sub-species",
     options: characterTypeOptions,
   },
 ];
 
 interface CharactersFilterBarProps {
-  filters: Filters;
-  setFilters: (key: keyof Filters, e: string) => void;
-  onClear: (key: keyof Filters) => void;
+  filters: CharacterFilters;
+  setFilters: (key: keyof CharacterFilters, e: string) => void;
+  onClear: (key: keyof CharacterFilters) => void;
   onReset: () => void;
   isLoading?: boolean;
 }
