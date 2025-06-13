@@ -19,6 +19,7 @@ interface NavigationProps {
 
 const Navigation = ({ children }: NavigationProps) => {
   const location = useLocation();
+  const currentPath = location.pathname;
 
   return (
     <div className="text-white p-2 grid grid-cols-3 items-center gap-1">
@@ -28,7 +29,7 @@ const Navigation = ({ children }: NavigationProps) => {
       <div>{children}</div>
       <div className="hidden xl:flex justify-end gap-4 items-center">
         {locationOptions.map((option, index) => {
-          const isActive = location.pathname === option.value;
+          const isActive = currentPath === option.value;
           return (
             <Link
               key={index}
@@ -53,7 +54,7 @@ const Navigation = ({ children }: NavigationProps) => {
               </NavigationMenuTrigger>
               <NavigationMenuContent className="grid gap-1.5 backdrop-blur-xl">
                 {locationOptions.map((option, index) => {
-                  const isActive = location.pathname === option.value;
+                  const isActive = currentPath === option.value;
                   return (
                     <Link key={index} to={option.value}>
                       <p
